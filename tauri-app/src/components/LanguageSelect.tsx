@@ -1,4 +1,4 @@
-import { For } from 'solid-js'
+import { createEffect, For } from 'solid-js'
 import {
   HeadlessDisclosureChild,
   Listbox,
@@ -15,8 +15,15 @@ import {
   selectedLanguages,
   setSelectedLanguages,
 } from '@/stores/languageStore'
+import { toast } from 'solid-toast'
 
 export default function Example() {
+  createEffect(() => {
+    if (selectedLanguages().length > 2) {
+      setSelectedLanguages(selectedLanguages().slice(1, 3))
+      toast.error('Max language count: 2')
+    }
+  })
   return (
     <div class="mb-4 w-60">
       <Listbox

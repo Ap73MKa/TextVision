@@ -21,7 +21,7 @@ export default function NavbarTab(props: { record: RecordType }) {
     deleteRecordStore(props.record.id)
   }
   return (
-    <button type="button" onClick={handleTabClick} class="group">
+    <button type="button" onClick={handleTabClick} class="group min-w-[80px]">
       <div
         class={classNames(
           isSelectedRecord()
@@ -30,7 +30,7 @@ export default function NavbarTab(props: { record: RecordType }) {
           'flex h-full items-center gap-2 border-x px-3 transition-colors'
         )}
       >
-        <p class="text-sm">{props.record.name}</p>
+        <p class="truncate text-sm">{props.record.name}</p>
         <div
           class={classNames(
             isSelectedRecord() ? '' : 'invisible group-hover:visible',

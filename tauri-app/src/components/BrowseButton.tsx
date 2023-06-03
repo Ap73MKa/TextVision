@@ -5,13 +5,19 @@ import { RecordType } from '@/shared/RecordType'
 import { addRecord } from '@/utils/database'
 import { addRecordStore, setSelectedRecord } from '@/stores/recordsStore'
 import { selectedLanguages } from '@/stores/languageStore'
+import { toast } from 'solid-toast'
 
 export default function BrowseButton() {
   const handleFileLoad = async (file: File) => {
     const reader = new FileReader()
     reader.onload = async () => {
       const imageData = reader.result as string
-      const text = await recognizeText(imageData)
+      const recognizePromise = recognizeText(imageData)
+      const text = await toast.promise(recognizePromise, {
+        loading: 'Loading',
+        success: 'Success',
+        error: 'An error occurred 😔',
+      })
       const photoData: RecordType = {
         id: Date.now(),
         text: text,

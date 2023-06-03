@@ -12,7 +12,7 @@ export default function ElementInfo() {
       <div class="flex h-full w-full flex-col items-center justify-center border-t bg-white">
         {selectedRecord() ? (
           <div class="flex h-full w-full">
-            <PanelGroup>
+            <PanelGroup class="w-full">
               <Panel id="1">
                 <TextEditor />
               </Panel>
