@@ -76,10 +76,15 @@ export default function BrowseButton() {
     }
   }
   return (
-    <div class="flex h-32 w-60 flex-col items-center justify-center gap-4 rounded-xl border border-gray-300 bg-gray-100 pr-4 text-gray-500 transition-colors hover:border-sky-900/[.20] hover:bg-sky-100 hover:text-sky-900">
+    <div
+      class="flex h-32 w-60 flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-gray-300
+       bg-gray-100 pr-4 text-gray-500 transition-colors hover:border-sky-900/[.20] hover:bg-sky-100 hover:text-sky-900"
+    >
       {isDrag() ? (
         <div class="w-full animate-pulse">
-          <p class="pl-3 text-center text-2xl font-bold">Drop your file</p>
+          <p class="pl-3 text-center text-2xl font-bold text-sky-800">
+            Drop your file
+          </p>
         </div>
       ) : (
         <label for="doc" class="flex w-full items-center">

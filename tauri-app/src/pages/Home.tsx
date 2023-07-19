@@ -1,6 +1,6 @@
 import { onMount } from 'solid-js'
 import { getAllRecords } from '@/utils/database'
-import Navbar from '@/components/Navbar'
+import Navbar from '@/components/navbar/Navbar'
 import ElementInfo from '@/components/ElementInfo'
 import { setRecords } from '@/stores/recordsStore'
 
