@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
@@ -6,7 +5,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'prettier',
     'plugin:prettier/recommended',
     'plugin:solid/typescript',
     'plugin:tailwindcss/recommended',
@@ -19,6 +17,5 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['solid', 'jsx-a11y', '@typescript-eslint'],
-  rules: {},
+  plugins: ['solid', '@typescript-eslint'],
 }
