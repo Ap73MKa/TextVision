@@ -10,6 +10,7 @@ export default function Home() {
     <div class="h-screen bg-gray-100">
       <div class="grid h-full w-full grid-cols-1 grid-rows-[40px_1fr]">
         <Navbar />
+
         <ElementInfo />
       </div>
     </div>

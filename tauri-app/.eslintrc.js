@@ -5,7 +5,6 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:prettier/recommended',
     'plugin:solid/typescript',
     'plugin:tailwindcss/recommended',
     'plugin:jsx-a11y/recommended',

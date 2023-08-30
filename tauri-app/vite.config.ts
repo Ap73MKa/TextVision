@@ -3,7 +3,6 @@ import solidPlugin from 'vite-plugin-solid'
 import eslint from 'vite-plugin-eslint'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [
     solidPlugin(),
