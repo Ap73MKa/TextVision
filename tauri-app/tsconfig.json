@@ -1,20 +1,30 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "target": "ESNext",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["vite/client", "vite-plugin-solid-svg/types"],
-    "noEmit": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"]
     },
-    "isolatedModules": true
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "src/**/*"],
-  "exclude": ["node_modules", "src-tauri"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "src-tauri"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

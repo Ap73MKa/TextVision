@@ -5,7 +5,6 @@ import path from 'path'
 
 export default defineConfig(async () => ({
   plugins: [
-    solidPlugin(),
     {
       ...eslint(),
       apply: 'build',
@@ -18,6 +17,7 @@ export default defineConfig(async () => ({
       apply: 'serve',
       enforce: 'post',
     },
+    solidPlugin(),
   ],
   resolve: {
     alias: {
@@ -30,9 +30,7 @@ export default defineConfig(async () => ({
     strictPort: true,
   },
   envPrefix: ['VITE_', 'TAURI_'],
-  build: {
-    target: process.env.TAURI_PLATFORM == 'windows' ? 'chrome105' : 'safari13',
-    minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
-    sourcemap: !!process.env.TAURI_DEBUG,
+  optimizeDeps: {
+    include: ['@codemirror/state', '@codemirror/view'],
   },
 }))

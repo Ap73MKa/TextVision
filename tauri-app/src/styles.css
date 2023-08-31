@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body {
+        @apply antialiased bg-white text-black dark:bg-black dark:text-white;
+    }
+}
+
+@layer utilities {
+    .dark {
+        color-scheme: dark;
+    }
+}
+
+.ResizeablePanelGroup-ResizeHandle {
+    @apply bg-transparent !w-3 border-solid rounded-none border-r border-r-gray-300 border-0 ;
+}

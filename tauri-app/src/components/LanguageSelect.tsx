@@ -7,9 +7,8 @@ import {
   ListboxOptions,
   Transition,
 } from 'solid-headless'
-import classNames from '@/utils/className'
-import { Icon } from 'solid-heroicons'
-import { chevronDown } from 'solid-heroicons/solid'
+import clsx from 'clsx'
+import { HiSolidChevronDown } from 'solid-icons/hi'
 import {
   languageOptions,
   selectedLanguages,
@@ -49,7 +48,7 @@ export default function Example() {
               </p>
             )}
 
-            <Icon path={chevronDown} class="mt-[1px] h-4 w-4 text-gray-500" />
+            <HiSolidChevronDown class="mt-[1px] h-4 w-4 text-gray-500" />
           </ListboxButton>
           <HeadlessDisclosureChild>
             {({ isOpen }) => (
@@ -74,15 +73,15 @@ export default function Example() {
                       >
                         {({ isActive, isSelected }) => (
                           <div
-                            class={classNames(
+                            class={clsx(
                               isActive()
                                 ? 'bg-sky-100 text-sky-900'
                                 : 'text-gray-900',
-                              'group-hover:text-sky-900 group-hover:bg-sky-100 cursor-default select-none relative py-2 pl-8'
+                              'relative cursor-default select-none py-2 pl-8 group-hover:bg-sky-100 group-hover:text-sky-900'
                             )}
                           >
                             <span
-                              class={classNames(
+                              class={clsx(
                                 isSelected() ? 'font-medium' : 'font-normal',
                                 'block truncate'
                               )}

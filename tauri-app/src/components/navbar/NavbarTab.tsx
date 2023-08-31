@@ -4,10 +4,9 @@ import {
   selectedRecord,
   setSelectedRecord,
 } from '@/stores/recordsStore'
-import { Icon } from 'solid-heroicons'
-import { xMark } from 'solid-heroicons/solid-mini'
+import { FaSolidXmark } from 'solid-icons/fa'
 import { deleteRecord } from '@/utils/database'
-import classNames from '@/utils/className'
+import clsx from 'clsx'
 
 export default function NavbarTab(props: { record: RecordType }) {
   const isSelectedRecord = () => props.record.id === selectedRecord()?.id
@@ -26,20 +25,19 @@ export default function NavbarTab(props: { record: RecordType }) {
         class="group/item h-full w-full"
       >
         <div
-          class={classNames(
+          class={clsx(
             isSelectedRecord() ? 'bg-white' : 'bg-gray-100 hover:bg-gray-200',
             'flex h-full items-center gap-2 px-3 transition-colors group-last/list:border-r'
           )}
         >
           <p class="truncate text-sm">{props.record.name}</p>
           <div
-            class={classNames(
+            class={clsx(
               isSelectedRecord() ? '' : 'invisible group-hover/item:visible',
-              'h-full flex items-center'
+              'flex h-full items-center'
             )}
           >
-            <Icon
-              path={xMark}
+            <FaSolidXmark
               onClick={handleDeleteButton}
               class="mt-1 h-3 w-3 text-gray-600 hover:rounded-full hover:bg-sky-200 hover:text-white"
             />

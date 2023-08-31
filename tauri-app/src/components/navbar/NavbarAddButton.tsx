@@ -1,6 +1,5 @@
 import { selectedRecord, setSelectedRecord } from '@/stores/recordsStore'
-import { home } from 'solid-heroicons/outline'
-import { Icon } from 'solid-heroicons'
+import { HiOutlineHome } from 'solid-icons/hi'
 
 export default function NavbarAddButton() {
   return (
@@ -15,11 +14,7 @@ export default function NavbarAddButton() {
             selectedRecord() === undefined ? 'bg-white' : ''
           }`}
         >
-          <Icon
-            path={home}
-            class="h-[18px] w-[18px] text-gray-600 transition-colors group-hover:text-sky-600 group-active:text-sky-800"
-          />
-          {/*<p class="h-full text-lg">+</p>*/}
+          <HiOutlineHome class="h-[18px] w-[18px] text-gray-600 transition-colors group-hover:text-sky-600 group-active:text-sky-800" />
         </div>
       </button>
     </li>

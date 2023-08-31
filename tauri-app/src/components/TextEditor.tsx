@@ -1,12 +1,16 @@
-import { selectedRecord } from '@/stores/recordsStore'
-import { CodeMirror } from '@solid-codemirror/codemirror'
+import { createCodeMirror } from 'solid-codemirror'
+import { selectedRecord } from '@/stores/recordsStore.ts'
+import { EditorView, lineNumbers } from '@codemirror/view'
+import { createSignal } from 'solid-js'
 
 export default function TextEditor() {
-  return (
-    <CodeMirror
-      value={selectedRecord()?.text}
-      class="h-[calc(100vh_-_41px)] w-full overflow-y-auto border-r scrollbar-thin scrollbar-thumb-gray-200/[.8]"
-      wrapLine={true}
-    />
-  )
+  const [showLineNumber] = createSignal(true)
+  const { ref: editorRef, createExtension } = createCodeMirror({
+    value: selectedRecord()?.text,
+  })
+  const lineWrapping = EditorView.lineWrapping
+  createExtension(lineWrapping)
+  createExtension(() => (showLineNumber() ? lineNumbers() : []))
+
+  return <div ref={editorRef} class="flex h-full overflow-y-auto" />
 }

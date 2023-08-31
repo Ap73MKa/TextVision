@@ -1,5 +1,4 @@
-import { documentArrowUp } from 'solid-heroicons/solid'
-import { Icon } from 'solid-heroicons'
+import { HiSolidDocumentArrowUp } from 'solid-icons/hi'
 import recognizeText from '@/utils/recognizeText'
 import { RecordType } from '@/shared/RecordType'
 import { addRecord } from '@/utils/database'
@@ -15,14 +14,15 @@ export default function BrowseButton() {
   const [isDrag, setIsDrag] = createSignal(false)
 
   const handleUpload = async (base64Data: string, fileName: string) => {
-    const text = await toast.promise(recognizeText(base64Data), {
+    const result = await toast.promise(recognizeText(base64Data), {
       loading: 'Loading',
       success: 'Success',
       error: 'An error occurred 😔',
     })
     const recordData: RecordType = {
       id: Date.now(),
-      text: text,
+      text: result.text,
+      blocks: result.blocks,
       name: fileName,
       dataURL: base64Data,
       createDate: new Date(),
@@ -69,7 +69,6 @@ export default function BrowseButton() {
     if (file && selectedLanguages().length > 0) {
       const reader = new FileReader()
       reader.onload = async () => {
-        console.log(reader.result as string)
         await handleUpload(reader.result as string, file.name)
       }
       reader.readAsDataURL(file)
@@ -88,7 +87,7 @@ export default function BrowseButton() {
         </div>
       ) : (
         <label for="doc" class="flex w-full items-center">
-          <Icon path={documentArrowUp} class="h-24 w-24" />
+          <HiSolidDocumentArrowUp class="h-24 w-24" />
           <div>
             <p class="text-2xl font-bold">Browse file</p>
             <p class="text-sm">.jpg, .png, .web</p>
