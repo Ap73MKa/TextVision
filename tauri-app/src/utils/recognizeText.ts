@@ -10,9 +10,8 @@ export default async function recognizeText(imageData: string) {
   const worker = await createWorker()
   await worker.loadLanguage(languages)
   await worker.initialize(languages)
-  await worker.setParameters({ tessedit_pageseg_mode: PSM.AUTO })
+  await worker.setParameters({ tessedit_pageseg_mode: PSM.SPARSE_TEXT })
   const result = await worker.recognize(imageData)
   await worker.terminate()
-  console.log(result)
   return { text: simplifyText(result.data.text), blocks: result.data.blocks }
 }

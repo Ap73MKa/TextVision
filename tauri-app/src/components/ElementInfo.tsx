@@ -2,6 +2,7 @@ import BrowseButton from './BrowseButton'
 import { selectedRecord } from '@/stores/recordsStore'
 import TextEditor from '@/components/TextEditor'
 import PhotoView from '@/components/PhotoView'
+// @ts-ignore
 import { Panel, PanelGroup, ResizeHandle } from 'solid-resizable-panels'
 import 'solid-resizable-panels/styles.css'
 import LanguageSelect from '@/components/LanguageSelect'
