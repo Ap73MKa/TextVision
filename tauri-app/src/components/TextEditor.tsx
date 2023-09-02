@@ -1,16 +1,25 @@
-import { createCodeMirror } from 'solid-codemirror'
+// @ts-expect-error Solid-codemirror .d.ts dismiss
+import { createCodeMirror, createEditorControlledValue } from 'solid-codemirror'
 import { selectedRecord } from '@/stores/recordsStore.ts'
 import { EditorView, lineNumbers } from '@codemirror/view'
-import { createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 
 export default function TextEditor() {
+  const [code, setCode] = createSignal(selectedRecord()?.text ?? '')
   const [showLineNumber] = createSignal(true)
-  const { ref: editorRef, createExtension } = createCodeMirror({
-    value: selectedRecord()?.text,
+  const {
+    ref: editorRef,
+    editorView,
+    createExtension,
+  } = createCodeMirror({
+    onValueChange: setCode,
   })
-  const lineWrapping = EditorView.lineWrapping
-  createExtension(lineWrapping)
+  createEffect(() => setCode(selectedRecord()?.text ?? ''))
+  createEditorControlledValue(editorView, code)
+  createExtension(EditorView.lineWrapping)
   createExtension(() => (showLineNumber() ? lineNumbers() : []))
 
-  return <div ref={editorRef} class="flex h-full overflow-y-auto" />
+  return (
+    <div ref={editorRef} class="h-full w-full overflow-y-auto dark:bg-black" />
+  )
 }

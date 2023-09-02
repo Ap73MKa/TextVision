@@ -1,62 +1,30 @@
 import { selectedRecord } from '@/stores/recordsStore'
-import { createEffect, createMemo, createSignal, For, onMount } from 'solid-js'
+import { createEffect, createSignal, For, onCleanup, onMount } from 'solid-js'
 import { useZoomImageWheel } from '@zoom-image/solid'
 import {
   FaSolidMagnifyingGlassPlus,
   FaSolidMagnifyingGlassMinus,
 } from 'solid-icons/fa'
 import { IconTypes } from 'solid-icons'
-import Tesseract from 'tesseract.js'
-import { ZoomImageWheelState } from '@zoom-image/core'
+import RecognizedBlock from '@/components/TesseractTextBlock.tsx'
 
 function ZoomIcon(props: { onClick: () => void; icon: IconTypes }) {
   return (
     <button type="button" onClick={() => props.onClick()}>
-      <props.icon class="h-5 w-5 transition-colors hover:text-gray-600 active:text-gray-800" />
+      <props.icon class="h-5 w-5 transition-colors hover:fill-gray-600 active:fill-gray-800 dark:fill-stone-400" />
     </button>
-  )
-}
-
-function RecognizedBlock(props: {
-  block: Tesseract.Block
-  zoomImageState: ZoomImageWheelState
-  containerScale: number
-}) {
-  const getSize = createMemo(() => {
-    const zoomValue = props.zoomImageState.currentZoom / props.containerScale
-    const blockWidth = Math.abs(props.block.bbox.x0 - props.block.bbox.x1)
-    const blockHeight = Math.abs(props.block.bbox.y0 - props.block.bbox.y1)
-    console.log(props.containerScale)
-    return { width: blockWidth * zoomValue, height: blockHeight * zoomValue }
-  })
-  const getOffset = createMemo(() => {
-    const zoomValue = props.zoomImageState.currentZoom / props.containerScale
-    const zoomOffset = {
-      x: props.zoomImageState.currentPositionX,
-      y: props.zoomImageState.currentPositionY,
-    }
-    const xOffset = props.block.bbox.x0 * zoomValue + zoomOffset.x
-    const yOffset = props.block.bbox.y0 * zoomValue + zoomOffset.y
-    return { x: xOffset, y: yOffset }
-  })
-  return (
-    <div
-      style={{
-        width: `${getSize().width}px`,
-        height: `${getSize().height}px`,
-        top: `${getOffset().y}px`,
-        left: `${getOffset().x}px`,
-      }}
-      class="group absolute border-2 border-red-900/[.9] hover:bg-white/[.7]"
-    >
-      <p class="invisible group-hover:visible">{props.block.text}</p>
-    </div>
   )
 }
 
 export default function PhotoView() {
   let containerRef: HTMLDivElement
   let imageRef: HTMLImageElement
+
+  const [date, setDate] = createSignal('')
+  const [containerScale, setContainerScale] = createSignal(0)
+  const { createZoomImage, zoomImageState, setZoomImageState } =
+    useZoomImageWheel()
+
   const getRecordDate = () => {
     const record = selectedRecord()
     if (!record) return ''
@@ -64,14 +32,13 @@ export default function PhotoView() {
     const timeString = record.createDate.toLocaleTimeString()
     return `${dateString} ${timeString}`
   }
-  const { createZoomImage, zoomImageState, setZoomImageState } =
-    useZoomImageWheel()
-  const [date, setDate] = createSignal('')
-  createEffect(() => setDate(getRecordDate()))
 
-  onMount(() => {
-    createZoomImage(containerRef)
-  })
+  const calcContainerScale = (containerWidth: number) => {
+    const accuracy = 50
+    const scale = imageRef.naturalWidth / containerWidth
+    const roundedScale = Math.round(scale * accuracy) / accuracy
+    return Math.max(1, roundedScale)
+  }
 
   const zoomInWheel = () =>
     setZoomImageState({
@@ -83,9 +50,22 @@ export default function PhotoView() {
       currentZoom: zoomImageState.currentZoom - 0.5,
     })
 
-  const getContainerScale = () =>
-    Math.max(1, imageRef.naturalWidth / containerRef.clientWidth)
+  createEffect(() => setDate(getRecordDate()))
 
+  createEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries)
+        if (entry.target === containerRef) {
+          setContainerScale(calcContainerScale(containerRef.clientWidth))
+        }
+    })
+    resizeObserver.observe(containerRef)
+    onCleanup(() => resizeObserver.disconnect())
+  })
+
+  onMount(() => {
+    createZoomImage(containerRef)
+  })
   return (
     <div class="relative flex h-[calc(100vh_-_41px)] w-full min-w-full items-center justify-center overflow-hidden">
       <div class="absolute left-0 top-0 z-20 flex gap-2 p-2">
@@ -113,7 +93,7 @@ export default function PhotoView() {
             <RecognizedBlock
               block={block}
               zoomImageState={zoomImageState}
-              containerScale={getContainerScale()}
+              containerScale={containerScale()}
             />
           )}
         </For>

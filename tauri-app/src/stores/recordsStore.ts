@@ -12,3 +12,7 @@ export const addRecordStore = (record: RecordType) => {
 export const deleteRecordStore = (id: number) => {
   setRecords(records.filter((item) => item.id !== id))
 }
+
+export const getRecordStore = (id: number) => {
+  return records.find((record) => record.id === id)
+}

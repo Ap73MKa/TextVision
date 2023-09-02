@@ -2,7 +2,7 @@ import BrowseButton from './BrowseButton'
 import { selectedRecord } from '@/stores/recordsStore'
 import TextEditor from '@/components/TextEditor'
 import PhotoView from '@/components/PhotoView'
-// @ts-ignore
+// @ts-expect-error Solid-resizable panels .d.ts missing
 import { Panel, PanelGroup, ResizeHandle } from 'solid-resizable-panels'
 import 'solid-resizable-panels/styles.css'
 import LanguageSelect from '@/components/LanguageSelect'
@@ -14,7 +14,7 @@ export default function ElementInfo() {
   const [isSettingWindow, setIsSettingWindow] = createSignal(false)
   return (
     <div class="h-full w-full overflow-hidden">
-      <div class="flex h-full w-full flex-col items-center justify-center overflow-hidden border-t bg-white">
+      <div class="flex h-full w-full flex-col items-center justify-center overflow-hidden bg-white dark:bg-stone-950">
         {selectedRecord() ? (
           <div class="flex h-full w-full">
             <PanelGroup class="w-full">
@@ -32,7 +32,7 @@ export default function ElementInfo() {
             <button
               type="button"
               onClick={() => setIsSettingWindow(true)}
-              class="absolute right-0 top-0 flex items-center gap-1 pr-8 pt-16 text-gray-600 transition-colors hover:text-sky-600 active:text-sky-800"
+              class="absolute right-10 top-20 flex items-center gap-1 text-gray-600 transition-colors hover:text-sky-600 active:text-sky-800 dark:text-stone-400 dark:hover:text-stone-200"
             >
               <p>Settings</p>
               <HiOutlineCog6Tooth class="mt-1 h-5 w-5" />

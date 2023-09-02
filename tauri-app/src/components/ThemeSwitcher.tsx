@@ -1,11 +1,20 @@
-import { createSignal } from 'solid-js'
+import { createEffect, createSignal } from 'solid-js'
 import { Checkbox, CheckboxIndicator } from 'solid-headless'
 import clsx from 'clsx'
 
 export default function ThemeSwitcher() {
   const root = document.documentElement
-  const defineTheme = () => (root.classList.contains('dark') ? 'dark' : 'light')
+  const defineTheme = (): string => {
+    const theme = localStorage.getItem('theme')
+    return theme === 'dark' ? 'dark' : 'light'
+  }
   const [checked, setChecked] = createSignal<boolean>(defineTheme() === 'dark')
+
+  createEffect(() => {
+    const theme = checked() ? 'dark' : 'light'
+    localStorage.setItem('theme', theme)
+    root.classList.toggle('dark', checked())
+  })
 
   return (
     <div class="flex items-center">

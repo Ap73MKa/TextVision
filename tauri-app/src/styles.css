@@ -4,7 +4,7 @@
 
 @layer base {
     body {
-        @apply antialiased bg-white text-black dark:bg-black dark:text-white;
+        @apply antialiased bg-white text-black dark:bg-stone-950 dark:text-white;
     }
 }
 
@@ -12,6 +12,10 @@
     .dark {
         color-scheme: dark;
     }
+}
+
+.cm-gutters {
+    @apply dark:bg-stone-800 dark:text-stone-300 dark:!border-r-stone-700
 }
 
 .ResizeablePanelGroup-ResizeHandle {

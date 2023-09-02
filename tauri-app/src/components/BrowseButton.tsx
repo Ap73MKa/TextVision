@@ -77,7 +77,7 @@ export default function BrowseButton() {
   return (
     <div
       class="flex h-32 w-60 flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed border-gray-300
-       bg-gray-100 pr-4 text-gray-500 transition-colors hover:border-sky-900/[.20] hover:bg-sky-100 hover:text-sky-900"
+       bg-gray-100 pr-4 text-gray-500 transition-colors hover:border-sky-900/[.20] hover:bg-sky-100 hover:text-sky-900 dark:border-stone-700 dark:bg-stone-900 hover:dark:text-sky-600"
     >
       {isDrag() ? (
         <div class="w-full animate-pulse">
