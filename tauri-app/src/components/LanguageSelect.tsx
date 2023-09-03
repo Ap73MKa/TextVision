@@ -15,6 +15,7 @@ import {
   setSelectedLanguages,
 } from '@/stores/languageStore'
 import { toast } from 'solid-toast'
+import { FaSolidCheck } from 'solid-icons/fa'
 
 export default function Example() {
   createEffect(() => {
@@ -63,7 +64,7 @@ export default function Example() {
               >
                 <ListboxOptions
                   class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md border bg-white py-1 text-sm shadow-lg
-                   dark:bg-stone-900"
+                   dark:border-stone-700 dark:bg-stone-900"
                 >
                   <For each={languageOptions}>
                     {(language) => (
@@ -72,22 +73,25 @@ export default function Example() {
                         value={language}
                       >
                         {({ isActive, isSelected }) => (
-                          <div
-                            class={clsx(
-                              isActive()
-                                ? 'bg-sky-100 text-sky-900'
-                                : 'text-gray-900 dark:text-gray-300',
-                              'relative cursor-default select-none py-2 pl-8 group-hover:bg-sky-100 group-hover:text-sky-900'
-                            )}
-                          >
+                          <div class="relative flex select-none items-center gap-2 py-2 pl-8 group-hover:bg-sky-100 group-hover:dark:bg-stone-700">
                             <span
                               class={clsx(
                                 isSelected() ? 'font-medium' : 'font-normal',
-                                'block truncate'
+                                isActive()
+                                  ? 'text-sky-900 dark:text-stone-300'
+                                  : 'text-gray-900 dark:text-gray-300',
+                                'truncate group-hover:text-sky-900 group-hover:dark:text-sky-400'
                               )}
                             >
                               {language.name}
                             </span>
+
+                            <FaSolidCheck
+                              class={clsx(
+                                isSelected() ? 'visible' : 'invisible',
+                                'h-3 w-3 fill-sky-900 group-hover:fill-sky-900 dark:fill-stone-300 group-hover:dark:fill-sky-400'
+                              )}
+                            />
                           </div>
                         )}
                       </ListboxOption>

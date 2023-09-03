@@ -4,11 +4,9 @@ import clsx from 'clsx'
 
 export default function ThemeSwitcher() {
   const root = document.documentElement
-  const defineTheme = (): string => {
-    const theme = localStorage.getItem('theme')
-    return theme === 'dark' ? 'dark' : 'light'
-  }
-  const [checked, setChecked] = createSignal<boolean>(defineTheme() === 'dark')
+  const [checked, setChecked] = createSignal<boolean>(
+    root.classList.contains('dark')
+  )
 
   createEffect(() => {
     const theme = checked() ? 'dark' : 'light'

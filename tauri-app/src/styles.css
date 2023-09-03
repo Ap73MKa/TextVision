@@ -18,6 +18,14 @@
     @apply dark:bg-stone-800 dark:text-stone-300 dark:!border-r-stone-700
 }
 
+.cm-line {
+    @apply dark:caret-white
+}
+
+.cm-editor {
+    @apply dark:bg-stone-900
+}
+
 .ResizeablePanelGroup-ResizeHandle {
-    @apply bg-transparent !w-3 border-solid rounded-none border-r border-r-gray-300 border-0 ;
+    @apply bg-transparent !w-2 border-solid rounded-none border-r border-r-gray-300 dark:border-r-stone-700 border-0 dark:bg-stone-900;
 }

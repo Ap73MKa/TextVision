@@ -17,7 +17,7 @@ export default function ElementInfo() {
       <div class="flex h-full w-full flex-col items-center justify-center overflow-hidden bg-white dark:bg-stone-950">
         {selectedRecord() ? (
           <div class="flex h-full w-full">
-            <PanelGroup class="w-full">
+            <PanelGroup class="relative w-full">
               <Panel id="1" minSize={20}>
                 <TextEditor />
               </Panel>
