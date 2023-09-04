@@ -3,33 +3,33 @@
 @tailwind utilities;
 
 @layer base {
-    body {
-        @apply antialiased bg-white text-black dark:bg-stone-950 dark:text-white;
-    }
+  body {
+    @apply bg-white text-black antialiased dark:bg-stone-950 dark:text-white;
+  }
 }
 
 @layer utilities {
-    .dark {
-        color-scheme: dark;
-    }
+  .dark {
+    color-scheme: dark;
+  }
 }
 
 .cm-gutters {
-    @apply dark:bg-stone-800 dark:text-stone-300 dark:!border-r-stone-700
+  @apply dark:!border-r-stone-700 dark:bg-stone-800 dark:text-stone-300;
 }
 
 .cm-line {
-    @apply dark:caret-white
+  @apply dark:caret-white;
 }
 
 .cm-editor {
-    @apply dark:bg-stone-900
+  @apply dark:bg-stone-900;
 }
 
 .cm-focused {
-    @apply !outline-none
+  @apply !outline-none;
 }
 
 .ResizeablePanelGroup-ResizeHandle {
-    @apply bg-transparent !w-2 border-solid rounded-none border-r border-r-gray-300 dark:border-r-stone-700 border-0 dark:bg-stone-900;
+  @apply cursor-ew-resize !w-2 rounded-none border-0 border-r border-solid border-r-gray-300 bg-transparent dark:border-r-stone-700 dark:bg-stone-900;
 }

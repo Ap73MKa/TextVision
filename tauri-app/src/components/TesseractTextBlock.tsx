@@ -28,13 +28,14 @@ export default function TesseractTextBlock(props: {
   const getBlockDimension = (): BoxDimensionsType => {
     const zoomValue = props.zoomImageState.currentZoom / props.containerScale
     const blockPosition = getBoxOffset(zoomValue)
-    return {
+    const dimensions: BoxDimensionsType = {
       scale: zoomValue,
       width: props.box.width * zoomValue,
       height: props.box.height * zoomValue,
       offsetX: blockPosition.x,
       offsetY: blockPosition.y,
     }
+    return dimensions
   }
 
   const getBoxOffset = (zoomValue: number) => {
@@ -46,7 +47,8 @@ export default function TesseractTextBlock(props: {
     const yOffset = props.box.y0 * zoomValue + zoomOffset.y
     return { x: xOffset, y: yOffset }
   }
-  const isBigEnought = () =>
+
+  const isBigEnough = () =>
     boxDimensions().width * boxDimensions().height >= 200
 
   const copyTextToClipboard = async () => {
@@ -55,12 +57,10 @@ export default function TesseractTextBlock(props: {
   }
 
   const debouncedSetBlockDimensions = debounce(setBoxDimensions, 100)
-  createEffect(() => {
-    debouncedSetBlockDimensions(getBlockDimension())
-  })
+  createEffect(() => debouncedSetBlockDimensions(getBlockDimension()))
   return (
     <>
-      {isBigEnought() && (
+      {isBigEnough() && (
         <button
           onClick={copyTextToClipboard}
           style={{
@@ -69,13 +69,13 @@ export default function TesseractTextBlock(props: {
             top: `${boxDimensions().offsetY}px`,
             left: `${boxDimensions().offsetX}px`,
           }}
-          class="group absolute justify-center overflow-hidden border-2 border-red-900/[.9] text-center transition-all hover:bg-white/[.7]"
+          class="group absolute flex items-center justify-center overflow-hidden border border-red-700 text-center transition-all hover:bg-white/[.8]"
         >
           <p
             style={{
-              'font-size': `${30 * boxDimensions().scale}px`,
+              'font-size': `${20 * boxDimensions().scale}px`,
             }}
-            class="invisible h-full text-center text-black group-hover:visible"
+            class="invisible text-black group-hover:visible"
           >
             {props.box.boxText}
           </p>

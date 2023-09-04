@@ -10,10 +10,7 @@ import clsx from 'clsx'
 
 export default function NavbarTab(props: { id: number; name: string }) {
   const isSelectedRecord = () => props.id === selectedRecord()?.id
-  const handleTabClick = () => {
-    const record = getRecordStore(props.id)
-    setSelectedRecord(record)
-  }
+  const handleTabClick = () => setSelectedRecord(getRecordStore(props.id))
   const handleDeleteButton = async (event: Event) => {
     event.stopPropagation()
     if (isSelectedRecord()) await setSelectedRecord(undefined)
@@ -38,7 +35,7 @@ export default function NavbarTab(props: { id: number; name: string }) {
           <p class="truncate text-sm">{props.name}</p>
           <div
             class={clsx(
-              isSelectedRecord() ? '' : 'invisible group-hover/item:visible',
+              !isSelectedRecord() ? 'invisible group-hover/item:visible' : '',
               'flex h-full items-center'
             )}
           >

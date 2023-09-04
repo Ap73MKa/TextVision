@@ -10,7 +10,6 @@ import { debounce } from '@solid-primitives/scheduled'
 export default function TextEditor() {
   const [editorRecordId, setEditorRecordId] = createSignal(selectedRecord()?.id)
   const [code, setCode] = createSignal(selectedRecord()?.fileText ?? '')
-  const [showLineNumber] = createSignal(true)
   const {
     ref: editorRef,
     editorView,
@@ -24,7 +23,7 @@ export default function TextEditor() {
   })
   createEditorControlledValue(editorView, code)
   createExtension(EditorView.lineWrapping)
-  createExtension(() => (showLineNumber() ? lineNumbers() : []))
+  createExtension(() => lineNumbers())
 
   const updateRecordNow = async (record: RecordType) => {
     await updateRecord(record)
@@ -35,8 +34,7 @@ export default function TextEditor() {
 
   createEffect(() => {
     const currentRecord = selectedRecord()
-    if (!editorRecordId) return
-    if (!currentRecord) return
+    if (!editorRecordId || !currentRecord) return
     if (currentRecord.fileText === code()) return
     if (currentRecord.id !== editorRecordId()) return
     debouncedUpdate({
