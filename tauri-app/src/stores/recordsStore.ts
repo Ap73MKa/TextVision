@@ -16,3 +16,11 @@ export const deleteRecordStore = (id: number) => {
 export const getRecordStore = (id: number) => {
   return records.find((record) => record.id === id)
 }
+
+export const updateRecordStore = (updatedRecord: RecordType) => {
+  setRecords(
+    records.map((record) =>
+      record.id === updatedRecord.id ? updatedRecord : record
+    )
+  )
+}

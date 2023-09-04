@@ -1,4 +1,4 @@
-import { createEffect, JSXElement } from 'solid-js'
+import { JSXElement, onMount } from 'solid-js'
 
 export default function ThemeProvider(props: { children: JSXElement }) {
   const getTheme = () => {
@@ -15,6 +15,6 @@ export default function ThemeProvider(props: { children: JSXElement }) {
       document.documentElement.classList.add('dark')
     }
   }
-  createEffect(() => getTheme())
-  return <ThemeProvider>{props.children}</ThemeProvider>
+  onMount(() => getTheme())
+  return <>{props.children}</>
 }

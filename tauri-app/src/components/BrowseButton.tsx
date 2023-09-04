@@ -1,6 +1,6 @@
 import { HiSolidDocumentArrowUp } from 'solid-icons/hi'
 import recognizeText from '@/utils/recognizeText'
-import { RecordType } from '@/shared/RecordType'
+import { RecordType, TextBoxType } from '@/shared/RecordType'
 import { addRecord } from '@/utils/database'
 import { addRecordStore, setSelectedRecord } from '@/stores/recordsStore'
 import { selectedLanguages } from '@/stores/languageStore'
@@ -19,10 +19,20 @@ export default function BrowseButton() {
       success: 'Success',
       error: 'An error occurred 😔',
     })
+    const blocks = result.blocks ?? []
+    const textBoxes: TextBoxType[] = blocks.map((block) => {
+      return {
+        boxText: block.text,
+        width: Math.abs(block.bbox.x0 - block.bbox.x1),
+        height: Math.abs(block.bbox.y0 - block.bbox.y1),
+        x0: block.bbox.x0,
+        y0: block.bbox.y0,
+      }
+    })
     const recordData: RecordType = {
       id: Date.now(),
-      text: result.text,
-      blocks: result.blocks,
+      fileText: result.text,
+      blocks: textBoxes,
       name: fileName,
       dataURL: base64Data,
       createDate: new Date(),

@@ -15,6 +15,7 @@
   "dependencies": {
     "@codemirror/state": "^6.2.1",
     "@codemirror/view": "^6.17.1",
+    "@solid-primitives/scheduled": "^1.4.1",
     "@tauri-apps/api": "^1.4.0",
     "@zoom-image/core": "^0.21.0",
     "@zoom-image/solid": "^0.1.10",

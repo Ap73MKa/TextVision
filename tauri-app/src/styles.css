@@ -26,6 +26,10 @@
     @apply dark:bg-stone-900
 }
 
+.cm-focused {
+    @apply !outline-none
+}
+
 .ResizeablePanelGroup-ResizeHandle {
     @apply bg-transparent !w-2 border-solid rounded-none border-r border-r-gray-300 dark:border-r-stone-700 border-0 dark:bg-stone-900;
 }

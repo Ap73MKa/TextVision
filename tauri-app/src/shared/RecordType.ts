@@ -1,9 +1,15 @@
-import Tesseract from 'tesseract.js'
+export type TextBoxType = {
+  boxText: string
+  width: number
+  height: number
+  x0: number
+  y0: number
+}
 
 export type RecordType = {
   id: number
-  text: string
-  blocks: Tesseract.Block[] | null
+  fileText: string
+  blocks: TextBoxType[]
   name: string
   dataURL: string
   createDate: Date

@@ -6,7 +6,7 @@ import {
   FaSolidMagnifyingGlassMinus,
 } from 'solid-icons/fa'
 import { IconTypes } from 'solid-icons'
-import RecognizedBlock from '@/components/TesseractTextBlock.tsx'
+import TesseractTextBlock from '@/components/TesseractTextBlock.tsx'
 
 function ZoomIcon(props: { onClick: () => void; icon: IconTypes }) {
   return (
@@ -50,22 +50,21 @@ export default function PhotoView() {
       currentZoom: zoomImageState.currentZoom - 0.5,
     })
 
-  createEffect(() => setDate(getRecordDate()))
-
   createEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
       for (const entry of entries)
         if (entry.target === containerRef) {
-          setContainerScale(calcContainerScale(containerRef.clientWidth))
+          const width = containerRef.clientWidth
+          const scale = calcContainerScale(width)
+          setContainerScale(scale)
         }
     })
     resizeObserver.observe(containerRef)
     onCleanup(() => resizeObserver.disconnect())
   })
 
-  onMount(() => {
-    createZoomImage(containerRef)
-  })
+  onMount(() => createZoomImage(containerRef))
+  onMount(() => setDate(getRecordDate()))
   return (
     <div class="relative flex h-[calc(100vh_-_41px)] w-full min-w-full items-center justify-center overflow-hidden">
       <div class="absolute left-0 top-0 z-20 flex gap-2 p-2">
@@ -89,9 +88,9 @@ export default function PhotoView() {
           class=""
         />
         <For each={selectedRecord()?.blocks}>
-          {(block) => (
-            <RecognizedBlock
-              block={block}
+          {(box) => (
+            <TesseractTextBlock
+              box={box}
               zoomImageState={zoomImageState}
               containerScale={containerScale()}
             />

@@ -36,9 +36,23 @@ export async function deleteRecord(id: number): Promise<void> {
   await store.delete(id)
 }
 
+export async function updateRecord(updatedRecord: RecordType): Promise<void> {
+  const db = await initDB()
+  const tx = db.transaction(STORE_NAME, 'readwrite')
+  const store = tx.objectStore(STORE_NAME)
+  await store.put(updatedRecord)
+}
+
 export async function getAllRecords(): Promise<RecordType[]> {
   const db = await initDB()
   const tx = db.transaction(STORE_NAME, 'readonly')
   const store = tx.objectStore(STORE_NAME)
   return store.getAll()
+}
+
+export async function getRecord(id: number): Promise<RecordType | undefined> {
+  const db = await initDB()
+  const tx = db.transaction(STORE_NAME, 'readonly')
+  const store = tx.objectStore(STORE_NAME)
+  return store.get(id)
 }

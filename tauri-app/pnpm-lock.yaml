@@ -11,6 +11,9 @@ dependencies:
   '@codemirror/view':
     specifier: ^6.17.1
     version: 6.17.1
+  '@solid-primitives/scheduled':
+    specifier: ^1.4.1
+    version: 1.4.1(solid-js@1.7.11)
   '@tauri-apps/api':
     specifier: ^1.4.0
     version: 1.4.0
@@ -977,6 +980,14 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
+
+  /@solid-primitives/scheduled@1.4.1(solid-js@1.7.11):
+    resolution: {integrity: sha512-OLcNXwYpX7HUOEqNPcmR31dkyI1E2imkMDBRlqsGT0ZhJV1L2g0TEREpo4nm/kUhh8LVQzkfnxS+GONx9kh90A==}
+    peerDependencies:
+      solid-js: ^1.6.12
+    dependencies:
+      solid-js: 1.7.11
+    dev: false
 
   /@tauri-apps/api@1.4.0:
     resolution: {integrity: sha512-Jd6HPoTM1PZSFIzq7FB8VmMu3qSSyo/3lSwLpoapW+lQ41CL5Dow2KryLg+gyazA/58DRWI9vu/XpEeHK4uMdw==}

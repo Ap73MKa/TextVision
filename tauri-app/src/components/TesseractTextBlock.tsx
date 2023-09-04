@@ -1,87 +1,83 @@
-import Tesseract from 'tesseract.js'
 import { ZoomImageWheelState } from '@zoom-image/core'
 import { createEffect, createSignal } from 'solid-js'
 import { toast } from 'solid-toast'
+import { debounce } from '@solid-primitives/scheduled'
+import { TextBoxType } from '@/shared/RecordType.ts'
 
-type BlockDimensionsType = {
+type BoxDimensionsType = {
   scale: number
   width: number
   height: number
-  x0: number
-  y0: number
+  offsetX: number
+  offsetY: number
 }
 
 export default function TesseractTextBlock(props: {
-  block: Tesseract.Block
+  box: TextBoxType
   zoomImageState: ZoomImageWheelState
   containerScale: number
 }) {
-  const [blockDimensions, setBlockDimensions] =
-    createSignal<BlockDimensionsType>({
-      scale: 1,
-      width: 0,
-      height: 0,
-      x0: 0,
-      y0: 0,
-    })
+  const [boxDimensions, setBoxDimensions] = createSignal<BoxDimensionsType>({
+    scale: 1,
+    width: 0,
+    height: 0,
+    offsetX: 0,
+    offsetY: 0,
+  })
 
-  const getBlockDimension = (): BlockDimensionsType => {
+  const getBlockDimension = (): BoxDimensionsType => {
     const zoomValue = props.zoomImageState.currentZoom / props.containerScale
-    const blockSize = getBlockSize(zoomValue)
-    const blockPosition = getBlockOffset(zoomValue)
+    const blockPosition = getBoxOffset(zoomValue)
     return {
       scale: zoomValue,
-      width: blockSize.width,
-      height: blockSize.height,
-      x0: blockPosition.x,
-      y0: blockPosition.y,
+      width: props.box.width * zoomValue,
+      height: props.box.height * zoomValue,
+      offsetX: blockPosition.x,
+      offsetY: blockPosition.y,
     }
   }
 
-  const getBlockSize = (zoomValue: number) => {
-    const blockWidth = Math.abs(props.block.bbox.x0 - props.block.bbox.x1)
-    const blockHeight = Math.abs(props.block.bbox.y0 - props.block.bbox.y1)
-    return { width: blockWidth * zoomValue, height: blockHeight * zoomValue }
-  }
-
-  const getBlockOffset = (zoomValue: number) => {
+  const getBoxOffset = (zoomValue: number) => {
     const zoomOffset = {
       x: props.zoomImageState.currentPositionX,
       y: props.zoomImageState.currentPositionY,
     }
-    const xOffset = props.block.bbox.x0 * zoomValue + zoomOffset.x
-    const yOffset = props.block.bbox.y0 * zoomValue + zoomOffset.y
+    const xOffset = props.box.x0 * zoomValue + zoomOffset.x
+    const yOffset = props.box.y0 * zoomValue + zoomOffset.y
     return { x: xOffset, y: yOffset }
   }
-  const isVisible = () =>
-    blockDimensions().width * blockDimensions().height >= 200
+  const isBigEnought = () =>
+    boxDimensions().width * boxDimensions().height >= 200
 
   const copyTextToClipboard = async () => {
-    await navigator.clipboard.writeText(props.block.text)
+    await navigator.clipboard.writeText(props.box.boxText)
     toast('Text copied to clipboard')
   }
 
-  createEffect(() => setBlockDimensions(getBlockDimension()))
+  const debouncedSetBlockDimensions = debounce(setBoxDimensions, 100)
+  createEffect(() => {
+    debouncedSetBlockDimensions(getBlockDimension())
+  })
   return (
     <>
-      {isVisible() && (
+      {isBigEnought() && (
         <button
           onClick={copyTextToClipboard}
           style={{
-            width: `${blockDimensions().width}px`,
-            height: `${blockDimensions().height}px`,
-            top: `${blockDimensions().y0}px`,
-            left: `${blockDimensions().x0}px`,
+            width: `${boxDimensions().width}px`,
+            height: `${boxDimensions().height}px`,
+            top: `${boxDimensions().offsetY}px`,
+            left: `${boxDimensions().offsetX}px`,
           }}
-          class="group absolute flex items-center justify-center overflow-hidden border-2 border-red-900/[.9] transition-colors hover:bg-white/[.7]"
+          class="group absolute justify-center overflow-hidden border-2 border-red-900/[.9] text-center transition-all hover:bg-white/[.7]"
         >
           <p
             style={{
-              'font-size': `${30 * blockDimensions().scale}px`,
+              'font-size': `${30 * boxDimensions().scale}px`,
             }}
-            class="invisible text-black group-hover:visible"
+            class="invisible h-full text-center text-black group-hover:visible"
           >
-            {props.block.text}
+            {props.box.boxText}
           </p>
         </button>
       )}
