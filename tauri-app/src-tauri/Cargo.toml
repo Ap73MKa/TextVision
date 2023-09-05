@@ -1,11 +1,11 @@
 [package]
-name = "tauri-app"
-version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-edition = "2021"
+name = "text-vision"
+version = "1.0.0"
+description = "TextVision is a project that uses OCR to extract text from images"
+authors = ["Ap73MKa"]
+license = "MIT"
+repository = "https://github.com/Ap73MKa/TextVision"
+edition = "2023"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

@@ -1,7 +1,7 @@
 {
   "name": "text-vision",
   "version": "1.0.0",
-  "description": "Text recognize tauri app",
+  "description": "TextVision is a project that uses OCR to extract text from images",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
