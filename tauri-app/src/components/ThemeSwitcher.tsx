@@ -1,11 +1,10 @@
 import { createSignal } from 'solid-js'
 import { HiSolidMoon, HiSolidSun } from 'solid-icons/hi'
+import getTheme from '@/utils/getTheme.ts'
 
 export default function ThemeSwitcher() {
   const root = document.documentElement
-  const [theme, setTheme] = createSignal<'dark' | 'light'>(
-    root.classList.contains('dark') ? 'dark' : 'light'
-  )
+  const [theme, setTheme] = createSignal<'dark' | 'light'>(getTheme())
   const switchTheme = () => {
     const switchedTheme = theme() === 'dark' ? 'light' : 'dark'
     setTheme(switchedTheme)

@@ -1,20 +1,12 @@
 import { JSXElement, onMount } from 'solid-js'
+import getTheme from '@/utils/getTheme.ts'
 
 export default function ThemeProvider(props: { children: JSXElement }) {
-  const getTheme = () => {
-    const theme = (() => {
-      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme'))
-        return localStorage.getItem('theme')
-      if (window.matchMedia('(prefers-color-scheme: dark)').matches)
-        return 'dark'
-      return 'light'
-    })()
-    if (theme === 'light') {
-      document.documentElement.classList.remove('dark')
-    } else {
-      document.documentElement.classList.add('dark')
-    }
+  const setTheme = () => {
+    const root = document.documentElement
+    const isDark = getTheme() === 'dark'
+    root.classList.toggle('dark', isDark)
   }
-  onMount(() => getTheme())
+  onMount(() => setTheme())
   return <>{props.children}</>
 }
