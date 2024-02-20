@@ -1,36 +1,21 @@
-import { defineConfig } from 'vite'
-import solidPlugin from 'vite-plugin-solid'
-import eslint from 'vite-plugin-eslint'
-import path from 'path'
+import { defineConfig } from "vite";
+import solid from "vite-plugin-solid";
+import { resolve } from 'node:path';
 
 export default defineConfig(async () => ({
-  plugins: [
-    {
-      ...eslint(),
-      apply: 'build',
-    },
-    {
-      ...eslint({
-        failOnWarning: false,
-        failOnError: false,
-      }),
-      apply: 'serve',
-      enforce: 'post',
-    },
-    solidPlugin(),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
+  plugins: [solid()],
   clearScreen: false,
   server: {
     port: 1420,
     strictPort: true,
+    watch: {
+      ignored: ["**/src-tauri/**"],
+    },
   },
-  envPrefix: ['VITE_', 'TAURI_'],
-  optimizeDeps: {
-    include: ['@codemirror/state', '@codemirror/view'],
-  },
-}))
+
+  resolve: {
+    alias: {
+      "@": resolve(__dirname, "./src")
+    }
+  }
+}));
