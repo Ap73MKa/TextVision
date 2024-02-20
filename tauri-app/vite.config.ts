@@ -1,7 +1,8 @@
 import { defineConfig } from "vite";
 import solid from "vite-plugin-solid";
-import { resolve } from 'node:path';
+import { resolve } from "node:path";
 
+// https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [solid()],
   clearScreen: false,
