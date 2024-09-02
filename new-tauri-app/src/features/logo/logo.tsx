@@ -6,7 +6,7 @@ const Logo: Component<ComponentProps<'div'>> = (props) => {
   return (
     <div
       class={cn(
-        'flex transition-opacity hover:cursor-pointer hover:opacity-70',
+        'flex select-none transition-opacity hover:cursor-pointer hover:opacity-70',
         props.class
       )}
     >

@@ -73,13 +73,13 @@ const TextBlock: Component<TextBlockProps> = (props) => {
             top: `${boxDimensions().offsetY.toString()}px`,
             left: `${boxDimensions().offsetX.toString()}px`,
           }}
-          class="group absolute flex items-center justify-center overflow-hidden border border-destructive text-center transition-all hover:bg-background/[.8]"
+          class="group absolute flex items-center justify-center overflow-hidden rounded border border-white/[.3] text-center shadow transition-all hover:bg-black/[.5]"
         >
           <p
             style={{
               'font-size': `${(20 * boxDimensions().scale).toString()}px`,
             }}
-            class="invisible text-black group-hover:visible"
+            class="invisible text-white group-hover:visible"
           >
             {props.box.boxText}
           </p>

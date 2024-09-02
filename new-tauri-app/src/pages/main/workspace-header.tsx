@@ -27,10 +27,10 @@ const WorkspaceHeader: Component = () => {
         <Icon path={arrowLeft} class="size-4" />
       </Button>
       <TabsList class="grid h-8 w-32 grid-cols-2 p-1">
-        <TabsTrigger value="image" class="py-1 text-xs">
+        <TabsTrigger value="image" class="py-1 text-xs font-normal">
           Image
         </TabsTrigger>
-        <TabsTrigger value="text" class="py-1 text-xs">
+        <TabsTrigger value="text" class="py-1 text-xs font-normal">
           Text
         </TabsTrigger>
       </TabsList>

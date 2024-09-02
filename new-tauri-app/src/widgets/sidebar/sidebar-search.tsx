@@ -3,6 +3,8 @@ import { Icon } from 'solid-heroicons'
 import { magnifyingGlass } from 'solid-heroicons/outline'
 import { type Component, createEffect } from 'solid-js'
 
+import { searchString, setSearchString } from '~/shared/store/search-store'
+
 const SidebarSearch: Component = () => {
   let inputRef: HTMLInputElement | undefined
 
@@ -20,9 +22,11 @@ const SidebarSearch: Component = () => {
 
   return (
     <div class="flex h-8 w-full items-center gap-2 rounded-md border bg-secondary/[.7] px-2">
-      <Icon path={magnifyingGlass} class="size-4 shrink-0" />
+      <Icon path={magnifyingGlass} class="size-4 shrink-0 pt-[2px]" />
       <input
         ref={inputRef}
+        value={searchString()}
+        onInput={(e) => setSearchString(e.target.value)}
         class="w-full bg-inherit pt-px text-sm placeholder:text-sm placeholder:font-light placeholder:text-secondary-foreground focus:outline-none"
         placeholder="Search"
       />
