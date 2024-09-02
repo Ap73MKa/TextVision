@@ -1,3 +1,9 @@
+import { useZoomImageWheel } from '@zoom-image/solid'
+import { Icon } from 'solid-heroicons'
+import {
+  magnifyingGlassMinus,
+  magnifyingGlassPlus,
+} from 'solid-heroicons/outline'
 import {
   type Component,
   createEffect,
@@ -7,13 +13,9 @@ import {
   onCleanup,
   onMount,
 } from 'solid-js'
-import { useZoomImageWheel } from '@zoom-image/solid'
-import {
-  magnifyingGlassPlus,
-  magnifyingGlassMinus,
-} from 'solid-heroicons/outline'
-import { Icon } from 'solid-heroicons'
+
 import { TextBox } from '~/shared/db'
+
 import TextBlock from './text-block'
 
 type ZoomIconProps = {
@@ -23,7 +25,12 @@ type ZoomIconProps = {
 
 const ZoomIcon: Component<ZoomIconProps> = (props) => {
   return (
-    <button type="button" onClick={() => props.onClick()}>
+    <button
+      type="button"
+      onClick={() => {
+        props.onClick()
+      }}
+    >
       <Icon
         path={props.iconPath}
         class="size-5 transition-transform hover:scale-105"
@@ -49,15 +56,17 @@ const ImageViewer: Component<ImageViewerPrps> = (props) => {
     return Math.max(1, roundedScale)
   }
 
-  const zoomInWheel = () =>
+  const zoomInWheel = () => {
     setZoomImageState({
       currentZoom: zoomImageState.currentZoom + 0.5,
     })
+  }
 
-  const zoomOutWheel = () =>
+  const zoomOutWheel = () => {
     setZoomImageState({
       currentZoom: zoomImageState.currentZoom - 0.5,
     })
+  }
 
   createEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
@@ -69,10 +78,14 @@ const ImageViewer: Component<ImageViewerPrps> = (props) => {
         }
     })
     resizeObserver.observe(containerRef)
-    onCleanup(() => resizeObserver.disconnect())
+    onCleanup(() => {
+      resizeObserver.disconnect()
+    })
   })
 
-  onMount(() => createZoomImage(containerRef))
+  onMount(() => {
+    createZoomImage(containerRef)
+  })
   return (
     <div class="relative flex h-[calc(100vh_-_41px)] w-full min-w-full items-center justify-center overflow-hidden">
       <div class="absolute right-0 top-0 z-20 flex gap-2 p-2">
@@ -80,6 +93,7 @@ const ImageViewer: Component<ImageViewerPrps> = (props) => {
         <ZoomIcon onClick={zoomInWheel} iconPath={magnifyingGlassPlus} />
       </div>
       <div
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         ref={containerRef!}
         class="relative cursor-grab !overflow-visible active:cursor-grabbing"
       >

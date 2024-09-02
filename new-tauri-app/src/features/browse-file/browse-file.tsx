@@ -1,17 +1,20 @@
-import type { Component } from 'solid-js'
-import { Button } from '~/shared/ui/button'
 import { open } from '@tauri-apps/plugin-dialog'
 import { readFile } from '@tauri-apps/plugin-fs'
+import type { Component } from 'solid-js'
 import { toast } from 'solid-sonner'
 import { Block, createWorker, PSM, RecognizeResult } from 'tesseract.js'
+
 import { db, type TextBox } from '~/shared/db'
 import {
   addBase64Prefix,
   decodeUint8ArrayToBase64,
 } from '~/shared/lib/image-decode'
+import { setSelectedRecord } from '~/shared/store'
+import { Button, type ButtonProps } from '~/shared/ui/button'
 
-const BrowserFile: Component = () => {
+const BrowserFileButton: Component<ButtonProps> = (props) => {
   const browseImage = async () => {
+    const toastId = 'browse-file'
     try {
       const file = await open({
         title: 'Browse image',
@@ -19,12 +22,12 @@ const BrowserFile: Component = () => {
         multiple: false,
       })
       if (!file) return
-      toast.loading('Loading...', { id: 'browse-file' })
+      toast.loading('Loading...', { id: toastId })
 
       const result = await processPhoto(file.path)
       const blocks = processTextBlocks(result.data.blocks ?? [])
 
-      db.records.add({
+      const newRecordId = await db.records.add({
         name: file.name ?? 'unnamed',
         text: result.data.text,
         path: file.path,
@@ -32,9 +35,12 @@ const BrowserFile: Component = () => {
         createDt: new Date(),
       })
 
-      toast.success('Success', { id: 'browse-file' })
+      const newRecord = await db.records.get(newRecordId)
+      if (newRecord) setSelectedRecord(newRecord)
+
+      toast.success('Success', { id: toastId })
     } catch {
-      toast.error('Error', { id: 'browse-file' })
+      toast.error('Error', { id: toastId })
     }
   }
 
@@ -66,10 +72,10 @@ const BrowserFile: Component = () => {
   }
 
   return (
-    <Button size="sm" variant="secondary" onClick={browseImage}>
-      Browse files
+    <Button onClick={() => void browseImage()} {...props}>
+      {props.children}
     </Button>
   )
 }
 
-export default BrowserFile
+export default BrowserFileButton

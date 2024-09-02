@@ -1,11 +1,13 @@
-import { createEffect, createSignal, type Component } from 'solid-js'
-import ImageViewer from './image-viewer'
 import { readFile } from '@tauri-apps/plugin-fs'
+import { type Component, createEffect, createSignal } from 'solid-js'
+
+import { TextBox } from '~/shared/db'
 import {
   addBase64Prefix,
   decodeUint8ArrayToBase64,
 } from '~/shared/lib/image-decode'
-import { TextBox } from '~/shared/db'
+
+import ImageViewer from './image-viewer'
 
 type ImageViewerContainerProps = {
   imagePath: string
@@ -16,20 +18,21 @@ const ImageViewerContainer: Component<ImageViewerContainerProps> = (props) => {
   const [imageData, setImageData] = createSignal<string>('')
   const [isLoading, setIsLoading] = createSignal<boolean>(true)
 
-  createEffect(() => {
+  createEffect(async () => {
     const loadImage = async () => {
       setIsLoading(true)
       try {
         const content = await readFile(props.imagePath)
         const base64Data = addBase64Prefix(decodeUint8ArrayToBase64(content))
         setImageData(base64Data)
-      } catch {
+      } catch (exp) {
+        console.log(exp)
         setImageData('')
       }
       setIsLoading(false)
     }
 
-    loadImage()
+    await loadImage()
   }, [props.imagePath])
 
   return (

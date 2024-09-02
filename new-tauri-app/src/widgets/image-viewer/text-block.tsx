@@ -1,8 +1,9 @@
+import { debounce } from '@solid-primitives/scheduled'
 import { ZoomImageWheelState } from '@zoom-image/core'
 import { Component, createEffect, createSignal } from 'solid-js'
-import { debounce } from '@solid-primitives/scheduled'
-import { type TextBox } from '~/shared/db'
 import { toast } from 'solid-sonner'
+
+import { type TextBox } from '~/shared/db'
 
 type BoxDimensionsType = {
   scale: number
@@ -30,14 +31,13 @@ const TextBlock: Component<TextBlockProps> = (props) => {
   const getBlockDimension = (): BoxDimensionsType => {
     const zoomValue = props.zoomImageState.currentZoom / props.containerScale
     const blockPosition = getBoxOffset(zoomValue)
-    const dimensions: BoxDimensionsType = {
+    return {
       scale: zoomValue,
       width: props.box.width * zoomValue,
       height: props.box.height * zoomValue,
       offsetX: blockPosition.x,
       offsetY: blockPosition.y,
     }
-    return dimensions
   }
 
   const getBoxOffset = (zoomValue: number) => {
@@ -59,23 +59,25 @@ const TextBlock: Component<TextBlockProps> = (props) => {
   }
 
   const debouncedSetBlockDimensions = debounce(setBoxDimensions, 100)
-  createEffect(() => debouncedSetBlockDimensions(getBlockDimension()))
+  createEffect(() => {
+    debouncedSetBlockDimensions(getBlockDimension())
+  })
   return (
     <>
       {isBigEnough() && (
         <button
-          onClick={copyTextToClipboard}
+          onClick={() => copyTextToClipboard}
           style={{
-            width: `${boxDimensions().width}px`,
-            height: `${boxDimensions().height}px`,
-            top: `${boxDimensions().offsetY}px`,
-            left: `${boxDimensions().offsetX}px`,
+            width: `${boxDimensions().width.toString()}px`,
+            height: `${boxDimensions().height.toString()}px`,
+            top: `${boxDimensions().offsetY.toString()}px`,
+            left: `${boxDimensions().offsetX.toString()}px`,
           }}
           class="group absolute flex items-center justify-center overflow-hidden border border-destructive text-center transition-all hover:bg-background/[.8]"
         >
           <p
             style={{
-              'font-size': `${20 * boxDimensions().scale}px`,
+              'font-size': `${(20 * boxDimensions().scale).toString()}px`,
             }}
             class="invisible text-black group-hover:visible"
           >

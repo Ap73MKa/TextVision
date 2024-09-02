@@ -2,13 +2,17 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": [
-    "main"
-  ],
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "shell:allow-open",
     "dialog:default",
-    "fs:default"
+    "fs:allow-read",
+    "fs:allow-read-dir",
+    "fs:allow-read-file",
+    "fs:allow-home-read",
+    "fs:read-all",
+    "fs:read-files",
+    "fs:scope-home"
   ]
 }
