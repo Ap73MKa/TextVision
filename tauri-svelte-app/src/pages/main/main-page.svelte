@@ -4,13 +4,19 @@
   import { selectedRecord } from '@/shared/stores/record-store'
   import UnselectedRecordBlock from './unselected-record-block.svelte'
   import WorkspaceHeader from './workspace-header.svelte'
+  import { ImageViewer } from "@/widgets/image-viewer";
+  import type {TextBox} from "@/shared/db";
 
   let isSelected = false
   let currentRecordText = ''
+  let imagePath = ''
+  let textBoxes: TextBox[] = []
 
   selectedRecord.subscribe((value) => {
     isSelected = !!value
     currentRecordText = value?.text ?? ''
+    imagePath = value?.path ?? ''
+    textBoxes = value?.blocks ?? []
   })
 </script>
 
@@ -26,6 +32,9 @@
             placeholder="Recognized text..."
             class="size-full px-3 py-2 resize-none bg-transparent focus:outline-none"
           />
+        </Tabs.Content>
+        <Tabs.Content value="image" class="size-full mt-0">
+          <ImageViewer {imagePath} {textBoxes} className="size-full" />
         </Tabs.Content>
       </Tabs.Root>
     {:else}

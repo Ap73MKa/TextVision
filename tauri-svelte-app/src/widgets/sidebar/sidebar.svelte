@@ -12,7 +12,7 @@
 
   let records: ImageRecord[] = []
   let filteredRecords: ImageRecord[] = []
-  let searchName = ''
+  let searchName: string = ''
 
   liveQuery(() => db.records.toArray()).subscribe(
     (result) => (records = result)

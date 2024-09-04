@@ -14,7 +14,7 @@
 <div
   class="flex h-8 w-full items-center gap-2 rounded-md border bg-secondary/[.7] px-2"
 >
-  <SearchIcon class="size-4 shrink-0" />
+  <SearchIcon class="size-4 shrink-0 text-muted-foreground" />
   <input
     bind:this={inputRef}
     bind:value={searchInputValue}
@@ -25,7 +25,7 @@
   />
   <div class="ms-auto inline-flex shrink-0 gap-0.5 font-light">
     <kbd
-      class="flex size-6 items-center justify-center rounded-md border bg-background text-[0.6rem] transition-colors hover:cursor-pointer hover:bg-secondary/80"
+      class="flex size-6 items-center justify-center rounded-md border bg-background pt-px text-[0.6rem] transition-colors hover:cursor-pointer hover:bg-secondary/80"
     >
       ⌘
     </kbd>

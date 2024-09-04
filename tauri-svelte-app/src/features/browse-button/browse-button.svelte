@@ -27,7 +27,6 @@
       })
       if (!file) return
       toast.loading('Loading...', { id: toastId })
-      console.log(file)
 
       const result = await processPhoto(file.path)
       const blocks = processTextBlocks(result.data.blocks ?? [])
