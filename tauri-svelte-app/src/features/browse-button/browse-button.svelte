@@ -27,14 +27,15 @@
       })
       if (!file) return
       toast.loading('Loading...', { id: toastId })
+      console.log(file)
 
-      const result = await processPhoto(file)
+      const result = await processPhoto(file.path)
       const blocks = processTextBlocks(result.data.blocks ?? [])
 
       const newRecordId = await db.records.add({
-        name: 'unnamed',
+        name: file.name ?? 'unnamed',
         text: result.data.text,
-        path: file,
+        path: file.path,
         blocks: blocks,
         createDt: new Date(),
       })

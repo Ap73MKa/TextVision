@@ -1,27 +1,31 @@
 <script lang="ts">
   import SearchIcon from 'lucide-svelte/icons/search'
   import { shortcut } from '@svelte-put/shortcut'
-  import { writable } from 'svelte/store'
+  import { searchString } from '@/shared/stores/search-store'
 
   let inputRef: HTMLInputElement | undefined
-  const searchString = writable('')
+  let searchInputValue = ''
 
   const handleK = () => inputRef?.focus()
+
+  searchString.subscribe((value: string) => (searchInputValue = value))
 </script>
 
 <div
   class="flex h-8 w-full items-center gap-2 rounded-md border bg-secondary/[.7] px-2"
 >
-  <SearchIcon class="size-4 shrink-0 pt-[2px]" />
+  <SearchIcon class="size-4 shrink-0" />
   <input
     bind:this={inputRef}
-    bind:value={$searchString}
-    class="w-full bg-inherit pt-px text-sm placeholder:text-sm placeholder:font-light placeholder:text-secondary-foreground focus:outline-none"
+    bind:value={searchInputValue}
+    on:input={() => searchString.set(searchInputValue)}
+    name="sidebar-search"
+    class="w-full bg-transparent pt-px text-sm placeholder:text-sm placeholder:font-light placeholder:text-secondary-foreground focus:outline-none"
     placeholder="Search"
   />
   <div class="ms-auto inline-flex shrink-0 gap-0.5 font-light">
     <kbd
-      class="flex size-6 items-center justify-center rounded-md border bg-background transition-colors hover:cursor-pointer hover:bg-secondary/80"
+      class="flex size-6 items-center justify-center rounded-md border bg-background text-[0.6rem] transition-colors hover:cursor-pointer hover:bg-secondary/80"
     >
       ⌘
     </kbd>

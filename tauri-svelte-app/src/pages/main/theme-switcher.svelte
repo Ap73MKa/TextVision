@@ -1,0 +1,37 @@
+<script lang="ts">
+  import * as Tabs from '@/shared/ui/tabs'
+  import { userPrefersMode, setMode, resetMode } from 'mode-watcher'
+  import SunIcon from 'lucide-svelte/icons/sun'
+  import MoonIcon from 'lucide-svelte/icons/moon'
+  import MonitorIcon from 'lucide-svelte/icons/monitor'
+  import { get } from 'svelte/store'
+</script>
+
+<Tabs.Root value={get(userPrefersMode)}>
+  <Tabs.List class="grid h-8 w-64 grid-cols-3 p-1">
+    <Tabs.Trigger
+      value="light"
+      on:click={() => setMode('light')}
+      class="py-1 text-xs"
+    >
+      <SunIcon class="mr-1.5 size-3.5 pt-px" />
+      Light
+    </Tabs.Trigger>
+    <Tabs.Trigger
+      value="dark"
+      on:click={() => setMode('dark')}
+      class="py-1 text-xs"
+    >
+      <MoonIcon class="mr-1.5 size-3.5 pt-px" />
+      Dark
+    </Tabs.Trigger>
+    <Tabs.Trigger
+      value="system"
+      on:click={() => resetMode()}
+      class="py-1 text-xs"
+    >
+      <MonitorIcon class="mr-1.5 size-3.5 pt-px" />
+      System
+    </Tabs.Trigger>
+  </Tabs.List>
+</Tabs.Root>

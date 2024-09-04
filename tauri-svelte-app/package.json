@@ -15,8 +15,8 @@
   "license": "MIT",
   "dependencies": {
     "@tauri-apps/api": "^2.0.0-rc.4",
-    "@tauri-apps/plugin-dialog": "^2.0.0-rc",
-    "@tauri-apps/plugin-fs": "^2.0.0-rc",
+    "@tauri-apps/plugin-dialog": "2.0.0-rc.0",
+    "@tauri-apps/plugin-fs": "2.0.0-rc.2",
     "@tauri-apps/plugin-shell": "^2.0.0-rc.1",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
