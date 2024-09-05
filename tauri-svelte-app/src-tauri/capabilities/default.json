@@ -2,13 +2,14 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": [
-    "main"
-  ],
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "shell:allow-open",
     "dialog:allow-open",
-    "fs:read-files"
+    "fs:read-files",
+    "fs:allow-create",
+    "fs:allow-applocaldata-write",
+    "fs:scope-applocaldata"
   ]
 }

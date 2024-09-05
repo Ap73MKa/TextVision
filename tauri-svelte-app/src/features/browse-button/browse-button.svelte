@@ -1,4 +1,39 @@
 <script lang="ts">
+  import { Button } from '@/shared/ui/button'
+  import { open as openDialog } from '@tauri-apps/plugin-dialog'
+  import { readFile } from '@tauri-apps/plugin-fs'
+  import ImageProcessDialog from './image-process-dialog.svelte'
+  import {
+    addBase64Prefix,
+    decodeUint8ArrayToBase64,
+  } from '@/shared/image-decode'
+
+  let open = false
+  let imageData = ''
+
+  const browseImage = async () => {
+    const toastId = 'browse-file'
+    try {
+      const file = await openDialog({
+        title: 'Browse image',
+        filters: [{ name: 'Images', extensions: ['jpeg', 'png', 'web2'] }],
+        multiple: false,
+      })
+      if (!file) return
+      imageData = await processPhoto(file.path)
+      open = true
+    } catch (ex) {
+      console.log(ex)
+    }
+  }
+
+  const processPhoto = async (filePath: string): Promise<string> => {
+    const content = await readFile(filePath)
+    return addBase64Prefix(decodeUint8ArrayToBase64(content))
+  }
+</script>
+
+<!-- <script lang="ts">
   import { open } from '@tauri-apps/plugin-dialog'
   import { readFile } from '@tauri-apps/plugin-fs'
   import { toast } from 'svelte-sonner'
@@ -79,4 +114,10 @@
 
 <Button on:click={() => void browseImage()} {...$$restProps}>
   <slot />
+</Button> -->
+
+<Button {...$$restProps} on:click={browseImage}>
+  <slot />
 </Button>
+
+<ImageProcessDialog bind:open {imageData} />
