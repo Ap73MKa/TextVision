@@ -1,6 +1,7 @@
 <script lang="ts">
   import Button from '@/shared/ui/button/button.svelte'
   import Slider from '@/shared/ui/slider/slider.svelte'
+  import { Label } from '@/shared/ui/label'
 
   export let imageData: string
   export let submitAction: (value: string) => void
@@ -36,38 +37,52 @@
   }
 </script>
 
-<div class="grid grid-cols-3 size-full py-2">
-  <div class="col-span-2 size-full max-h-[60vh]">
-    <div class="size-full h-[40vh] bg-secondary rounded-md">
+<div class="grid grid-cols-3 w-full pt-3">
+  <div class="col-span-2 size-full">
+    <div class="size-full h-64 md:h-96 bg-secondary rounded-md">
       <img
         bind:this={imageElement}
         src={imageData}
         alt=""
         style="filter: grayscale({grayscale[0]}%) contrast({contrast[0]}%) brightness({brightness[0]}%) saturate({saturation[0]}%);"
-        class="m-auto"
+        class="size-full object-contain"
       />
     </div>
   </div>
   <div class="size-full flex flex-col gap-4 px-5">
     <div class="space-y-2">
-      <label for="grayscale">Grayscale</label>
+      <Label for="grayscale">Grayscale</Label>
       <Slider id="grayscale" bind:value={grayscale} max={100} step={1} />
     </div>
     <div class="space-y-2">
-      <label for="brightness">Brightness</label>
-      <Slider id="brightness" bind:value={brightness} max={200} step={1} />
+      <Label for="brightness">Brightness</Label>
+      <Slider
+        id="brightness"
+        bind:value={brightness}
+        min={50}
+        max={150}
+        step={1}
+      />
     </div>
     <div class="space-y-2">
-      <label for="contrast">Contrast</label>
-      <Slider id="contrast" bind:value={contrast} max={200} step={1} />
+      <Label for="contrast">Contrast</Label>
+      <Slider id="contrast" bind:value={contrast} min={50} max={150} step={1} />
     </div>
     <div class="space-y-2">
-      <label for="saturation">Saturation</label>
-      <Slider id="saturation" bind:value={saturation} max={200} step={1} />
+      <Label for="saturation">Saturation</Label>
+      <Slider
+        id="saturation"
+        bind:value={saturation}
+        min={50}
+        max={150}
+        step={1}
+      />
     </div>
-    <div class="flex gap-2">
-      <Button on:click={cancelAction}>Back</Button>
-      <Button on:click={onSubmitAction}>Next</Button>
+    <div class="flex w-full h-full items-end gap-2">
+      <Button on:click={cancelAction} variant="outline" class="w-full"
+        >Back</Button
+      >
+      <Button on:click={onSubmitAction} class="w-full">Next</Button>
     </div>
   </div>
 </div>

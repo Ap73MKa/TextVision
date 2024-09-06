@@ -9,6 +9,8 @@
     "dialog:allow-open",
     "fs:read-files",
     "fs:allow-create",
+    "fs:allow-exists",
+    "fs:allow-remove",
     "fs:allow-applocaldata-write",
     "fs:scope-applocaldata"
   ]

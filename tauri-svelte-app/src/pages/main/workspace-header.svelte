@@ -2,16 +2,23 @@
   import * as Tabs from '@/shared/ui/tabs'
   import { get } from 'svelte/store'
   import { selectedRecord } from '@/shared/stores/record-store'
-  import { db } from '@/shared/db'
   import { Button } from '@/shared/ui/button'
   import ArrowLeftIcon from 'lucide-svelte/icons/arrow-left'
   import TrashIcon from 'lucide-svelte/icons/trash'
+  import { deleteImageRecord } from '@/entities/image-record'
+  import { toast } from 'svelte-sonner'
 
   const deleteSelectedRecord = async () => {
-    const currentRecord = get(selectedRecord)
-    if (!currentRecord) return
-    await db.records.delete(currentRecord.id)
-    selectedRecord.set(undefined)
+    try {
+      const currentRecord = get(selectedRecord)
+      if (!currentRecord) return
+      await deleteImageRecord(currentRecord.id)
+      selectedRecord.set(undefined)
+    } catch (ex) {
+      const msg =
+        ex instanceof Error ? ex.message : 'Error when deleting a record'
+      toast.error(msg)
+    }
   }
 </script>
 

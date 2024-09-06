@@ -4,7 +4,9 @@
   import ThemeSwitcher from './theme-switcher.svelte'
 </script>
 
-<div class="flex max-w-sm flex-col gap-2 rounded-xl border bg-background p-4">
+<div
+  class="flex max-w-sm flex-col gap-3 rounded-xl border bg-background overflow-hidden p-4"
+>
   <div class="flex justify-center">
     <Logo />
   </div>

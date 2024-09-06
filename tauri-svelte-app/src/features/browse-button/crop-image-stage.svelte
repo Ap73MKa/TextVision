@@ -1,27 +1,40 @@
 <script lang="ts">
-  import { Button } from '@/shared/ui/button'
   import 'cropperjs'
-  import type { CropperSelection } from 'cropperjs'
+  import { Button } from '@/shared/ui/button'
+  import type { CropperImage, CropperSelection } from 'cropperjs'
 
   export let imageData: string
   export let submitAction: (value: string) => void
   export let cancelAction: () => void
 
   let cropperSelection: CropperSelection
+  let cropperImage: CropperImage
 
-  const onSubdmitAction = async () => {
-    const canvas = await cropperSelection.$toCanvas()
-    const base64Image = canvas.toDataURL('image/png')
-    imageData = base64Image
-    submitAction(imageData)
+  const onSubmitAction = async () => {
+    const canvas = await cropperSelection.$toCanvas({
+      beforeDraw: (context) => {
+        context.imageSmoothingQuality = 'high'
+        context.imageSmoothingEnabled = true
+      },
+      width: cropperImage.$image.width,
+      height: cropperImage.$image.height,
+    })
+    submitAction(canvas.toDataURL('image/png', 1))
   }
 </script>
 
 <cropper-canvas
-  class="max-h-[40rem] mx-auto h-[60vh] rounded-md max-w-[40rem] w-[60vw] my-4"
+  class="w-full mt-4 mb-2 rounded-md h-64 md:h-96 xl:h-[40rem]"
   background
 >
-  <cropper-image src={imageData} alt="Picture" scalable skewable translatable />
+  <cropper-image
+    bind:this={cropperImage}
+    src={imageData}
+    alt="Picture"
+    scalable
+    skewable
+    translatable
+  />
   <cropper-shade theme-color="rgba(0, 0, 0, 0.65)" />
   <cropper-handle action="move" plain />
   <cropper-selection
@@ -46,7 +59,7 @@
   </cropper-selection>
 </cropper-canvas>
 
-<div class="flex justify-end gap-2">
+<div class="flex justify-end pt-2 gap-2">
   <Button variant="outline" on:click={() => cancelAction()}>Close</Button>
-  <Button on:click={() => onSubdmitAction()}>Next</Button>
+  <Button on:click={() => onSubmitAction()}>Next</Button>
 </div>

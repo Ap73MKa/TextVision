@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ImagePositionType } from '@/shared/types/image-position-type'
-  import type { TextBox } from '@/shared/db'
+
+  import type { TextBox } from '@/entities/image-record/image-record-types'
 
   export let textBox: TextBox
   export let imagePosition: ImagePositionType

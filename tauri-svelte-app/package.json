@@ -20,6 +20,7 @@
     "@tauri-apps/plugin-shell": "^2.0.0-rc.1",
     "bits-ui": "^0.21.13",
     "clsx": "^2.1.1",
+    "cmdk-sv": "^0.0.18",
     "cropperjs": "^2.0.0-rc.2",
     "dexie": "^4.0.8",
     "lucide-svelte": "^0.438.0",

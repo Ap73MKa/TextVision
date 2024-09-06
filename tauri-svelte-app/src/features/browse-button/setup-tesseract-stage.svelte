@@ -1,75 +1,46 @@
 <script lang="ts">
-  import { db, type TextBox } from '@/shared/db'
   import { selectedRecord } from '@/shared/stores/record-store'
   import Button from '@/shared/ui/button/button.svelte'
-  import { BaseDirectory, create } from '@tauri-apps/plugin-fs'
-  import { appLocalDataDir } from '@tauri-apps/api/path'
-  import { v4 as uuidv4 } from 'uuid'
-  import {
-    type Block,
-    createWorker,
-    PSM,
-    type RecognizeResult,
-  } from 'tesseract.js'
+  import { Input } from '@/shared/ui/input'
+  import { Label } from '@/shared/ui/label'
+  import { toast } from 'svelte-sonner'
+  import { addImageRecord } from '@/entities/image-record'
+  import LanguageSelect from './language-select.svelte'
 
   export let imageData: string
   export let submitAction: () => void
+  export let cancelAction: () => void
+
+  let fileName: string = 'unnamed'
+  let lang: string = 'eng'
 
   const browseImage = async () => {
+    const toastId = 'browse-file'
+    toast.loading('Loading...', { id: toastId })
     try {
-      const fileName = 'unnamed.jpeg'
-      const result = await readTextFromImage(imageData)
-      const blocks = processTextBlocks(result.data.blocks ?? [])
-
-      const base64Data = imageData.split(',')[1] // Убираем префикс data:image/jpeg;base64,
-      const binaryString = atob(base64Data)
-      const binaryData = new Uint8Array(binaryString.length)
-
-      for (let i = 0; i < binaryString.length; i++)
-        binaryData[i] = binaryString.charCodeAt(i)
-
-      const file = await create(fileName, {
-        baseDir: BaseDirectory.AppLocalData,
-      })
-      await file.write(binaryData)
-      await file.close()
-
-      const newRecordId = await db.records.add({
-        name: fileName,
-        text: result.data.text,
-        path: `${await appLocalDataDir()}/${fileName}`,
-        blocks: blocks,
-        createDt: new Date(),
-      })
-
-      const newRecord = await db.records.get(newRecordId)
-      if (newRecord) selectedRecord.set(newRecord)
+      const newRecord = await addImageRecord(fileName, imageData, lang)
+      selectedRecord.set(newRecord)
       submitAction()
+      toast.success('Success', { id: toastId })
     } catch (ex) {
-      console.log(ex)
+      const msg =
+        ex instanceof Error ? ex.message : 'Error when adding a record'
+      toast.error(msg, { id: toastId })
     }
-  }
-
-  const processTextBlocks = (blocks: Block[]): TextBox[] =>
-    blocks.map((block) => {
-      return {
-        boxText: block.text,
-        width: Math.abs(block.bbox.x0 - block.bbox.x1),
-        height: Math.abs(block.bbox.y0 - block.bbox.y1),
-        x0: block.bbox.x0,
-        y0: block.bbox.y0,
-      }
-    })
-
-  const readTextFromImage = async (
-    base64Data: string
-  ): Promise<RecognizeResult> => {
-    const worker = await createWorker('eng')
-    const ret = await worker.recognize(base64Data)
-    await worker.setParameters({ tessedit_pageseg_mode: PSM.SPARSE_TEXT })
-    await worker.terminate()
-    return ret
   }
 </script>
 
-<Button on:click={browseImage}>Apply</Button>
+<div class="w-full flex max-w-sm mx-auto flex-col gap-6">
+  <div class="space-y-2">
+    <Label for="fileName">File name</Label>
+    <Input id="fileName" placeholder="Enter file name" bind:value={fileName} />
+  </div>
+  <div class="space-y-2">
+    <Label for="fileName">Language</Label>
+    <LanguageSelect bind:value={lang} />
+  </div>
+  <div class="w-full flex gap-2 justify-end">
+    <Button on:click={cancelAction} variant="outline">Back</Button>
+    <Button on:click={browseImage}>Apply</Button>
+  </div>
+</div>

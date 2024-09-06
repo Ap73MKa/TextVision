@@ -5,7 +5,8 @@
   import UnselectedRecordBlock from './unselected-record-block.svelte'
   import WorkspaceHeader from './workspace-header.svelte'
   import { ImageViewer } from '@/widgets/image-viewer'
-  import type { TextBox } from '@/shared/db'
+
+  import type { TextBox } from '@/entities/image-record/image-record-types'
 
   let isSelected = false
   let currentRecordText = ''
@@ -38,7 +39,7 @@
         </Tabs.Content>
       </Tabs.Root>
     {:else}
-      <div class="size-full flex items-center justify-center">
+      <div class="size-full flex items-center justify-center p-3">
         <UnselectedRecordBlock />
       </div>
     {/if}

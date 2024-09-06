@@ -9,16 +9,19 @@
   export let imageData: string
 
   let tab = 'crop'
-  let croppedImageData = imageData
+  let croppedImageData = ''
   let processedImageData = ''
 
-  $: if (!open) tab = 'crop'
+  $: if (!open) {
+    tab = 'crop'
+    croppedImageData = ''
+    processedImageData = ''
+  }
   $: croppedImageData = imageData
-  $: processedImageData = croppedImageData
 </script>
 
 <Dialog.Root bind:open>
-  <Dialog.Content class="max-w-screen-md">
+  <Dialog.Content>
     <Dialog.Header>
       <Dialog.Title>Edit profile</Dialog.Title>
       <Tabs.Root bind:value={tab}>
@@ -35,28 +38,34 @@
         </Tabs.List>
         <Tabs.Content value="crop">
           <CropImageStage
-            bind:imageData={croppedImageData}
+            {imageData}
             cancelAction={() => (open = false)}
             submitAction={(value) => {
               tab = 'process'
-              imageData = value
+              croppedImageData = value
             }}
           />
         </Tabs.Content>
         <Tabs.Content value="process">
           <ProcessImageStage
-            bind:imageData={processedImageData}
-            cancelAction={() => (tab = 'crop')}
+            imageData={croppedImageData}
+            cancelAction={() => {
+              tab = 'crop'
+              croppedImageData = imageData
+            }}
             submitAction={(value) => {
               tab = 'tesseract'
-              imageData = value
+              processedImageData = value
             }}
           />
         </Tabs.Content>
         <Tabs.Content value="tesseract">
           <SetupTesseractStage
             imageData={processedImageData}
-            submitAction={() => (open = false)}
+            submitAction={() => {
+              open = false
+            }}
+            cancelAction={() => (tab = 'process')}
           />
         </Tabs.Content>
       </Tabs.Root>

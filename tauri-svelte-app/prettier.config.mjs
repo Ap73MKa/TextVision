@@ -4,7 +4,8 @@ const config = {
   semi: false,
   singleQuote: true,
   plugins: ["prettier-plugin-tailwindcss", "prettier-plugin-svelte"],
-  tailwindConfig: "./tailwind.config.ts"
+  tailwindConfig: "./tailwind.config.ts",
+  endOfLine: "lf"
 };
 
 export default config;

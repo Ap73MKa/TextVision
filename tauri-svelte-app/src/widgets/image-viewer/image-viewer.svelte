@@ -4,10 +4,10 @@
   import ZoomMinusIcon from 'lucide-svelte/icons/zoom-out'
   import { type CropperImage } from 'cropperjs'
   import { onMount } from 'svelte'
-  import type { TextBox } from '@/shared/db'
   import type { ImagePositionType } from '@/shared/types/image-position-type'
   import ImageTextBox from './image-text-box.svelte'
   import { cn } from '@/shared/libs'
+  import type { TextBox } from '@/entities/image-record/image-record-types'
 
   let cropperImage: CropperImage
   let imagePosition: ImagePositionType = {
