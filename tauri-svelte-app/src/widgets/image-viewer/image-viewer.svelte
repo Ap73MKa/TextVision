@@ -1,34 +1,25 @@
 <script lang="ts">
   import 'cropperjs'
+
+  import { type CropperImage } from 'cropperjs'
   import ZoomPlusIcon from 'lucide-svelte/icons/zoom-in'
   import ZoomMinusIcon from 'lucide-svelte/icons/zoom-out'
-  import { type CropperImage } from 'cropperjs'
-  import { onMount } from 'svelte'
-  import type { ImagePositionType } from '@/shared/types/image-position-type'
-  import ImageTextBox from './image-text-box.svelte'
-  import { cn } from '@/shared/libs'
-  import type { TextBox } from '@/entities/image-record/image-record-types'
 
-  let cropperImage: CropperImage
-  let imagePosition: ImagePositionType = {
-    scaleX: 1,
-    scaleY: 1,
-    translateX: 0,
-    translateY: 0,
-  }
+  import type { TextBox } from '@/entities/image-record/image-record-types'
+  import { cn } from '@/shared/libs'
+
+  import ImageTextBox from './image-text-box.svelte'
 
   export let imageData: string
   export let className: string = ''
   export let textBoxes: TextBox[]
 
+  let cropperImage: CropperImage
+  let imageScale = 1
+
   const onImageTransform = (event: Event) => {
     const posMatrix = event.detail.matrix as number[]
-    imagePosition = {
-      scaleX: posMatrix[0],
-      scaleY: posMatrix[3],
-      translateX: posMatrix[4],
-      translateY: posMatrix[5],
-    }
+    imageScale = posMatrix[0]
   }
 </script>
 
@@ -50,11 +41,14 @@
     skewable
     translatable
     on:transform={onImageTransform}
-  />
-  {#if textBoxes}
-    {#each textBoxes as item (item)}
-      <ImageTextBox textBox={item} {imagePosition} />
-    {/each}
-  {/if}
+    class="relative"
+    slottable
+  >
+    {#if textBoxes}
+      {#each textBoxes as item (item)}
+        <ImageTextBox textBox={item} {imageScale} />
+      {/each}
+    {/if}</cropper-image
+  >
   <cropper-handle action="move" plain></cropper-handle>
 </cropper-canvas>

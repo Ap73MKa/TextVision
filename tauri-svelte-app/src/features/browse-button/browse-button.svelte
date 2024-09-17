@@ -1,13 +1,15 @@
 <script lang="ts">
-  import { Button } from '@/shared/ui/button'
   import { open as openDialog } from '@tauri-apps/plugin-dialog'
   import { readFile } from '@tauri-apps/plugin-fs'
-  import ImageProcessDialog from './image-process-dialog.svelte'
+  import { toast } from 'svelte-sonner'
+
   import {
     addBase64Prefix,
     decodeUint8ArrayToBase64,
   } from '@/shared/image-decode'
-  import { toast } from 'svelte-sonner'
+  import { Button } from '@/shared/ui/button'
+
+  import ImageProcessDialog from './image-process-dialog.svelte'
 
   let open = false
   let imageData = ''

@@ -1,4 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie'
+
 import type { ImageRecord } from '@/entities/image-record'
 
 const db = new Dexie('ImagesDatabase') as Dexie & {

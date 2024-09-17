@@ -1,8 +1,10 @@
 <script lang="ts">
   import { Dialog as DialogPrimitive } from 'bits-ui'
   import X from 'lucide-svelte/icons/x'
-  import * as Dialog from './index.js'
+
   import { cn, flyAndScale } from '@/shared/libs.js'
+
+  import * as Dialog from './index.js'
 
   type $$Props = DialogPrimitive.ContentProps
 

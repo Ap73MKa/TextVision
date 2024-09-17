@@ -1,5 +1,6 @@
-import { db } from '@/shared/db'
 import { remove } from '@tauri-apps/plugin-fs'
+
+import { db } from '@/shared/db'
 
 const deleteImageRecord = async (id: number): Promise<void> => {
   const record = await db.records.get(id)

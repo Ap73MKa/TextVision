@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import { readFile } from '@tauri-apps/plugin-fs'
+  import { onMount } from 'svelte'
+
+  import type { TextBox } from '@/entities/image-record/image-record-types'
   import {
     addBase64Prefix,
     decodeUint8ArrayToBase64,
   } from '@/shared/image-decode'
 
   import ImageViewer from './image-viewer.svelte'
-
-  import type { TextBox } from '@/entities/image-record/image-record-types'
 
   export let imagePath: string
   export let className: string = ''
@@ -35,9 +35,9 @@
 </script>
 
 {#if isLoading}
-  <p>Loading...</p>
+  <div />
 {:else if !imageData}
-  <p>Error while loading image...</p>
+  <div class="m-auto">Error</div>
 {:else}
   <ImageViewer {imageData} {className} {textBoxes} />
 {/if}

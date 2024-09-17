@@ -1,12 +1,12 @@
 <script lang="ts">
-  import * as Tabs from '@/shared/ui/tabs'
-  import { Sidebar } from '@/widgets/sidebar'
+  import type { TextBox } from '@/entities/image-record/image-record-types'
   import { selectedRecord } from '@/shared/stores/record-store'
+  import * as Tabs from '@/shared/ui/tabs'
+  import { ImageViewer } from '@/widgets/image-viewer'
+  import { Sidebar } from '@/widgets/sidebar'
+
   import UnselectedRecordBlock from './unselected-record-block.svelte'
   import WorkspaceHeader from './workspace-header.svelte'
-  import { ImageViewer } from '@/widgets/image-viewer'
-
-  import type { TextBox } from '@/entities/image-record/image-record-types'
 
   let isSelected = false
   let currentRecordText = ''

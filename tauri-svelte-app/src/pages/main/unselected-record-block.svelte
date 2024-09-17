@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { Logo } from '@/features/logo'
   import { BrowseButton } from '@/features/browse-button'
+  import { Logo } from '@/features/logo'
+
   import ThemeSwitcher from './theme-switcher.svelte'
 </script>
 

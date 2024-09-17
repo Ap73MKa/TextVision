@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Dialog as DialogPrimitive } from 'bits-ui'
   import type { Command as CommandPrimitive } from 'cmdk-sv'
-  import Command from './command.svelte'
+
   import * as Dialog from '@/shared/ui/dialog'
+
+  import Command from './command.svelte'
 
   type $$Props = DialogPrimitive.Props & CommandPrimitive.CommandProps
 

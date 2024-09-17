@@ -1,12 +1,13 @@
 <script lang="ts">
-  import * as Tabs from '@/shared/ui/tabs'
-  import { get } from 'svelte/store'
-  import { selectedRecord } from '@/shared/stores/record-store'
-  import { Button } from '@/shared/ui/button'
   import ArrowLeftIcon from 'lucide-svelte/icons/arrow-left'
   import TrashIcon from 'lucide-svelte/icons/trash'
-  import { deleteImageRecord } from '@/entities/image-record'
+  import { get } from 'svelte/store'
   import { toast } from 'svelte-sonner'
+
+  import { deleteImageRecord } from '@/entities/image-record'
+  import { selectedRecord } from '@/shared/stores/record-store'
+  import { Button } from '@/shared/ui/button'
+  import * as Tabs from '@/shared/ui/tabs'
 
   const deleteSelectedRecord = async () => {
     try {
@@ -26,7 +27,9 @@
   class="flex h-12 w-full shrink-0 items-center justify-between gap-2 border-b bg-background px-4"
 >
   <Button
-    on:click={() => selectedRecord.set(undefined)}
+    on:click={() => {
+      selectedRecord.set(undefined)
+    }}
     variant="ghost"
     size="icon"
     class="size-8"

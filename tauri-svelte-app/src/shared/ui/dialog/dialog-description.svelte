@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Dialog as DialogPrimitive } from 'bits-ui'
+
   import { cn } from '@/shared/libs.js'
 
   type $$Props = DialogPrimitive.DescriptionProps

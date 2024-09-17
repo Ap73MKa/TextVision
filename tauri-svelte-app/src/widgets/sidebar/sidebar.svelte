@@ -1,16 +1,18 @@
 <script lang="ts">
-  import { Logo } from '@/features/logo'
-  import { Button } from '@/shared/ui/button'
-  import SidebarSearch from './sidebar-search.svelte'
+  import { liveQuery } from 'dexie'
   import EllipsisIcon from 'lucide-svelte/icons/ellipsis'
   import PlusIcon from 'lucide-svelte/icons/plus'
-  import { liveQuery } from 'dexie'
-  import { db } from '@/shared/db'
-  import SidebarItem from './sidebar-item.svelte'
-  import { BrowseButton } from '@/features/browse-button'
-  import { searchString } from '@/shared/stores/search-store'
-  import { ScrollArea } from '@/shared/ui/scroll-area'
+
   import type { ImageRecord } from '@/entities/image-record'
+  import { BrowseButton } from '@/features/browse-button'
+  import { Logo } from '@/features/logo'
+  import { db } from '@/shared/db'
+  import { searchString } from '@/shared/stores/search-store'
+  import { Button } from '@/shared/ui/button'
+  import { ScrollArea } from '@/shared/ui/scroll-area'
+
+  import SidebarItem from './sidebar-item.svelte'
+  import SidebarSearch from './sidebar-search.svelte'
 
   let records: ImageRecord[] = []
   let filteredRecords: ImageRecord[] = []

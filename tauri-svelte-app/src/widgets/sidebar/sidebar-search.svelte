@@ -1,6 +1,7 @@
 <script lang="ts">
-  import SearchIcon from 'lucide-svelte/icons/search'
   import { shortcut } from '@svelte-put/shortcut'
+  import SearchIcon from 'lucide-svelte/icons/search'
+
   import { searchString } from '@/shared/stores/search-store'
 
   let inputRef: HTMLInputElement | undefined
@@ -18,14 +19,16 @@
   <input
     bind:this={inputRef}
     bind:value={searchInputValue}
-    on:input={() => searchString.set(searchInputValue)}
+    on:input={() => {
+      searchString.set(searchInputValue)
+    }}
     name="sidebar-search"
     class="w-full bg-transparent pt-px text-sm placeholder:text-sm placeholder:font-light placeholder:text-secondary-foreground focus:outline-none"
     placeholder="Search"
   />
   <div class="ms-auto inline-flex shrink-0 gap-0.5 font-light">
     <kbd
-      class="flex size-6 items-center justify-center rounded-md border bg-background pt-px text-[0.6rem] transition-colors hover:cursor-pointer hover:bg-secondary/80"
+      class="flex size-6 items-center justify-center rounded-md border bg-background pt-px text-sm transition-colors hover:cursor-pointer hover:bg-secondary/80"
     >
       ⌘
     </kbd>

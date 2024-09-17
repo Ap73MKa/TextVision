@@ -2,29 +2,19 @@
   import Check from 'lucide-svelte/icons/check'
   import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
   import { tick } from 'svelte'
+  import { PSM } from 'tesseract.js'
 
   import { cn } from '@/shared/libs'
   import { Button } from '@/shared/ui/button'
   import * as Command from '@/shared/ui/command'
   import * as Popover from '@/shared/ui/popover'
 
-  export let value: string = ''
+  export let value: PSM = PSM.AUTO
 
   const frameworks = [
-    { value: 'ara', label: 'Arabic' },
-    { value: 'ben', label: 'Bengali' },
-    { value: 'chi_sim', label: 'Chinese - Simplified' },
-    { value: 'chi_tra', label: 'Chinese - Traditional' },
-    { value: 'eng', label: 'English' },
-    { value: 'fra', label: 'French' },
-    { value: 'deu', label: 'German' },
-    { value: 'itl', label: 'Italian' },
-    { value: 'jpn', label: 'Japanese' },
-    { value: 'kor', label: 'Korean' },
-    { value: 'pol', label: 'Polish' },
-    { value: 'por', label: 'Portuguese' },
-    { value: 'rus', label: 'Russian' },
-    { value: 'spa', label: 'Spanish' },
+    { value: PSM.AUTO, label: 'Auto' },
+    { value: PSM.RAW_LINE, label: 'Raw' },
+    { value: PSM.SPARSE_TEXT, label: 'Sparse' },
   ]
 
   let open = false
@@ -32,11 +22,18 @@
   $: selectedValue =
     frameworks.find((f) => f.value === value)?.label ?? 'Select a language...'
 
-  function closeAndFocusTrigger(triggerId: string) {
+  const closeAndFocusTrigger = async (triggerId: string) => {
     open = false
-    tick().then(() => {
+    await tick().then(() => {
       document.getElementById(triggerId)?.focus()
     })
+  }
+
+  const onItemSelect = async (newValue: string, id: string) => {
+    const selectedPSM = Object.values(PSM).find((v) => v === newValue)
+    if (!selectedPSM) return
+    value = selectedPSM
+    await closeAndFocusTrigger(id)
   }
 </script>
 
@@ -55,16 +52,12 @@
   </Popover.Trigger>
   <Popover.Content class="w-[200px] p-0">
     <Command.Root>
-      <Command.Input placeholder="Search framework..." />
       <Command.Empty>No framework found.</Command.Empty>
       <Command.Group class="max-h-52 overflow-y-auto">
         {#each frameworks as framework}
           <Command.Item
             value={framework.value}
-            onSelect={(currentValue) => {
-              value = currentValue
-              closeAndFocusTrigger(ids.trigger)
-            }}
+            onSelect={(value) => onItemSelect(value, ids.trigger)}
           >
             <Check
               class={cn(

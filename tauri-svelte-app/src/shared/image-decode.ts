@@ -17,4 +17,4 @@ const convertBase64ToBinaryData = (base64Image: string): Uint8Array => {
 const addBase64Prefix = (base64: string): string =>
   `data:image/jpeg;base64,${base64}`
 
-export { addBase64Prefix, decodeUint8ArrayToBase64, convertBase64ToBinaryData }
+export { addBase64Prefix, convertBase64ToBinaryData, decodeUint8ArrayToBase64 }

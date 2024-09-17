@@ -5,7 +5,7 @@ export type FormInputEvent<T extends Event = Event> = T & {
 }
 export type InputEvents = {
   blur: FormInputEvent<FocusEvent>
-  change: FormInputEvent<Event>
+  change: FormInputEvent
   click: FormInputEvent<MouseEvent>
   focus: FormInputEvent<FocusEvent>
   focusin: FormInputEvent<FocusEvent>
@@ -23,7 +23,7 @@ export type InputEvents = {
 }
 
 export {
-  Root,
   //
   Root as Input,
+  Root,
 }

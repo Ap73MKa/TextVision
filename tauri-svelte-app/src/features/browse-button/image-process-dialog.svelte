@@ -1,6 +1,7 @@
 <script lang="ts">
   import * as Dialog from '@/shared/ui/dialog'
   import * as Tabs from '@/shared/ui/tabs'
+
   import CropImageStage from './crop-image-stage.svelte'
   import ProcessImageStage from './process-image-stage.svelte'
   import SetupTesseractStage from './setup-tesseract-stage.svelte'
@@ -21,7 +22,7 @@
 </script>
 
 <Dialog.Root bind:open>
-  <Dialog.Content>
+  <Dialog.Content class="max-w-screen-lg">
     <Dialog.Header>
       <Dialog.Title>Edit profile</Dialog.Title>
       <Tabs.Root bind:value={tab}>

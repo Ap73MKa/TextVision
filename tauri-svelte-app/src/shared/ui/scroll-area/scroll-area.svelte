@@ -1,7 +1,9 @@
 <script lang="ts">
   import { ScrollArea as ScrollAreaPrimitive } from 'bits-ui'
-  import { Scrollbar } from './index'
+
   import { cn } from '@/shared/libs'
+
+  import { Scrollbar } from './index'
 
   type $$Props = ScrollAreaPrimitive.Props & {
     orientation?: 'vertical' | 'horizontal' | 'both'

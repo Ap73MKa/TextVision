@@ -1,7 +1,7 @@
 <script lang="ts">
   import Button from '@/shared/ui/button/button.svelte'
-  import Slider from '@/shared/ui/slider/slider.svelte'
   import { Label } from '@/shared/ui/label'
+  import Slider from '@/shared/ui/slider/slider.svelte'
 
   export let imageData: string
   export let submitAction: (value: string) => void
@@ -73,8 +73,8 @@
       <Slider
         id="saturation"
         bind:value={saturation}
-        min={50}
-        max={150}
+        min={0}
+        max={200}
         step={1}
       />
     </div>

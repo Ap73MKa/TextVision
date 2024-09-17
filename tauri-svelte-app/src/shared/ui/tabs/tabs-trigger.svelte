@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Tabs as TabsPrimitive } from 'bits-ui'
+
   import { cn } from '@/shared/libs.js'
 
   type $$Props = TabsPrimitive.TriggerProps
