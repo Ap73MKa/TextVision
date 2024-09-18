@@ -6,6 +6,7 @@
   import { buttonVariants, type Events, type Props } from './index.js'
 
   type $$Props = Props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Events = Events
 
   let className: $$Props['class'] = undefined

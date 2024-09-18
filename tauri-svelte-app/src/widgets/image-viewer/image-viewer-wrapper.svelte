@@ -22,8 +22,7 @@
     try {
       const content = await readFile(imagePath)
       imageData = addBase64Prefix(decodeUint8ArrayToBase64(content))
-    } catch (exp) {
-      console.log(exp)
+    } catch {
       imageData = ''
     }
     isLoading = false

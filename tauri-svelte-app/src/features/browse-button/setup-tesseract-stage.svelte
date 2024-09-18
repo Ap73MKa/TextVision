@@ -22,7 +22,7 @@
 
   const setInitialFileName = async () => {
     const recordCount = await db.records.count()
-    fileName = `unnamed${recordCount + 1}`
+    fileName = `unnamed${(recordCount + 1).toString()}`
   }
 
   setInitialFileName()

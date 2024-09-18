@@ -5,6 +5,7 @@
     type ToasterProps as SonnerProps,
   } from 'svelte-sonner'
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Props = SonnerProps
 </script>
 

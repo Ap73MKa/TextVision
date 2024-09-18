@@ -23,10 +23,10 @@
     if (!context) return ''
 
     context.filter = `
-        grayscale(${grayscale[0]}%)
-        contrast(${contrast[0]}%)
-        brightness(${brightness[0]}%)
-        saturate(${saturation[0]}%)
+        grayscale(${grayscale[0].toString()}%)
+        contrast(${contrast[0].toString()}%)
+        brightness(${brightness[0].toString()}%)
+        saturate(${saturation[0].toString()}%)
       `
     context.drawImage(imageElement, 0, 0, canvas.width, canvas.height)
     return canvas.toDataURL('image/png')

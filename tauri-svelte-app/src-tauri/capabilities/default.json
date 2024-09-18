@@ -12,6 +12,7 @@
     "fs:allow-exists",
     "fs:allow-remove",
     "fs:allow-applocaldata-write",
+    "fs:allow-applocaldata-read",
     "fs:scope-applocaldata"
   ]
 }

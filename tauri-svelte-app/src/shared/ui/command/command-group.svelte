@@ -2,6 +2,8 @@
   import { Command as CommandPrimitive } from 'cmdk-sv'
 
   import { cn } from '@/shared/libs'
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Props = CommandPrimitive.GroupProps
 
   let className: string | undefined | null = undefined

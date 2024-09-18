@@ -3,15 +3,14 @@
 
   import { cn } from '@/shared/libs'
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Props = HTMLAttributes<HTMLSpanElement>
 
-  let className: string | undefined | null = undefined
+  let className: $$Props['class'] = undefined
   export { className as class }
 </script>
 
 <span
-  class={cn('text-muted-foreground ml-auto text-xs tracking-widest', className)}
+  class={cn('ml-auto text-xs tracking-widest opacity-60', className)}
   {...$$restProps}
 >
   <slot />

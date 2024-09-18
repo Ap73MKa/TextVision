@@ -4,6 +4,7 @@
   import { cn } from '@/shared/libs.js'
 
   type $$Props = TabsPrimitive.TriggerProps
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Events = TabsPrimitive.TriggerEvents
 
   let className: $$Props['class'] = undefined

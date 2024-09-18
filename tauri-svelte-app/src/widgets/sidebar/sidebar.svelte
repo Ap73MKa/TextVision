@@ -2,13 +2,16 @@
   import { liveQuery } from 'dexie'
   import EllipsisIcon from 'lucide-svelte/icons/ellipsis'
   import PlusIcon from 'lucide-svelte/icons/plus'
+  import TrashIcon from 'lucide-svelte/icons/trash'
+  import { toast } from 'svelte-sonner'
 
-  import type { ImageRecord } from '@/entities/image-record'
+  import { deleteAllRecords, type ImageRecord } from '@/entities/image-record'
   import { BrowseButton } from '@/features/browse-button'
   import { Logo } from '@/features/logo'
   import { db } from '@/shared/db'
   import { searchString } from '@/shared/stores/search-store'
   import { Button } from '@/shared/ui/button'
+  import * as DropdownMenu from '@/shared/ui/dropdown-menu'
   import { ScrollArea } from '@/shared/ui/scroll-area'
 
   import SidebarItem from './sidebar-item.svelte'
@@ -26,6 +29,15 @@
     (value) => (searchName = value ? value.toLowerCase() : '')
   )
 
+  const onClearAction = async () => {
+    try {
+      await deleteAllRecords()
+      toast.success('Successfully clear all records')
+    } catch {
+      toast.error('Error while deleting items')
+    }
+  }
+
   $: filteredRecords = searchName
     ? records.filter((item) => item.name.toLowerCase().includes(searchName))
     : records
@@ -39,9 +51,26 @@
         <BrowseButton size="icon" variant="ghost" class="size-8">
           <PlusIcon class="size-[1.2rem]" />
         </BrowseButton>
-        <Button size="icon" variant="ghost" class="size-8">
-          <EllipsisIcon class="size-5" />
-        </Button>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild let:builder>
+            <Button
+              builders={[builder]}
+              size="icon"
+              variant="ghost"
+              class="size-8"
+            >
+              <EllipsisIcon class="size-5" />
+            </Button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content>
+            <DropdownMenu.Group>
+              <DropdownMenu.Item on:click={onClearAction}>
+                <TrashIcon class="size-4 mr-2" />
+                Clear
+              </DropdownMenu.Item>
+            </DropdownMenu.Group>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@
 
   import type { TextBox } from '@/entities/image-record/image-record-types'
   import { cn } from '@/shared/libs'
+  import type { ImageTransformEvent } from '@/shared/types/image-transform-event-type'
 
   import ImageTextBox from './image-text-box.svelte'
 
@@ -17,10 +18,8 @@
   let cropperImage: CropperImage
   let imageScale = 1
 
-  const onImageTransform = (event: Event) => {
-    const posMatrix = event.detail.matrix as number[]
-    imageScale = posMatrix[0]
-  }
+  const onImageTransform = (event: ImageTransformEvent) =>
+    (imageScale = event.detail.matrix[0])
 </script>
 
 <cropper-canvas class={cn('relative', className)}>

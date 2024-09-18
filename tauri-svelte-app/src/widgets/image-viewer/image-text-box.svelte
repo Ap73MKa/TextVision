@@ -6,7 +6,7 @@
 
   let isBigEnough: boolean = false
   let fontSize: number = 1
-  const MIN_BLOCK_SIZE = 3000
+  const MIN_BLOCK_SIZE = 1000
 
   $: {
     fontSize = Math.max((20 * imageScale) / 3, textBox.height - 10)

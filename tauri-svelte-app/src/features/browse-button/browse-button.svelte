@@ -16,14 +16,14 @@
 
   const browseImage = async () => {
     try {
-      const file = await openDialog({
+      const filePath = await openDialog({
         title: 'Browse image',
         filters: [{ name: 'Images', extensions: ['jpeg', 'png', 'web2'] }],
         multiple: false,
       })
 
-      if (!file) return
-      imageData = await processPhoto(file.path)
+      if (!filePath) return
+      imageData = await processPhoto(filePath)
       open = true
     } catch (ex) {
       const msg = ex instanceof Error ? ex.message : 'Error while loading image'

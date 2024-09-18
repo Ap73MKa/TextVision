@@ -4,6 +4,7 @@
   import { cn } from '@/shared/libs'
 
   type $$Props = LabelPrimitive.Props
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type $$Events = LabelPrimitive.Events
 
   let className: $$Props['class'] = undefined
