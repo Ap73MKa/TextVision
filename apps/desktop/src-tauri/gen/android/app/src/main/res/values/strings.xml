@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">tauri-svelte-app</string>
+    <string name="main_activity_title">tauri-svelte-app</string>
+</resources>

@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.text_vision_mobile.app",
+      "sha256_cert_fingerprints": [
+        "71:06:0B:B5:BD:99:DD:A6:76:54:AB:0C:B0:B6:71:53:61:70:BE:C0:01:54:83:E4:4D:F3:9C:76:37:A4:BA:87"
+      ]
+    }
+  }
+]

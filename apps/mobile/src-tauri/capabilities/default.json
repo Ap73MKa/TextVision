@@ -1,0 +1,26 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "shell:allow-open",
+    {
+      "identifier": "http:default",
+      "allow": [
+        {
+          "url": "https://*.tauri.app"
+        },
+        {
+          "url": "http://localhost:3032"
+        },
+        {
+          "url": "https://auth.dobroe22.keenetic.pro"
+        }
+      ]
+    },
+    "deep-link:default",
+    "shell:default"
+  ]
+}
