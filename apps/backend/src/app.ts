@@ -1,25 +1,49 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
-import Fastify from 'fastify'
+import fastifyJwt from '@fastify/jwt'
+import fastifyMultipart from '@fastify/multipart'
 import fastifyStatic from '@fastify/static'
+import Fastify from 'fastify'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from 'fastify-type-provider-zod'
+import path from 'path'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import postsRoutes from '@/routes/posts'
+import { getKeyRequest, keycloakIssuer } from '@/shared/protect-handler'
+import { prismaPlugin } from '@/shared/prisma-plugin'
+import appPath from './shared/app-path'
 
-const start = async () => {
-  const server = Fastify({ logger: true })
+const start = () => {
+  const server = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
+
+  server.setValidatorCompiler(validatorCompiler)
+  server.setSerializerCompiler(serializerCompiler)
+
+  server.register(prismaPlugin)
+
+  server.addHook('onRequest', (request, reply, done) => {
+    reply.header('ngrok-skip-browser-warning', '1231')
+    done()
+  })
+
+  // @ts-expect-error wrong plugin
+  server.register(fastifyJwt, {
+    secret: getKeyRequest,
+    sign: { issuer: keycloakIssuer, audience: 'text-vision-client' },
+  })
 
   server.register(fastifyStatic, {
-    root: path.join(__dirname, '../static'),
+    root: path.join(appPath, './static'),
     prefix: '/',
   })
 
-  server.get('/callback', async () => {
-    return JSON.stringify('callback received')
-  })
+  server.register(fastifyMultipart)
 
-  server.get('/', async () => {
-    return JSON.stringify('it worked!')
+  server.register(postsRoutes)
+
+  server.get('/callback', () => {
+    return JSON.stringify('callback received')
   })
 
   return server

@@ -26,7 +26,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="d58c-77-73-71-39.ngrok-free.app" android:pathPrefix="/callback" />
+                <data android:scheme="https" android:host="5588-77-73-71-39.ngrok-free.app" android:pathPrefix="/callback" />
             </intent-filter>
             <!-- DEEP LINK PLUGIN. AUTO-GENERATED. DO NOT REMOVE. -->
             <intent-filter android:autoVerify="true">
@@ -35,7 +35,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="d58c-77-73-71-39.ngrok-free.app" />
+                <data android:host="5588-77-73-71-39.ngrok-free.app" />
                 <data android:pathPrefix="/callback" />
             </intent-filter>
             <!-- DEEP LINK PLUGIN. AUTO-GENERATED. DO NOT REMOVE. -->

@@ -15,16 +15,22 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@fontsource/geist-sans": "^5.1.0",
+    "@repo/ui": "*",
+    "@tanstack/svelte-query": "^5.59.17",
     "@tauri-apps/api": "^2.0.3",
+    "@tauri-apps/plugin-deep-link": "^2.0.0",
     "@tauri-apps/plugin-http": "^2.0.1",
     "@tauri-apps/plugin-shell": "^2.0.1",
-    "@tauri-apps/plugin-deep-link": "^2.0.0",
-    "mode-watcher": "^0.4.1"
+    "lucide-svelte": "^0.454.0",
+    "mode-watcher": "^0.4.1",
+    "svelte-sonner": "^0.3.28",
+    "sveltekit-superforms": "^2.20.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@repo/ui": "*",
-    "@sveltejs/adapter-static": "^3.0.5",
-    "@sveltejs/kit": "^2.7.2",
+    "@sveltejs/adapter-static": "^3.0.6",
+    "@sveltejs/kit": "^2.7.3",
     "@sveltejs/vite-plugin-svelte": "^3.1.2",
     "@tauri-apps/cli": "^2.0.4",
     "autoprefixer": "^10.4.20",
