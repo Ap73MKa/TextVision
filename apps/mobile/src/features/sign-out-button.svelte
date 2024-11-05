@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Button } from '@repo/ui/button'
-  import { authToken } from '@/shared/auth';
+  import { user } from '@/shared/auth';
 
-  const signOut = () => authToken.set(null)
+  const signOut = () => user.set(null)
 </script>
 
 <Button {...$$restProps} on:click={signOut}>

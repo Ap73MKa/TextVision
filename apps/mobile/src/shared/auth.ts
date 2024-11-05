@@ -8,14 +8,17 @@ import {
 } from '$env/static/public'
 import { onOpenUrl } from '@tauri-apps/plugin-deep-link'
 import { writable } from 'svelte/store'
+import { jwtDecode } from 'jwt-decode'
 
-const authTokenKey = 'authToken'
+const userKey = 'authToken'
+const storedToken = localStorage.getItem(userKey)
+const initialUser = storedToken ? JSON.parse(storedToken) : null
 
-const authToken = writable(localStorage.getItem(authTokenKey))
+const user = writable<User | null>(initialUser)
 
-authToken.subscribe((value) => {
-  if (value) localStorage.setItem(authTokenKey, value)
-  else localStorage.removeItem(authTokenKey)
+user.subscribe((value) => {
+  if (value) localStorage.setItem(userKey, JSON.stringify(value))
+  else localStorage.removeItem(userKey)
 })
 
 const tokenExchangeUrl = `${PUBLIC_AUTH_URL}/realms/${PUBLIC_AUTH_REALM}/protocol/openid-connect/token`
@@ -47,6 +50,22 @@ const processUrlCode = (url: string): string => {
   return urlParams.get('code') ?? ''
 }
 
+const decodeToken = (token: string): User | null => {
+  try {
+    const decodedToken = jwtDecode(token) as TokenPayload
+    return {
+      id: decodedToken.sub,
+      preferedName: decodedToken.preferred_username,
+      givenName: decodedToken.given_name,
+      familyName: decodedToken.family_name,
+      email: decodedToken.email,
+      token: token,
+    }
+  } catch {
+    return null
+  }
+}
+
 const addAuthListener = (
   onSuccess?: (token: string) => void,
   onError?: (error: Error) => void
@@ -65,11 +84,50 @@ const addAuthListener = (
 
     try {
       const token = await exchangeCodeForToken(code)
-      authToken.set(token)
+      user.set(decodeToken(token))
       if (onSuccess) onSuccess(token)
     } catch (error) {
       if (onError) onError(error as Error)
     }
   })
 
-export { addAuthListener, authToken }
+type TokenPayload = {
+  exp: number
+  iat: number
+  auth_time: number
+  jti: string
+  iss: string
+  aud: string
+  sub: string
+  typ: string
+  azp: string
+  sid: string
+  acr: string
+  'allowed-origins': string[]
+  realm_access: {
+    roles: string[]
+  }
+  resource_access: {
+    [key: string]: {
+      roles: string[]
+    }
+  }
+  scope: string
+  email_verified: boolean
+  name: string
+  preferred_username: string
+  given_name: string
+  family_name: string
+  email: string
+}
+
+type User = {
+  id: string
+  token: string
+  preferedName: string
+  givenName: string
+  familyName: string
+  email: string
+}
+
+export { addAuthListener, user }
