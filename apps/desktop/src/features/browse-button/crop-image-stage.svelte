@@ -1,9 +1,8 @@
 <script lang="ts">
   import 'cropperjs'
 
-  import type { CropperImage, CropperSelection } from 'cropperjs'
-
   import { Button } from '@repo/ui/button'
+  import type { CropperImage, CropperSelection } from 'cropperjs'
 
   export let imageData: string
   export let submitAction: (value: string) => void

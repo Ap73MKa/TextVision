@@ -1,7 +1,11 @@
 <script lang="ts">
   import { createGetPostQuery } from "@/entities/post"
 
-  export let id: string
+  type Props = {
+    id: string;
+  }
+
+  let { id }: Props = $props();
 
   const postsQuery = createGetPostQuery(id)
 </script>

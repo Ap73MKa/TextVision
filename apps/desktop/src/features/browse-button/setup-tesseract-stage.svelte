@@ -1,13 +1,13 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
+  import { Input } from '@repo/ui/input'
+  import { Label } from '@repo/ui/label'
   import { toast } from 'svelte-sonner'
   import { PSM } from 'tesseract.js'
 
   import { addImageRecord } from '@/entities/image-record'
   import { db } from '@/shared/db'
   import { selectedRecord } from '@/shared/stores/record-store'
-  import { Button } from '@repo/ui/button'
-  import { Input } from '@repo/ui/input'
-  import { Label } from '@repo/ui/label'
 
   import LanguageSelect from './language-select.svelte'
   import PsmSelect from './psm-select.svelte'

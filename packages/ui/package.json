@@ -6,6 +6,7 @@
     "./tailwind.config": "./tailwind.config.ts",
     "./postcss.config": "./postcss.config.mjs",
     "./global.css": "./src/global.css",
+    "./utils": "./src/utils.ts",
     "./*": [
       "./src/ui/*/index.ts",
       "./src/ui/*.svelte"
@@ -18,7 +19,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "formsnap": "^1.0.1",
-    "svelte": "^5.1.9"
+    "svelte": "^5.1.16"
   },
   "dependencies": {
     "bits-ui": "^0.21.16",

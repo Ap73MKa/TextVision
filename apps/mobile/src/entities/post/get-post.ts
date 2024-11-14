@@ -1,8 +1,10 @@
-import { get } from 'svelte/store'
 import { fetch } from '@tauri-apps/plugin-http'
-import { PUBLIC_API_URL } from '$env/static/public'
-import type { PostDto } from './post-type'
+import { get } from 'svelte/store'
+
 import { user } from '@/shared/auth'
+import { PUBLIC_API_URL } from '$env/static/public'
+
+import type { PostDto } from './post-type'
 
 const getPost = async (id: string): Promise<PostDto> => {
   const response = await fetch(`${PUBLIC_API_URL}/posts/${id}`, {

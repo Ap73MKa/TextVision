@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
   import { open as openDialog } from '@tauri-apps/plugin-dialog'
   import { readFile } from '@tauri-apps/plugin-fs'
   import { toast } from 'svelte-sonner'
@@ -7,7 +8,6 @@
     addBase64Prefix,
     decodeUint8ArrayToBase64,
   } from '@/shared/image-decode'
-  import { Button } from '@repo/ui/button'
 
   import ImageProcessDialog from './image-process-dialog.svelte'
 

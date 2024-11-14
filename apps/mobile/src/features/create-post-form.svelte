@@ -1,9 +1,10 @@
 <script lang="ts">
   import * as Form from "@repo/ui/form";
   import { Input } from "@repo/ui/input";
-  import { postCreateDtoSchema } from "@/entities/post";
-  import { superForm, defaults } from "sveltekit-superforms";
+  import { defaults,superForm } from "sveltekit-superforms";
   import { zod } from "sveltekit-superforms/adapters";
+
+  import { postCreateDtoSchema } from "@/entities/post";
   import { createPostAction } from "@/entities/post"
   import { goto } from '$app/navigation';
 
@@ -14,9 +15,9 @@
         if (form.valid) {
           try {
             await createPostAction(form.data);
-            goto("/")
+            await goto("/")
           } catch (error) {
-            console.log(error)
+            // pass
           }
         }
       }
@@ -24,7 +25,7 @@
 
   const { form: formData, enhance } = form;
 
-  async function handleFileChange(event: Event) {
+  const handleFileChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (input.files) $formData.photo = input.files[0];
   }

@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
   import AuthSuspense from "@/features/auth-suspense.svelte"
-  import HomePage from '@/pages/home-page.svelte'
+  import UserPage from "@/pages/user-page.svelte"
 </script>
 
 <AuthSuspense>
-  <HomePage />
+  <UserPage />
 </AuthSuspense>

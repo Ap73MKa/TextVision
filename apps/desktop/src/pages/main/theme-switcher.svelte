@@ -1,11 +1,10 @@
 <script lang="ts">
+  import * as Tabs from '@repo/ui/tabs'
   import MonitorIcon from 'lucide-svelte/icons/monitor'
   import MoonIcon from 'lucide-svelte/icons/moon'
   import SunIcon from 'lucide-svelte/icons/sun'
   import { resetMode, setMode, userPrefersMode } from 'mode-watcher'
   import { get } from 'svelte/store'
-
-  import * as Tabs from '@repo/ui/tabs'
 </script>
 
 <Tabs.Root value={get(userPrefersMode)}>

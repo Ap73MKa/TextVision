@@ -1,7 +1,9 @@
-import { get } from 'svelte/store'
-import { user } from '@/shared/auth'
 import { fetch } from '@tauri-apps/plugin-http'
+import { get } from 'svelte/store'
+
+import { user } from '@/shared/auth'
 import { PUBLIC_API_URL } from '$env/static/public'
+
 import type { PostCreateDto, PostDto } from './post-type'
 
 const createPostAction = async (createDto: PostCreateDto): Promise<PostDto> => {

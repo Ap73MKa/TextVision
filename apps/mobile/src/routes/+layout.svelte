@@ -1,14 +1,22 @@
-<script>
+<script lang="ts">
   import '@/app/global.css'
+
   import { ModeWatcher } from "mode-watcher";
-  import { Toaster } from '@/shared/ui/sonner'
+
   import QueryClientProvider from '@/app/query-client-provider.svelte'
   import NavigationMenu from '@/features/navigation-menu.svelte'
+  import { Toaster } from '@/shared/ui/sonner'
+
+  type Props = {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 </script>
 
 <QueryClientProvider>
   <main class="h-dvh w-screen overflow-hidden bg-primary-foreground">
-    <slot />
+    {@render children?.()}
   </main>
   <NavigationMenu />
 </QueryClientProvider>

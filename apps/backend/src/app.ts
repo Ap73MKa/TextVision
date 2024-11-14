@@ -14,18 +14,29 @@ import { getKeyRequest, keycloakIssuer } from '@/shared/protect-handler'
 import { prismaPlugin } from '@/shared/prisma-plugin'
 import appPath from './shared/app-path'
 
+const envToLogger = {
+  development: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
+  production: true,
+  test: false,
+}
+
 const start = () => {
-  const server = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
+  const server = Fastify({
+    logger: envToLogger['development'] ?? true,
+  }).withTypeProvider<ZodTypeProvider>()
 
   server.setValidatorCompiler(validatorCompiler)
   server.setSerializerCompiler(serializerCompiler)
 
   server.register(prismaPlugin)
-
-  server.addHook('onRequest', (request, reply, done) => {
-    reply.header('ngrok-skip-browser-warning', '1231')
-    done()
-  })
 
   // @ts-expect-error wrong plugin
   server.register(fastifyJwt, {
@@ -38,7 +49,7 @@ const start = () => {
     prefix: '/',
   })
 
-  server.register(fastifyMultipart)
+  server.register(fastifyMultipart, { attachFieldsToBody: 'keyValues' })
 
   server.register(postsRoutes)
 

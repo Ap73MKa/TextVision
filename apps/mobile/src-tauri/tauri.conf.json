@@ -18,14 +18,17 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": {
+        "default-src": "'self'",
+        "img-src": "'self' data: asset: https://asset.localhost https://dd96-77-73-71-39.ngrok-free.app"
+      }
     }
   },
   "plugins": {
     "deep-link": {
       "mobile": [
         {
-          "host": "5588-77-73-71-39.ngrok-free.app",
+          "host": "dd96-77-73-71-39.ngrok-free.app",
           "pathPrefix": ["/callback"]
         }
       ]

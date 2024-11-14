@@ -1,18 +1,27 @@
+import { onOpenUrl } from '@tauri-apps/plugin-deep-link'
 import { fetch } from '@tauri-apps/plugin-http'
+import { jwtDecode } from 'jwt-decode'
+import { writable } from 'svelte/store'
+
 import {
-  PUBLIC_AUTH_URL,
-  PUBLIC_AUTH_REALM,
   PUBLIC_API_URL,
   PUBLIC_AUTH_CLIENT_ID,
   PUBLIC_AUTH_CLIENT_SECRET,
+  PUBLIC_AUTH_REALM,
+  PUBLIC_AUTH_URL,
 } from '$env/static/public'
-import { onOpenUrl } from '@tauri-apps/plugin-deep-link'
-import { writable } from 'svelte/store'
-import { jwtDecode } from 'jwt-decode'
+
+const parseStoredUser = (token: string): User | null => {
+  try {
+    return JSON.parse(token) as User
+  } catch {
+    return null
+  }
+}
 
 const userKey = 'authToken'
 const storedToken = localStorage.getItem(userKey)
-const initialUser = storedToken ? JSON.parse(storedToken) : null
+const initialUser = storedToken ? parseStoredUser(storedToken) : null
 
 const user = writable<User | null>(initialUser)
 
@@ -40,8 +49,7 @@ const exchangeCodeForToken = async (code: string): Promise<string> => {
 
   if (!response.ok) throw new Error('Can not access data')
 
-  const data = await response.json()
-  console.log(data)
+  const data = (await response.json()) as { access_token: string }
   return data.access_token
 }
 
@@ -71,16 +79,12 @@ const addAuthListener = (
   onError?: (error: Error) => void
 ) =>
   onOpenUrl(async (urls) => {
-    if (urls.length === 0) {
-      if (onError) onError(new Error('No URLs received in onOpenUrl'))
-      return
-    }
+    if (urls.length === 0)
+      return onError?.(new Error('No URLs received in onOpenUrl'))
 
     const code = processUrlCode(urls[0])
-    if (!code) {
-      if (onError) onError(new Error('Invalid URL: authorization code missing'))
-      return
-    }
+    if (!code)
+      return onError?.(new Error('Invalid URL: authorization code missing'))
 
     try {
       const token = await exchangeCodeForToken(code)
@@ -130,4 +134,5 @@ type User = {
   email: string
 }
 
+export type { User }
 export { addAuthListener, user }

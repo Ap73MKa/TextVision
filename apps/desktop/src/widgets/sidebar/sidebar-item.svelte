@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
   import ImageIcon from 'lucide-svelte/icons/image'
 
   import type { ImageRecord } from '@/entities/image-record'
   import { selectedRecord } from '@/shared/stores/record-store'
-  import { Button } from '@repo/ui/button'
 
   export let item: ImageRecord
 

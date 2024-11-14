@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
+  import * as Tabs from '@repo/ui/tabs'
   import ArrowLeftIcon from 'lucide-svelte/icons/arrow-left'
   import TrashIcon from 'lucide-svelte/icons/trash'
   import { get } from 'svelte/store'
@@ -6,8 +8,6 @@
 
   import { deleteImageRecord } from '@/entities/image-record'
   import { selectedRecord } from '@/shared/stores/record-store'
-  import { Button } from '@repo/ui/button'
-  import * as Tabs from '@repo/ui/tabs'
 
   const deleteSelectedRecord = async () => {
     try {

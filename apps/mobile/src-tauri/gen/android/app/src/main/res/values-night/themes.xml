@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.text_vision_mobile" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-
+        <item name="android:statusBarColor">#09090B</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
     </style>
 </resources>

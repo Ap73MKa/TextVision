@@ -5,15 +5,19 @@ import { pipeline } from 'stream'
 import { z } from 'zod'
 import { promisify } from 'util'
 import { v7 as randomUUIDv7 } from 'uuid'
+import { fileTypeFromBuffer } from 'file-type'
 
 import { protectHandler } from '@/shared/protect-handler'
 import appPath from '@/shared/app-path'
 
 const pump = promisify(pipeline)
 
+const supportedMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
+
 const createPostScheme = z.object({
   name: z.string().max(128).default('unnamed'),
   language: z.string().optional().default('en-US'),
+  photo: z.instanceof(Buffer),
 })
 
 const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
@@ -31,19 +35,29 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
     '/posts',
     {
       preHandler: protectHandler,
+      schema: {
+        body: createPostScheme,
+      },
     },
     async (req, reply) => {
       const userId = req.user.sub
-      const language = 'en-US'
-      const name = 'test'
+      const { name, language, photo } = req.body
 
-      const data = await req.file()
-      if (!data) return reply.status(401).send({ error: 'Unnosaptable type' })
+      let fileExt = ''
+      try {
+        const fileType = await fileTypeFromBuffer(photo)
+        if (!fileType || !supportedMimeTypes.includes(fileType.mime))
+          throw new Error()
+        fileExt = fileType.ext
+      } catch (ex) {
+        console.log(ex)
+        return reply.status(400).send({ error: 'Invalid data or file type' })
+      }
 
-      const imagePath = path.join('./uploads', `${randomUUIDv7()}.jpg`)
+      const imagePath = path.join('./uploads', `${randomUUIDv7()}.${fileExt}`)
       const uploadPath = path.join(appPath, './static', imagePath)
       console.log(imagePath, uploadPath)
-      await pump(data.file, fs.createWriteStream(uploadPath))
+      await fs.promises.writeFile(uploadPath, photo)
 
       const post = await server.prisma.post.create({
         data: {
@@ -54,7 +68,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
         },
       })
 
-      reply.send(post)
+      return reply.send(post)
     }
   )
 
@@ -72,7 +86,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
 
       fs.unlinkSync(post.imagePath)
       await server.prisma.post.delete({ where: { id } })
-      reply.send({ success: true })
+      return reply.send({ success: true })
     },
   })
 
@@ -92,7 +106,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
           .send({ error: 'Post not found or unauthorized' })
       }
 
-      reply.send(post)
+      return reply.send(post)
     },
   })
 }

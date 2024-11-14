@@ -1,13 +1,13 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
+  import * as Command from '@repo/ui/command'
+  import * as Popover from '@repo/ui/popover'
   import Check from 'lucide-svelte/icons/check'
   import ChevronsUpDown from 'lucide-svelte/icons/chevrons-up-down'
   import { tick } from 'svelte'
   import { PSM } from 'tesseract.js'
 
   import { cn } from '@/shared/libs'
-  import { Button } from '@repo/ui/button'
-  import * as Command from '@repo/ui/command'
-  import * as Popover from '@repo/ui/popover'
 
   export let value: PSM = PSM.AUTO
 

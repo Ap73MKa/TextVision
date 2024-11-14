@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { Button } from '@repo/ui/button'
+  import * as DropdownMenu from '@repo/ui/dropdown-menu'
+  import { ScrollArea } from '@repo/ui/scroll-area'
   import { liveQuery } from 'dexie'
   import EllipsisIcon from 'lucide-svelte/icons/ellipsis'
   import PlusIcon from 'lucide-svelte/icons/plus'
@@ -10,9 +13,6 @@
   import { Logo } from '@/features/logo'
   import { db } from '@/shared/db'
   import { searchString } from '@/shared/stores/search-store'
-  import { Button } from '@repo/ui/button'
-  import * as DropdownMenu from '@repo/ui/dropdown-menu'
-  import { ScrollArea } from '@repo/ui/scroll-area'
 
   import SidebarItem from './sidebar-item.svelte'
   import SidebarSearch from './sidebar-search.svelte'
