@@ -1,29 +1,25 @@
 <script lang="ts">
-  import CropImage from "./crop-image.svelte"
-  import SelectImage from "./select-image.svelte"
-  import ProcessImage from "./process-image.svelte"
+  import { fromFileToBase64 } from "@repo/models/services/image-decode"
+  import { type LangValueType } from "@repo/models/types/lang-type"
+  import { Button } from "@repo/ui/button"
   import * as Tabs from '@repo/ui/tabs'
   import { CropIcon, LanguagesIcon, PaletteIcon } from "lucide-svelte"
-  import LanguageImage from "./language-image.svelte"
+
+  import CropImage from "./crop-image.svelte"
   import CropperContainer from "./cropper-container.svelte"
-  import { Button } from "@repo/ui/button"
+  import LanguageImage from "./language-image.svelte"
+  import ProcessImage from "./process-image.svelte"
+  import SelectImage from "./select-image.svelte"
   import SubmitProcessButton from "./submit-process-button.svelte"
 
   let tab = $state<'crop' | 'lang' | 'color'>('crop')
   let imageData = $state<string>("")
   let processedImageData = $state<string>("")
-  let language = $state<string>("eng")
+  let language = $state<LangValueType>("eng")
   let fileName = $state<string>("")
 
-  const toBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-  });
-
   const onFileSelect = async (file: File) => {
-    const data = await toBase64(file)
+    const data = await fromFileToBase64(file)
     imageData = processedImageData = data
     fileName = file.name
   }

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import SignInButton from '@/features/sign-in-button.svelte';
+  import { SignInButton } from '@/features/auth';
   import { addAuthListener } from '@/shared/auth'
 
   onMount(() => { addAuthListener() });

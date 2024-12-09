@@ -1,6 +1,5 @@
+import { languages } from '@repo/models/types/lang-type'
 import { z } from 'zod'
-
-const languageOptions = ['eng', 'rus'] as const
 
 const MAX_FILE_SIZE = 12000000
 const FILE_TYPES = ['png', 'jpeg', 'jpg']
@@ -11,9 +10,14 @@ const checkFileType = (file: File): boolean => {
   return fileType ? FILE_TYPES.includes(fileType) : false
 }
 
+const languageValues = languages.map((language) => language.value) as [
+  string,
+  ...string[],
+]
+
 const postCreateDtoSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  language: z.enum(languageOptions).default('eng'),
+  language: z.enum(languageValues).default('eng'),
   photo: z
     .instanceof(File)
     .refine((file: File) => file.size !== 0, 'File is required')
@@ -24,25 +28,6 @@ const postCreateDtoSchema = z.object({
     ),
 })
 
-export type BoxType = {
-  boxText: string
-  width: number
-  height: number
-  x0: number
-  y0: number
-}
-
 export type PostCreateDto = z.infer<typeof postCreateDtoSchema>
-
-export type PostDto = {
-  name: string
-  language: string
-  id: string
-  userId: string
-  text: string
-  imagePath: string
-  boxes: BoxType[]
-  createdAt: Date
-}
 
 export { postCreateDtoSchema }

@@ -1,20 +1,16 @@
-import createGetPostImageQuery from './create-get-post-image'
+import type { BoxType } from '@repo/models/types/box-type'
+import type { PostDto } from '@repo/models/types/post-type'
+
 import createGetPostQuery from './create-get-post-query'
 import createGetPostsQuery from './create-get-posts-query'
 import createPostAction from './create-post-action'
 import deletePostAction from './delete-post-action'
 import getPost from './get-post'
 import getPosts from './get-posts'
-import {
-  type PostCreateDto,
-  postCreateDtoSchema,
-  type PostDto,
-  type BoxType,
-} from './post-type'
+import { type PostCreateDto, postCreateDtoSchema } from './post-type'
 
-export type { PostCreateDto, PostDto, BoxType }
+export type { BoxType, PostCreateDto, PostDto }
 export {
-  createGetPostImageQuery,
   createGetPostQuery,
   createGetPostsQuery,
   createPostAction,

@@ -2,8 +2,6 @@
   import { Label } from '@repo/ui/label'
   import { Slider } from '@repo/ui/slider'
 
-  import 'cropperjs'
-  import type { CropperImage } from 'cropperjs'
   import { getCropperContext } from './cropper-context'
 
   let grayscale = $state<number[]>([0])
@@ -15,32 +13,12 @@
   $effect(() => {
     if (!ctx.cropperImage) return;
     ctx.cropperImage.$image.style.filter = `
-          grayscale(${grayscale[0]}%)
-          contrast(${contrast[0]}%)
-          brightness(${brightness[0]}%)
-          saturate(${saturation[0]}%)
+          grayscale(${grayscale[0].toString()}%)
+          contrast(${contrast[0].toString()}%)
+          brightness(${brightness[0].toString()}%)
+          saturate(${saturation[0].toString()}%)
         `.trim();
   })
-
-  const getFilteredImageBase64 = () => {
-    if (!ctx.cropperImage) return;
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-
-    canvas.width = ctx.cropperImage.$image.naturalWidth
-    canvas.height = ctx.cropperImage.$image.naturalHeight
-
-    if (!context) return ''
-
-    context.filter = `
-        grayscale(${grayscale[0].toString()}%)
-        contrast(${contrast[0].toString()}%)
-        brightness(${brightness[0].toString()}%)
-        saturate(${saturation[0].toString()}%)
-      `
-    context.drawImage(ctx.cropperImage.$image, 0, 0, canvas.width, canvas.height)
-    return canvas.toDataURL('image/png')
-  }
 </script>
 
 <div class="absolute w-full bottom-16 left-0 px-4">

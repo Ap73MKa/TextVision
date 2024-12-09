@@ -1,32 +1,40 @@
 <script lang="ts">
   import 'cropperjs'
 
+  import { Button } from '@repo/ui/button'
+  import { cn } from '@repo/ui/utils'
   import { type CropperImage } from 'cropperjs'
   import ZoomPlusIcon from 'lucide-svelte/icons/zoom-in'
   import ZoomMinusIcon from 'lucide-svelte/icons/zoom-out'
+  import EyeIcon from 'lucide-svelte/icons/eye'
+  import EyeClosedIcon from 'lucide-svelte/icons/eye-closed'
 
   import type { BoxType } from '@/entities/post'
-  import { cn } from '@repo/ui/utils'
 
   import ImageTextBox from './image-text-box.svelte'
-  import { Button } from '@repo/ui/button'
 
   const { imageData, className, textBoxes }: { imageData: string, className?: string, textBoxes: BoxType[] } = $props()
 
-  type ImageTransformEvent = CustomEvent<{
-    matrix: number[]
-    oldMatrix: number[]
-  }>
-
-  let cropperImage: CropperImage
   let imageScale = $state(1)
+  let visible = $state<boolean>(true)
+  let cropperImage: CropperImage
 
-  const onImageTransform = (event: ImageTransformEvent) =>
+  const onImageTransform = (event: CustomEvent<{
+      matrix: number[]
+      oldMatrix: number[]
+  }>) =>
     (imageScale = event.detail.matrix[0])
 </script>
 
 <cropper-canvas class={cn('relative', className)}>
   <div class="absolute top-16 pt-2 right-2 z-20 flex">
+    <Button variant="ghost" size="sm" onclick={() => { visible = !visible }}>
+      {#if visible}
+        <EyeIcon class="size-5" />
+      {:else}
+        <EyeClosedIcon class="size-5" />
+      {/if}
+    </Button>
     <Button variant="ghost" size="sm" onclick={() => { cropperImage.$scale(1.2) }}>
       <ZoomPlusIcon class="size-5" />
     </Button>
@@ -45,11 +53,11 @@
     class="relative"
     slottable
   >
-    {#if textBoxes}
+    {#if textBoxes && visible}
       {#each textBoxes as item (item)}
         <ImageTextBox textBox={item} {imageScale} />
       {/each}
-    {/if}</cropper-image
-  >
+    {/if}
+  </cropper-image>
   <cropper-handle action="move" plain></cropper-handle>
 </cropper-canvas>

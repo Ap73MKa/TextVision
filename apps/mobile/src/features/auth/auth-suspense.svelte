@@ -1,7 +1,8 @@
 <script lang="ts">
+  import type { Snippet } from "svelte"
+
   import AuthPage from "@/pages/auth-page.svelte"
   import { user } from "@/shared/auth";
-  import type { Snippet } from "svelte"
 
   type Props = {
     children?: Snippet

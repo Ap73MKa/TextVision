@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { BoxType } from '@/entities/post';
 
-  const { textBox, imageScale }: {textBox: BoxType, imageScale: number } = $props()
+  const { textBox, imageScale }: { textBox: BoxType, imageScale: number } = $props()
 
   let text = $derived(textBox.boxText.replace(/\n{2,}/g, '\n'))
   let isBigEnough = $derived.by(() => textBox.width * imageScale * textBox.height * imageScale >= MIN_BLOCK_SIZE);
@@ -22,7 +22,7 @@
       left: {textBox.x0}px;
       top: {textBox.y0}px;
     "
-    class="absolute flex justify-center items-center overflow-hidden rounded border border-white/[.3] bg-primary/50"
+    class="absolute flex backdrop-blur-[2px] justify-center items-center overflow-hidden rounded-lg border border-white/[.3] bg-primary/50"
   >
     <span
       style="

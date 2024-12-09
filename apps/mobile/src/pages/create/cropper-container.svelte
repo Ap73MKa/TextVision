@@ -1,6 +1,7 @@
 <script lang="ts">
-  import type { Snippet } from "svelte"
   import type { CropperImage } from "cropperjs"
+  import type { Snippet } from "svelte"
+
   import { setCropperContext } from "./cropper-context"
 
   let { imageSrc, children }: { imageSrc: string, children?: Snippet } = $props()

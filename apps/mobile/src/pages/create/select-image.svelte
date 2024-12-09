@@ -3,7 +3,7 @@
 
   let { onFileSelect }: { onFileSelect?: (value: File) => void } = $props()
 
-  const handleFileChange = async(event: Event) => {
+  const handleFileChange = (event: Event) => {
     const input = event.target as HTMLInputElement;
     if (!input.files || !onFileSelect) return;
     onFileSelect(input.files[0])

@@ -1,5 +1,5 @@
-import { getContext, setContext } from 'svelte'
 import type { CropperImage } from 'cropperjs'
+import { getContext, setContext } from 'svelte'
 
 type cropperContextType = {
   cropperImage: CropperImage | undefined
@@ -13,5 +13,5 @@ const setCropperContext = (context: cropperContextType) =>
 const getCropperContext = () =>
   getContext<cropperContextType>(cropperContextKey)
 
-export { setCropperContext, getCropperContext }
+export { getCropperContext, setCropperContext }
 export type { cropperContextType }

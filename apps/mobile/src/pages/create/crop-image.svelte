@@ -2,6 +2,7 @@
   import 'cropperjs'
 
   import type { CropperSelection } from 'cropperjs'
+
   import { getCropperContext } from './cropper-context'
 
   let { currentTab, onValueChanged }: { currentTab: string, onValueChanged?: (value: string) => void } = $props()
@@ -11,18 +12,21 @@
   const DEBOUNCE_TIME = 500
 
   let cropperSelection: CropperSelection
+  // eslint-disable-next-line no-undef
   let debounceTimer: ReturnType<typeof setTimeout> | null = null;
   let countOfRender = 0;
 
   const ctx = getCropperContext()
 
-  const onSelectionChanged = async() => {
+  const onSelectionChanged = () => {
     if (countOfRender < SKIP_INITIAL_RENDERS) {
       countOfRender++
       return;
     }
 
+      // eslint-disable-next-line no-undef
     if (debounceTimer) clearTimeout(debounceTimer);
+      // eslint-disable-next-line no-undef
     debounceTimer = setTimeout(renderSelection, DEBOUNCE_TIME);
   }
 

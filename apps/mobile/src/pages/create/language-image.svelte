@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { languages } from "@/shared/languages"
+  import { languages } from "@repo/models/types/lang-type"
 
   let { language = $bindable() }: { language: string } = $props()
 </script>

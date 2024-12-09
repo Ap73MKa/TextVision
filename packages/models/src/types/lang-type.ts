@@ -15,4 +15,7 @@ const languages = [
   { value: 'spa', label: 'Spanish' },
 ]
 
+type LangValueType = (typeof languages)[number]['value']
+
+export type { LangValueType }
 export { languages }
