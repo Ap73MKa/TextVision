@@ -1,22 +1,35 @@
 <script lang="ts">
+  import "cropperjs"
   import { createGetPostQuery } from "@/entities/post"
+  import { PUBLIC_API_URL } from '$env/static/public'
+  import * as Tabs from "@repo/ui/tabs"
+  import { ImageViewer } from "@/features/image-viewer"
 
-  type Props = {
-    id: string;
-  }
+  let { id }: { id: string } = $props();
 
-  let { id }: Props = $props();
-
-  const postsQuery = createGetPostQuery(id)
+  const postQuery = createGetPostQuery(id)
+  let tab = $state<'image' | 'text'>('image');
 </script>
 
-<div class="p-4 flex flex-col">
-    {#if $postsQuery.isLoading}
-    <p>Loading...</p>
-    {:else if $postsQuery.isError}
-    <p>Error: {$postsQuery.error.message}</p>
-    {:else if $postsQuery.isSuccess}
-        Id: {$postsQuery.data.id}
-        Наименование: {$postsQuery.data.name}
-    {/if}
-</div>
+<Tabs.Root bind:value={tab} class="size-full relative pb-16">
+    <div class="absolute w-full flex z-10 justify-center top-4">
+        <Tabs.List class="shadow">
+            <Tabs.Trigger value="text">
+                Text
+            </Tabs.Trigger>
+            <Tabs.Trigger value="image">
+                Image
+            </Tabs.Trigger>
+        </Tabs.List>
+    </div>
+    <Tabs.Content value="text" class="size-full relative pt-16 px-2">
+        <textarea value={$postQuery.data?.text} class="bg-inherit size-full focus:outline-none"></textarea>
+    </Tabs.Content>
+    <Tabs.Content value="image" class="size-full">
+        <ImageViewer
+            imageData={$postQuery.data?.imagePath ? `${PUBLIC_API_URL}/${$postQuery.data.imagePath }` : ""}
+            textBoxes={$postQuery.data?.boxes ?? []}
+            className="size-full"
+        />
+    </Tabs.Content>
+</Tabs.Root>

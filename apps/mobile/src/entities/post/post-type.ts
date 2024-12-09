@@ -24,6 +24,14 @@ const postCreateDtoSchema = z.object({
     ),
 })
 
+export type BoxType = {
+  boxText: string
+  width: number
+  height: number
+  x0: number
+  y0: number
+}
+
 export type PostCreateDto = z.infer<typeof postCreateDtoSchema>
 
 export type PostDto = {
@@ -31,7 +39,9 @@ export type PostDto = {
   language: string
   id: string
   userId: string
+  text: string
   imagePath: string
+  boxes: BoxType[]
   createdAt: Date
 }
 

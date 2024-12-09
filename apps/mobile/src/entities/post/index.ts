@@ -8,9 +8,10 @@ import {
   type PostCreateDto,
   postCreateDtoSchema,
   type PostDto,
+  type BoxType,
 } from './post-type'
 
-export type { PostCreateDto,PostDto }
+export type { PostCreateDto, PostDto, BoxType }
 export {
   createGetPostImageQuery,
   createGetPostQuery,

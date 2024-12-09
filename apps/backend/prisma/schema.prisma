@@ -17,7 +17,20 @@ model Post {
   id        String   @id @default(uuid())
   userId    String
   name      String
+  text      String
   language  String
   imagePath String
   createdAt DateTime @default(now())
+  boxes     Box[]    @relation("PostBoxes")
+}
+
+model Box {
+  id      String @id @default(uuid())
+  boxText String
+  width   Int
+  height  Int
+  x0      Int
+  y0      Int
+  postId  String
+  post    Post   @relation("PostBoxes", fields: [postId], references: [id])
 }

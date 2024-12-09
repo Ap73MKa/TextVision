@@ -1826,6 +1826,7 @@ axobject-query@^4.0.0, axobject-query@^4.1.0:
     fastify "^5.1.0"
     fastify-type-provider-zod "^4.0.2"
     jwks-rsa "^3.1.0"
+    tesseract.js ""
     uuid "^11.0.3"
     zod "^3.23.8"
 
@@ -4471,7 +4472,7 @@ tailwindcss@^3.4.14, tailwindcss@^3.4.16:
     postcss-load-config "^4.0.2"
     postcss-selector-parser "^6.1.2"
 
-tesseract.js@^5.1.1:
+tesseract.js@^5.1.1, tesseract.js@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/tesseract.js/-/tesseract.js-5.1.1.tgz"
   integrity sha512-lzVl/Ar3P3zhpUT31NjqeCo1f+D5+YfpZ5J62eo2S14QNVOmHBTtbchHm/YAbOOOzCegFnKf4B3Qih9LuldcYQ==
