@@ -22,7 +22,7 @@
     "deep-link": {
       "mobile": [
         {
-          "host": "clean-absolutely-rhino.ngrok-free.app",
+          "host": "dev.lakina.keenetic.pro",
           "pathPrefix": ["/callback"]
         }
       ]

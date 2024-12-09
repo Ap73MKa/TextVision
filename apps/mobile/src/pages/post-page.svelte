@@ -4,6 +4,8 @@
   import { PUBLIC_API_URL } from '$env/static/public'
   import * as Tabs from "@repo/ui/tabs"
   import { ImageViewer } from "@/features/image-viewer"
+  import ChevronLeftIcon from "lucide-svelte/icons/chevron-left"
+  import { Button } from "@repo/ui/button"
 
   let { id }: { id: string } = $props();
 
@@ -12,7 +14,10 @@
 </script>
 
 <Tabs.Root bind:value={tab} class="size-full relative pb-16">
-    <div class="absolute w-full flex z-10 justify-center top-4">
+    <div class="absolute w-full grid grid-cols-3 z-10 justify-center top-4">
+        <Button href="/" variant="secondary" class="w-fit mt-1 ml-4" size="sm">
+            <ChevronLeftIcon class="size-4" />
+        </Button>
         <Tabs.List class="shadow">
             <Tabs.Trigger value="text">
                 Text
