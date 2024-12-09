@@ -1,0 +1,17 @@
+{
+  "name": "@repo/models",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./*": [
+      "./src/*.ts"
+    ]
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "ui:add": "bunx shadcn-svelte@latest add"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

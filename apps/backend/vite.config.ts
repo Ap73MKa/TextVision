@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
+import { defineConfig, PluginOption } from 'vite'
 import { VitePluginNode } from 'vite-plugin-node'
 import { runtimeEnv } from 'vite-plugin-runtime'
 import path from 'node:path'
 
 export default defineConfig(({ mode }) => {
-  const plugins =
+  const plugins: PluginOption[] =
     mode == 'production'
       ? [runtimeEnv()]
       : [
@@ -18,6 +18,16 @@ export default defineConfig(({ mode }) => {
   return {
     server: {
       port: 3032,
+    },
+    build: {
+      target: 'esnext',
+      lib: {
+        entry: path.resolve(__dirname, './src/server.ts'),
+        formats: ['es'],
+      },
+      rollupOptions: {
+        external: ['*', 'node:url'],
+      },
     },
     plugins: plugins,
     resolve: {

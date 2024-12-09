@@ -1,11 +1,13 @@
+import logger from '@/shared/logger.ts'
+
 import fastify from './app'
 
-const app = fastify()
+const app = await fastify({ logger })
 
 if (import.meta.env.PROD) {
   try {
-    const port = import.meta.env.PORT ?? 3000
-    app.listen({ port: port as number, host: '0.0.0.0' })
+    const port = import.meta.env.PORT
+    await app.listen({ port: port, host: '0.0.0.0' })
   } catch (err) {
     app.log.error(err)
     process.exit(1)

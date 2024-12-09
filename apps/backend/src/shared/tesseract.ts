@@ -1,6 +1,6 @@
+import type { BoxType } from '@repo/models/types/box-type'
 import { Block, RecognizeResult } from 'tesseract.js'
 import { createWorker, PSM } from 'tesseract.js'
-import type { BoxType } from './box-type'
 
 const processTextBlocks = (blocks: Block[]): BoxType[] =>
   blocks.map((block) => {
@@ -15,10 +15,11 @@ const processTextBlocks = (blocks: Block[]): BoxType[] =>
 
 const readTextFromImage = async (
   base64Data: string,
-  options: { language: string; psm: PSM } = { language: 'eng', psm: PSM.AUTO }
+  options: { language?: string; psm?: PSM } = {}
 ): Promise<RecognizeResult> => {
-  const worker = await createWorker(options.language)
-  await worker.setParameters({ tessedit_pageseg_mode: options.psm })
+  const { language = 'eng', psm = PSM.AUTO } = options
+  const worker = await createWorker(language)
+  await worker.setParameters({ tessedit_pageseg_mode: psm })
   const ret = await worker.recognize(`data:image/jpeg;base64,${base64Data}`)
   await worker.terminate()
   return ret

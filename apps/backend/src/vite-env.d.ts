@@ -6,6 +6,7 @@ interface ImportMetaEnv {
   readonly VITE_AUTH_CLIENT_SECRET: string
   readonly VITE_AUTH_URL: string
   readonly DATABASE_URL: string
+  readonly PORT: number
 }
 
 interface ImportMeta {

@@ -1,16 +1,12 @@
-import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
+import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import fs from 'fs'
 import path from 'path'
-import { z } from 'zod'
 import { v7 as randomUUIDv7 } from 'uuid'
+import { z } from 'zod'
 
-import { protectHandler } from '@/shared/protect-handler'
 import appPath from '@/shared/app-path'
-import {
-  processTextBlocks,
-  readTextFromImage,
-} from '@/shared/tesseract/recognize'
-import { PSM } from 'tesseract.js'
+import { protectHandler } from '@/shared/auth-plugin.ts'
+import { processTextBlocks, readTextFromImage } from '@/shared/tesseract'
 
 const createPostScheme = z.object({
   name: z.string().max(128).default('unnamed'),
@@ -19,7 +15,9 @@ const createPostScheme = z.object({
 })
 
 const postsRoutes: FastifyPluginAsyncZod = async (server) => {
-  server.get('/posts', { preHandler: protectHandler }, async (req, reply) => {
+  server.addHook('preHandler', protectHandler)
+
+  server.get('/', async (req, reply) => {
     const userId = req.user.sub
 
     const posts = await server.prisma.post.findMany({
@@ -35,9 +33,8 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
   })
 
   server.post(
-    '/posts',
+    '/',
     {
-      preHandler: protectHandler,
       schema: {
         body: createPostScheme,
       },
@@ -56,11 +53,10 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         const base64Photo = photoBuffer.toString('base64')
         const result = await readTextFromImage(base64Photo, {
           language,
-          psm: PSM.AUTO,
         })
         blocks = processTextBlocks(result.data.blocks ?? [])
         text = result.data.text
-      } catch (ex) {
+      } catch {
         console.error('Error processing image')
         return reply.status(500).send({ error: 'Failed to process image' })
       }
@@ -98,8 +94,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
     }
   )
 
-  server.delete('/posts/:id', {
-    preHandler: protectHandler,
+  server.delete('/:id', {
     schema: { params: z.object({ id: z.string() }) },
     handler: async (req, reply) => {
       const { id } = req.params
@@ -116,8 +111,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
     },
   })
 
-  server.get('/posts/:id', {
-    preHandler: protectHandler,
+  server.get('/:id', {
     schema: { params: z.object({ id: z.string() }) },
     handler: async (req, reply) => {
       const { id } = req.params
