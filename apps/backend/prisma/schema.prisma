@@ -32,5 +32,5 @@ model Box {
   x0      Int
   y0      Int
   postId  String
-  post    Post   @relation("PostBoxes", fields: [postId], references: [id])
+  post    Post   @relation("PostBoxes", fields: [postId], references: [id], onDelete: Cascade)
 }

@@ -60,6 +60,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         })
         blocks = processTextBlocks(result.data.blocks ?? [])
         text = result.data.text
+        if (!text) throw new Error("No recognized data on image")
       } catch (ex) {
         console.error('Error processing image')
         return reply.status(500).send({ error: 'Failed to process image' })
@@ -110,8 +111,10 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
       if (!post || post.userId !== userId)
         return reply.status(403).send({ error: 'Unauthorized' })
 
-      fs.unlinkSync(post.imagePath)
       await server.prisma.post.delete({ where: { id } })
+      const imagePath = path.join(appPath, './static', post.imagePath);
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+
       return reply.send({ success: true })
     },
   })
