@@ -28,7 +28,7 @@ const envToLogger = {
   test: false,
 }
 
-const start = () => {
+const app = () => {
   const server = Fastify({
     logger: envToLogger['development'] ?? true,
   }).withTypeProvider<ZodTypeProvider>()
@@ -60,4 +60,4 @@ const start = () => {
   return server
 }
 
-export const viteNodeApp = start()
+export default app

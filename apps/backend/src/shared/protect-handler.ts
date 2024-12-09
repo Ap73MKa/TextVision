@@ -2,7 +2,7 @@ import { JwtHeader } from '@fastify/jwt'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import jwksClient from 'jwks-rsa'
 
-const keycloakIssuer = 'https://auth.dobroe22.keenetic.pro/realms/text-vision'
+const keycloakIssuer = `${import.meta.env.VITE_AUTH_URL}/realms/${import.meta.env.VITE_AUTH_REALM}`
 const client = jwksClient({
   jwksUri: `${keycloakIssuer}/protocol/openid-connect/certs`,
 })

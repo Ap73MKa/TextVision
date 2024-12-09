@@ -1,18 +1,11 @@
 import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import fs from 'fs'
 import path from 'path'
-import { pipeline } from 'stream'
 import { z } from 'zod'
-import { promisify } from 'util'
 import { v7 as randomUUIDv7 } from 'uuid'
-import { fileTypeFromBuffer } from 'file-type'
 
 import { protectHandler } from '@/shared/protect-handler'
 import appPath from '@/shared/app-path'
-
-const pump = promisify(pipeline)
-
-const supportedMimeTypes = ['image/jpeg', 'image/png', 'image/gif']
 
 const createPostScheme = z.object({
   name: z.string().max(128).default('unnamed'),
@@ -20,7 +13,7 @@ const createPostScheme = z.object({
   photo: z.instanceof(Buffer),
 })
 
-const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
+const postsRoutes: FastifyPluginAsyncZod = async (server) => {
   server.get('/posts', { preHandler: protectHandler }, async (req, reply) => {
     const userId = req.user.sub
 
@@ -43,18 +36,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
       const userId = req.user.sub
       const { name, language, photo } = req.body
 
-      let fileExt = ''
-      try {
-        const fileType = await fileTypeFromBuffer(photo)
-        if (!fileType || !supportedMimeTypes.includes(fileType.mime))
-          throw new Error()
-        fileExt = fileType.ext
-      } catch (ex) {
-        console.log(ex)
-        return reply.status(400).send({ error: 'Invalid data or file type' })
-      }
-
-      const imagePath = path.join('./uploads', `${randomUUIDv7()}.${fileExt}`)
+      const imagePath = path.join('./uploads', `${randomUUIDv7()}.jpeg`)
       const uploadPath = path.join(appPath, './static', imagePath)
       console.log(imagePath, uploadPath)
       await fs.promises.writeFile(uploadPath, photo)
@@ -99,7 +81,6 @@ const postsRoutes: FastifyPluginAsyncZod = async (server, opt) => {
 
       const post = await server.prisma.post.findUnique({ where: { id } })
 
-      // Проверяем, существует ли пост и принадлежит ли он запрашивающему пользователю
       if (!post || post.userId !== userId) {
         return reply
           .status(404)

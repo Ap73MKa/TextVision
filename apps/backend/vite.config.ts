@@ -1,23 +1,29 @@
 import { defineConfig } from 'vite'
 import { VitePluginNode } from 'vite-plugin-node'
+import { runtimeEnv } from 'vite-plugin-runtime'
 import path from 'node:path'
-import fs from 'fs'
 
-export default defineConfig({
-  server: {
-    port: 3032,
-  },
-  plugins: [
-    ...VitePluginNode({
-      adapter: 'fastify',
-      appPath: './src/app.ts',
-      exportName: 'viteNodeApp',
-      tsCompiler: 'swc',
-    }),
-  ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+export default defineConfig(({ mode }) => {
+  const plugins =
+    mode == 'production'
+      ? [runtimeEnv()]
+      : [
+          ...VitePluginNode({
+            adapter: 'fastify',
+            appPath: './src/server.ts',
+            exportName: 'viteNodeApp',
+            tsCompiler: 'swc',
+          }),
+        ]
+  return {
+    server: {
+      port: 3032,
     },
-  },
+    plugins: plugins,
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+    },
+  }
 })

@@ -15,7 +15,7 @@
 </script>
 
 <QueryClientProvider>
-  <main class="h-dvh w-screen overflow-hidden bg-primary-foreground">
+  <main class="h-dvh overscroll-none w-screen overflow-hidden bg-primary-foreground">
     {@render children?.()}
   </main>
   <NavigationMenu />

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const languageOptions = ['en-US', 'ru-RU'] as const
+const languageOptions = ['eng', 'rus'] as const
 
 const MAX_FILE_SIZE = 12000000
 const FILE_TYPES = ['png', 'jpeg', 'jpg']
@@ -13,7 +13,7 @@ const checkFileType = (file: File): boolean => {
 
 const postCreateDtoSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  language: z.enum(languageOptions).default('en-US'),
+  language: z.enum(languageOptions).default('eng'),
   photo: z
     .instanceof(File)
     .refine((file: File) => file.size !== 0, 'File is required')

@@ -16,19 +16,13 @@
         "width": 800,
         "height": 600
       }
-    ],
-    "security": {
-      "csp": {
-        "default-src": "'self'",
-        "img-src": "'self' data: asset: https://asset.localhost https://dd96-77-73-71-39.ngrok-free.app"
-      }
-    }
+    ]
   },
   "plugins": {
     "deep-link": {
       "mobile": [
         {
-          "host": "dd96-77-73-71-39.ngrok-free.app",
+          "host": "clean-absolutely-rhino.ngrok-free.app",
           "pathPrefix": ["/callback"]
         }
       ]
