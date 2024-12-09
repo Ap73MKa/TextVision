@@ -19,7 +19,6 @@ const readTextFromImage = async (
 ): Promise<RecognizeResult> => {
   const worker = await createWorker(options.language)
   await worker.setParameters({ tessedit_pageseg_mode: options.psm })
-  console.log(base64Data.substring(0, 100))
   const ret = await worker.recognize(`data:image/jpeg;base64,${base64Data}`)
   await worker.terminate()
   return ret

@@ -9,6 +9,7 @@
   import { cn } from '@repo/ui/utils'
 
   import ImageTextBox from './image-text-box.svelte'
+  import { Button } from '@repo/ui/button'
 
   const { imageData, className, textBoxes }: { imageData: string, className?: string, textBoxes: BoxType[] } = $props()
 
@@ -19,26 +20,24 @@
 
   let cropperImage: CropperImage
   let imageScale = $state(1)
-  console.log(textBoxes)
 
   const onImageTransform = (event: ImageTransformEvent) =>
     (imageScale = event.detail.matrix[0])
 </script>
 
 <cropper-canvas class={cn('relative', className)}>
-  <div class="absolute right-0 top-12 z-20 flex gap-2 p-2">
-    <button type="button" onclick={() => { cropperImage.$scale(1.2) }}>
+  <div class="absolute top-16 pt-2 right-2 z-20 flex">
+    <Button variant="ghost" size="sm" onclick={() => { cropperImage.$scale(1.2) }}>
       <ZoomPlusIcon class="size-5" />
-    </button>
-    <button type="button" onclick={() => { cropperImage.$scale(0.8) }}>
+    </Button>
+    <Button variant="ghost" size="sm" onclick={() => { cropperImage.$scale(0.8) }}>
       <ZoomMinusIcon class="size-5" />
-    </button>
+    </Button>
   </div>
   <cropper-image
     bind:this={cropperImage}
     src={imageData}
     alt="image"
-    rotatable
     scalable
     skewable
     translatable

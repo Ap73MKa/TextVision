@@ -7,15 +7,13 @@
   import LanguageImage from "./language-image.svelte"
   import CropperContainer from "./cropper-container.svelte"
   import { Button } from "@repo/ui/button"
-  import { createPostAction } from "@/entities/post"
-  import { goto } from "$app/navigation"
+  import SubmitProcessButton from "./submit-process-button.svelte"
 
   let tab = $state<'crop' | 'lang' | 'color'>('crop')
   let imageData = $state<string>("")
   let processedImageData = $state<string>("")
   let language = $state<string>("eng")
   let fileName = $state<string>("")
-  let loading = $state<boolean>(false)
 
   const toBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -28,31 +26,6 @@
     const data = await toBase64(file)
     imageData = processedImageData = data
     fileName = file.name
-  }
-
-  const fromBase64ToFile = async(base64: string): Promise<File> => {
-    const res: Response = await fetch(base64);
-    const blob: Blob = await res.blob();
-    return new File([blob], fileName, { type: 'image/png' });
-  }
-
-  const submitImage = async() => {
-    try {
-      loading = true;
-      console.log('1')
-      await createPostAction({
-        name: fileName,
-        language: language,
-        photo: await fromBase64ToFile(processedImageData)
-      });
-      console.log('2')
-      loading = false;
-      await goto("/")
-    } catch (ex) {
-      console.log('3')
-      console.log(ex)
-      loading = false;
-    }
   }
 </script>
 
@@ -82,12 +55,14 @@
                 </Tabs.List>
             </div>
             <div class="absolute top-4 right-4 flex">
-                <Button href="/" variant="ghost" disabled={loading}>
+                <Button href="/" variant="ghost">
                     Cancel
                 </Button>
-                <Button variant="ghost" onclick={submitImage} disabled={loading}>
-                    Submit
-                </Button>
+                <SubmitProcessButton
+                  lang={language}
+                  imageData={processedImageData}
+                  fileName={fileName}
+                />
             </div>
         </CropperContainer>
     {:else}

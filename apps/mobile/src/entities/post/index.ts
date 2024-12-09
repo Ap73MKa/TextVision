@@ -2,6 +2,7 @@ import createGetPostImageQuery from './create-get-post-image'
 import createGetPostQuery from './create-get-post-query'
 import createGetPostsQuery from './create-get-posts-query'
 import createPostAction from './create-post-action'
+import deletePostAction from './delete-post-action'
 import getPost from './get-post'
 import getPosts from './get-posts'
 import {
@@ -17,6 +18,7 @@ export {
   createGetPostQuery,
   createGetPostsQuery,
   createPostAction,
+  deletePostAction,
   getPost,
   getPosts,
   postCreateDtoSchema,

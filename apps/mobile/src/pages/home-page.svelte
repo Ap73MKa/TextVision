@@ -16,7 +16,7 @@
         {#each $postsQuery.data as todo}
             <li class="min-w-24 basis-28 grow max-w-32">
                 <a href="/posts/{todo.id}" class="flex flex-col items-center gap-2 overflow-hidden">
-                    <img src="{PUBLIC_API_URL}/{todo.imagePath}" alt="im" class="max-w-full w-full h-auto max-h-24 min-h-20 rounded-md border overflow-hidden" />
+                    <img src="{PUBLIC_API_URL}/{todo.imagePath}" alt="im" class="max-w-full object-cover w-full h-24 rounded-md border overflow-hidden" />
                     <span class="text-sm line-clamp-2">{todo.name}</span>
                 </a>
             </li>
