@@ -8,6 +8,7 @@
   import CropperContainer from "./cropper-container.svelte"
   import { Button } from "@repo/ui/button"
   import { createPostAction } from "@/entities/post"
+  import { goto } from "$app/navigation"
 
   let tab = $state<'crop' | 'lang' | 'color'>('crop')
   let imageData = $state<string>("")
