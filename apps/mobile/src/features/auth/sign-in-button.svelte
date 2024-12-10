@@ -24,5 +24,5 @@
 </script>
 
 <Button {...rest} on:click={openAuthPageInBrowser}>
-  {#if children}{@render children()}{:else}Sign In{/if}
+  {#if children}{@render children()}{:else}Войти{/if}
 </Button>

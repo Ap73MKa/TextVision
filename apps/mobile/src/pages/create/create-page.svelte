@@ -25,7 +25,7 @@
   }
 </script>
 
-<Tabs.Root bind:value={tab} class="size-full relative pb-20">
+<Tabs.Root bind:value={tab} class="size-full relative pb-24">
     {#if imageData}
         <CropperContainer imageSrc={tab === 'crop' ? imageData : processedImageData}>
             <Tabs.Content value="lang" class="size-full">

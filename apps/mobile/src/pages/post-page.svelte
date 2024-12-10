@@ -36,7 +36,7 @@
   }
 </script>
 
-<Tabs.Root bind:value={tab} class="size-full relative pb-20">
+<Tabs.Root bind:value={tab} class="size-full relative pb-24">
     <div class="absolute w-full grid grid-cols-3 z-10 justify-center top-12">
         <Button href="/" variant="secondary" class="w-fit mt-1 ml-4" size="sm">
             <ChevronLeftIcon class="size-4" />

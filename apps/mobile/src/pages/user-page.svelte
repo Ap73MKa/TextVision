@@ -10,7 +10,7 @@
 </script>
 
 {#if $user}
-    <div class="size-full pt-4 flex flex-col">
+    <div class="size-full pb-24 pt-4 flex flex-col">
         <div class="w-full flex flex-col gap-4 justify-center items-center py-8">
             <h2 class="font-medium text-xl">Аккаунт</h2>
             <div class="size-20 text-xl rounded-full bg-background flex items-center justify-center overflow-hidden">

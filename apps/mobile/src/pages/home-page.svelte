@@ -8,7 +8,7 @@
   const postsQuery = createGetPostsQuery();
 </script>
 
-<div class="size-full px-4 pb-20 py-10 relative">
+<div class="size-full px-4 pb-24 py-10 relative">
   <h2 class="text-2xl font-medium py-2">Фотографии</h2>
   <ul class="flex gap-3 w-full py-3 overflow-hidden justify-center flex-wrap">
       {#if !$postsQuery.data || $postsQuery.isLoading || $postsQuery.isError }

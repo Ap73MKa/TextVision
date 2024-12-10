@@ -8,8 +8,9 @@
 </script>
 
 <div class="size-full flex flex-col gap-5 p-6 justify-center items-center">
-    <h2 class="text-3xl font-medium">WELCOME!</h2>
-    <span class="text-sm text-center text-muted-foreground">Log in to acccess your customized mindfulness
-        exercides, track your progress, and unlock new insights your mental wellbeing</span>
+    <h2 class="text-3xl font-medium">Доброе пожаловать!</h2>
+    <span class="text-sm text-center text-muted-foreground">
+        Для возможность сохранять фотографии на аккаунт, пожалуйста, авторизуйтесь в системе
+    </span>
     <SignInButton class="max-w-xs w-full" />
 </div>
