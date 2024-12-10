@@ -27,7 +27,7 @@
 </script>
 
 <cropper-canvas class={cn('relative', className)}>
-  <div class="absolute top-16 pt-2 right-2 z-20 flex">
+  <div class="absolute top-24 pt-2 right-3 z-20 flex">
     <Button variant="ghost" size="sm" onclick={() => { visible = !visible }}>
       {#if visible}
         <EyeIcon class="size-5" />

@@ -6,6 +6,7 @@
   import { goto } from "$app/navigation";
 
   import { getCropperContext } from "./cropper-context";
+  import { toast } from "svelte-sonner";
 
   const { fileName, lang, imageData }: { fileName: string, lang: string, imageData: string } = $props();
   let loading = $state<boolean>(false);
@@ -55,12 +56,13 @@
 
       loading = false;
       await goto("/");
-    } catch {
+    } catch (ex) {
+        toast.error(ex?.toString() ?? "Неизвестная ошибка. Повторите попытку позже.")
       loading = false;
     }
   };
 </script>
 
 <Button variant="ghost" onclick={submitImage} disabled={loading}>
-    Submit
+    Подтвердить
 </Button>

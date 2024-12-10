@@ -28,8 +28,6 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
       },
     })
 
-    console.log('passed')
-
     reply.send(posts)
   })
 
@@ -57,17 +55,17 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         })
         blocks = processTextBlocks(result.data.blocks ?? [])
         text = result.data.text
-        if (!text) throw new Error("No recognized data on image")
+        if (!text) throw new Error('Текст не обнаружен')
       } catch {
         console.error('Error processing image')
-        return reply.status(500).send({ error: 'Failed to process image' })
+        return reply.status(500).send({ error: 'Ошибка обработки фото' })
       }
 
       try {
         await fs.promises.writeFile(uploadPath, photoBuffer)
       } catch (err) {
         console.error('Error saving file:', err)
-        return reply.status(500).send({ error: 'Failed to save file' })
+        return reply.status(500).send({ error: 'Ошибка сохранения файла' })
       }
 
       const post = await server.prisma.post.create({
@@ -108,8 +106,8 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         return reply.status(403).send({ error: 'Unauthorized' })
 
       await server.prisma.post.delete({ where: { id } })
-      const imagePath = path.join(appPath, './static', post.imagePath);
-      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath);
+      const imagePath = path.join(appPath, './static', post.imagePath)
+      if (fs.existsSync(imagePath)) fs.unlinkSync(imagePath)
 
       return reply.send({ success: true })
     },
@@ -128,11 +126,12 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         },
       })
 
-      if (!post || post.userId !== userId) {
+      if (!post) return reply.status(404).send({ error: 'Файл не найден' })
+
+      if (post.userId !== userId)
         return reply
           .status(404)
-          .send({ error: 'Post not found or unauthorized' })
-      }
+          .send({ error: 'Файл не принадлежит пользователю' })
 
       return reply.send(post)
     },

@@ -22,7 +22,7 @@
       left: {textBox.x0}px;
       top: {textBox.y0}px;
     "
-    class="absolute flex backdrop-blur-[2px] justify-center items-center overflow-hidden rounded-lg border border-white/[.3] bg-primary/50"
+    class="absolute flex backdrop-blur-[2px] justify-center items-center overflow-hidden rounded-lg border border-white/[.3] bg-black/50"
   >
     <span
       style="

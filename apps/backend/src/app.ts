@@ -10,8 +10,9 @@ import path from 'path'
 
 import postsRoutes from '@/routes/posts'
 import appPath from '@/shared/app-path'
-import authPlugin from "@/shared/auth-plugin";
+import authPlugin from '@/shared/auth-plugin'
 import prismaPlugin from '@/shared/prisma-plugin'
+import fs from 'fs'
 
 export default async function (opts?: FastifyServerOptions) {
   const server = Fastify(opts).withTypeProvider<ZodTypeProvider>()
@@ -28,7 +29,17 @@ export default async function (opts?: FastifyServerOptions) {
   })
 
   await server.register(postsRoutes, { prefix: '/posts' })
-  server.get('/callback', () => JSON.stringify('callback received'))
+
+  server.get('/callback', (_request, reply) => {
+    try {
+      const htmlFilePath = path.join(appPath, './static', 'auth-fallback.html')
+      const htmlContent = fs.readFileSync(htmlFilePath, 'utf-8')
+      return reply.type('text/html').send(htmlContent)
+    } catch (err) {
+      server.log.error(err)
+      return reply.code(500).send('Ошибка сервера: файл не найден')
+    }
+  })
 
   return server
 }

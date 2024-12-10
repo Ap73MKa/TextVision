@@ -6,6 +6,7 @@
     "dev-mobile": "turbo run dev --filter=mobile --env-mode=loose",
     "dev-desk": "turbo run dev --filter=desktop",
     "dev-back": "turbo run dev --filter=backend",
+    "build-mobile": "turbo run build --filter=mobile --env-mode=loose",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },

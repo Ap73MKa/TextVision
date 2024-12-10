@@ -25,7 +25,7 @@
   }
 </script>
 
-<Tabs.Root bind:value={tab} class="size-full relative pb-16">
+<Tabs.Root bind:value={tab} class="size-full relative pb-20">
     {#if imageData}
         <CropperContainer imageSrc={tab === 'crop' ? imageData : processedImageData}>
             <Tabs.Content value="lang" class="size-full">
@@ -37,7 +37,7 @@
             <Tabs.Content value="color" class="size-full">
               <ProcessImage />
             </Tabs.Content>
-            <div class="absolute z-10 bottom-2 flex w-full items-center justify-center">
+            <div class="absolute z-10 bottom-4 flex w-full items-center justify-center">
                 <Tabs.List class="shadow">
                     <Tabs.Trigger value="lang">
                         <LanguagesIcon class="size-4" />
@@ -50,9 +50,9 @@
                     </Tabs.Trigger>
                 </Tabs.List>
             </div>
-            <div class="absolute top-4 right-4 flex">
+            <div class="absolute top-10 right-2 flex">
                 <Button href="/" variant="ghost">
-                    Cancel
+                    Отмена
                 </Button>
                 <SubmitProcessButton
                   lang={language}

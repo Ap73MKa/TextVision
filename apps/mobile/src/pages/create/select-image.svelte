@@ -10,7 +10,7 @@
   }
 </script>
 
-<div class="size-full p-4">
+<div class="size-full p-4 pt-14">
     <label
         for="file-upload"
         class="size-full border-2 bg-muted rounded-md text-center border-dashed flex flex-col gap-2 items-center justify-center cursor-pointer"

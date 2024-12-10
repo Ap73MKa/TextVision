@@ -8,7 +8,7 @@
 
 </script>
 
-<footer class={cn("w-full bg-background border-t h-14 absolute bottom-0 flex justify-evenly items-center", $user == null ? "h-px [&>a]:hidden" : "")}>
+<footer class={cn("w-full bg-background border-t h-[6.5rem] pb-10 absolute bottom-0 flex justify-evenly items-center", $user == null ? "h-px [&>a]:hidden" : "")}>
     <a href="/">
         <LayoutGridIcon class="size-6" />
     </a>

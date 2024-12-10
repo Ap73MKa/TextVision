@@ -1,23 +1,28 @@
 [package]
 name = "text-vision-mobile"
-version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+version = "1.0.0"
+description = "Extracting text from images using OCR engine"
+authors = ["Ap73MKa"]
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+codegen-units = 1
+lto = true
+opt-level = "s"
+panic = "abort"
+strip = true
 
 [lib]
 name = "text_vision_mobile_lib"
 crate-type = ["lib", "cdylib", "staticlib"]
 
 [build-dependencies]
-tauri-build = { version = "^2.0.0", features = [] }
+tauri-build = { version = "^2.0.3", features = [] }
 
 [dependencies]
-tauri = { version = "^2.0.0", features = [] }
-tauri-plugin-shell = "^2.0.0"
+tauri = { version = "^2.1.1", features = [] }
+tauri-plugin-shell = "^2.2.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
-tauri-plugin-http = "^2.0.0"
-tauri-plugin-deep-link = "^2.0.0"
+tauri-plugin-http = "^2.2.0"
+tauri-plugin-deep-link = "^2.2.0"

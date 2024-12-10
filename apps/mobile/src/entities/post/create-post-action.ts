@@ -1,10 +1,11 @@
+import type { PostDto } from '@repo/models/types/post-type'
 import { fetch } from '@tauri-apps/plugin-http'
 import { get } from 'svelte/store'
 
 import { user } from '@/shared/auth'
 import { PUBLIC_API_URL } from '$env/static/public'
 
-import type { PostCreateDto, PostDto } from './post-type'
+import type { PostCreateDto } from './post-type'
 
 const createPostAction = async (createDto: PostCreateDto): Promise<PostDto> => {
   const formData = new FormData()
@@ -15,13 +16,15 @@ const createPostAction = async (createDto: PostCreateDto): Promise<PostDto> => {
   const response = await fetch(`${PUBLIC_API_URL}/posts`, {
     body: formData,
     headers: {
-      Authorization: `Bearer ${get(user)?.token}`,
+      Authorization: `Bearer ${get(user)?.token ?? ''}`,
     },
     method: 'POST',
   })
 
   if (!response.ok)
-    throw new Error(`Error ${response.status}: ${await response.text()}`)
+    throw new Error(
+      `Ошибка ${response.status.toString()}: ${await response.text()}`
+    )
 
   return response.json() as Promise<PostDto>
 }
