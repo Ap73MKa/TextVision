@@ -14,10 +14,6 @@
 from images quickly and easily. With TextVision, you can take a picture of any text and have it instantly
 converted into digital text that you can edit, translate, or share with other apps.
 
-<p align="center">
-  <img src="https://github.com/Ap73MKa/TextVision/assets/45181349/e77ba083-2bde-4b47-a602-37254038eb63" width="500" />
-</p>
-
 ## Features
 
 - **Optical Character Recognition (OCR)**: TextVision uses the power of OCR to quickly and easily extract text from images.
