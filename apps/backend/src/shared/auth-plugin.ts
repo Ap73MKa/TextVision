@@ -1,8 +1,29 @@
-import type { JwtHeader } from '@fastify/jwt'
-import fastifyJwt from '@fastify/jwt'
+import fastifyAuth, { type FastifyAuthFunction } from "@fastify/auth";
+import fastifyJwt, { type JwtHeader} from "@fastify/jwt";
 import type { FastifyReply, FastifyRequest } from 'fastify'
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import jwksClient from 'jwks-rsa'
+import fp from "fastify-plugin";
+import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import jwksClient from "jwks-rsa";
+
+declare module '@fastify/jwt' {
+  interface FastifyJWT {
+    payload: { id: number }
+    user: {
+      sub: string
+      name: string
+      preferred_username: string
+      given_name: string
+      family_name: string
+      email: string
+    }
+  }
+}
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    keycloakAuth: FastifyAuthFunction
+  }
+}
 
 const keycloakIssuer = `${import.meta.env.VITE_AUTH_URL}/realms/${import.meta.env.VITE_AUTH_REALM}`
 
@@ -10,21 +31,24 @@ const client = jwksClient({
   jwksUri: `${keycloakIssuer}/protocol/openid-connect/certs`,
 })
 
-const authPlugin: FastifyPluginAsyncZod = async (server) => {
-  // @ts-expect-error fastify jwt integration issue
+const authPlugin: FastifyPluginAsyncZod = fp(async (server) => {
+  await server.register(fastifyAuth)
+  
+  // @ts-expect-error plugin inject warning
   await server.register(fastifyJwt, {
     secret: async (header: JwtHeader) =>
-      (await client.getSigningKey(header.kid)).getPublicKey(),
-    sign: { issuer: keycloakIssuer, audience: 'text-vision-client' },
+        (await client.getSigningKey(header.kid)).getPublicKey(),
+    sign: { issuer: keycloakIssuer, audience: import.meta.env.VITE_AUTH_CLIENT_ID },
   })
-}
 
-const protectHandler = async (request: FastifyRequest, reply: FastifyReply) => {
-  try {
-    await request.jwtVerify()
-  } catch {
-    reply.status(401).send({ error: 'Unauthorized' })
-  }
-}
+  server.decorate('keycloakAuth', async (request: FastifyRequest, reply: FastifyReply) => {
+    try {
+      await request.jwtVerify()
+    } catch (ex) {
+      console.log(ex)
+      reply.status(401).send({ error: 'Unauthorized' })
+    }
+  })
+})
 
-export { authPlugin, protectHandler }
+export default authPlugin

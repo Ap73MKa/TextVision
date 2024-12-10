@@ -10,7 +10,7 @@ import path from 'path'
 
 import postsRoutes from '@/routes/posts'
 import appPath from '@/shared/app-path'
-import { authPlugin } from '@/shared/auth-plugin'
+import authPlugin from "@/shared/auth-plugin";
 import prismaPlugin from '@/shared/prisma-plugin'
 
 export default async function (opts?: FastifyServerOptions) {

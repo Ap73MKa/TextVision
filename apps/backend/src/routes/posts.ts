@@ -5,7 +5,6 @@ import { v7 as randomUUIDv7 } from 'uuid'
 import { z } from 'zod'
 
 import appPath from '@/shared/app-path'
-import { protectHandler } from '@/shared/auth-plugin.ts'
 import { processTextBlocks, readTextFromImage } from '@/shared/tesseract'
 
 const createPostScheme = z.object({
@@ -15,10 +14,12 @@ const createPostScheme = z.object({
 })
 
 const postsRoutes: FastifyPluginAsyncZod = async (server) => {
-  server.addHook('preHandler', protectHandler)
+  server.addHook('preHandler', server.auth([server.keycloakAuth]))
 
   server.get('/', async (req, reply) => {
     const userId = req.user.sub
+
+    console.log(userId)
 
     const posts = await server.prisma.post.findMany({
       where: { userId },
@@ -27,7 +28,7 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
       },
     })
 
-    console.log(posts)
+    console.log('passed')
 
     reply.send(posts)
   })
