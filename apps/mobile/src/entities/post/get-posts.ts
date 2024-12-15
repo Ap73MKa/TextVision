@@ -15,7 +15,9 @@ const getPosts = async (): Promise<PostDto[]> => {
   })
 
   if (!response.ok)
-    throw new Error(`Error ${response.status}: ${await response.text()}`)
+    throw new Error(
+      `${response.status.toString()}: ${(await response.json()).error ?? 'Неизвестная ошибка'}`
+    )
 
   return response.json() as Promise<PostDto[]>
 }

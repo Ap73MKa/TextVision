@@ -1,12 +1,12 @@
 <script lang="ts">
   import { fromBase64ToFile } from "@repo/models/services/image-decode"
   import { Button } from "@repo/ui/button";
+  import { toast } from "svelte-sonner";
 
   import { createPostAction } from "@/entities/post";
   import { goto } from "$app/navigation";
 
   import { getCropperContext } from "./cropper-context";
-  import { toast } from "svelte-sonner";
 
   const { fileName, lang, imageData }: { fileName: string, lang: string, imageData: string } = $props();
   let loading = $state<boolean>(false);
@@ -48,14 +48,14 @@
       const styledImageData = await renderImageWithStyles();
       const file = await fromBase64ToFile(styledImageData);
 
-      await createPostAction({
+      const data = await createPostAction({
         name: fileName,
         language: lang,
         photo: file,
       });
 
       loading = false;
-      await goto("/");
+      await goto(`/posts/${data.id}`);
     } catch (ex) {
         toast.error(ex?.toString() ?? "Неизвестная ошибка. Повторите попытку позже.")
       loading = false;

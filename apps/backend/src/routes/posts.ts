@@ -55,16 +55,15 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         })
         blocks = processTextBlocks(result.data.blocks ?? [])
         text = result.data.text
-        if (!text) throw new Error('Текст не обнаружен')
+        if (!text)
+          return reply.status(500).send({ error: 'Текст не обнаружен' })
       } catch {
-        console.error('Error processing image')
         return reply.status(500).send({ error: 'Ошибка обработки фото' })
       }
 
       try {
         await fs.promises.writeFile(uploadPath, photoBuffer)
-      } catch (err) {
-        console.error('Error saving file:', err)
+      } catch {
         return reply.status(500).send({ error: 'Ошибка сохранения файла' })
       }
 
