@@ -8,10 +8,11 @@ import {
 } from 'fastify-type-provider-zod'
 import path from 'path'
 
-import postsRoutes from '@/routes/posts'
+import postsRoutes from '@/routes/posts-routes'
+import authRoutes from "@/routes/auth-routes"
 import appPath from '@/shared/app-path'
-import authPlugin from '@/shared/auth-plugin'
-import prismaPlugin from '@/shared/prisma-plugin'
+import authPlugin from '@/shared/plugins/auth-plugin'
+import prismaPlugin from '@/shared/plugins/prisma-plugin'
 import fs from 'fs'
 
 export default async function (opts?: FastifyServerOptions) {
@@ -29,6 +30,7 @@ export default async function (opts?: FastifyServerOptions) {
   })
 
   await server.register(postsRoutes, { prefix: '/posts' })
+  await server.register(authRoutes, { prefix: '/auth' })
 
   server.get('/callback', (_request, reply) => {
     try {
