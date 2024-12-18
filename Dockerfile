@@ -4,7 +4,7 @@ ARG APP_NAME=backend
 ARG YARN_PKG_MANAGER="this.packageManager=\"yarn@1.22.22\""
 ARG BUN_PKG_MANAGER="this.packageManager=\"bun@${BUN_VERSION}\""
 
-FROM imbios/bun-node:${BUN_VERSION}-22-alpine AS base
+FROM imbios/bun-node:${BUN_VERSION}-22-slim AS base
 WORKDIR /app
 
 FROM base AS pruner
