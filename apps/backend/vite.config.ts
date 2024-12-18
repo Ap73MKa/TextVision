@@ -1,12 +1,12 @@
 import { defineConfig, PluginOption } from 'vite'
 import { VitePluginNode } from 'vite-plugin-node'
-import { runtimeEnv } from 'vite-plugin-runtime'
+import nodeExternals from 'rollup-plugin-node-externals'
 import path from 'node:path'
 
 export default defineConfig(({ mode }) => {
   const plugins: PluginOption[] =
     mode == 'production'
-      ? [runtimeEnv()]
+      ? [nodeExternals()]
       : [
           ...VitePluginNode({
             adapter: 'fastify',
@@ -24,9 +24,14 @@ export default defineConfig(({ mode }) => {
       lib: {
         entry: path.resolve(__dirname, './src/server.ts'),
         formats: ['es'],
+        fileName: "index"
       },
       rollupOptions: {
-        external: ['*', 'node:url'],
+        output: {
+          dir: "./dist/server"
+
+        },
+        external: [],
       },
     },
     plugins: plugins,
@@ -34,6 +39,8 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, './src'),
       },
+      mainFields: ['module', 'jsnext:main', 'jsnext'],
+      conditions: ['node'],
     },
   }
 })

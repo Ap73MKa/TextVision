@@ -6,6 +6,7 @@ import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import jwksClient from "jwks-rsa";
 
 import {authProtocol,authRealm} from "@/shared/auth.ts";
+import {env} from "@/shared/env.ts";
 
 declare module '@fastify/jwt' {
   interface FastifyJWT {
@@ -36,7 +37,7 @@ const authPlugin: FastifyPluginAsyncZod = fp(async (server) => {
   await server.register(fastifyJwt, {
     secret: async (header: JwtHeader) =>
         (await client.getSigningKey(header.kid)).getPublicKey(),
-    sign: { issuer: authRealm, audience: import.meta.env.VITE_AUTH_CLIENT_ID },
+    sign: { issuer: authRealm, audience: env.VITE_AUTH_CLIENT_ID },
   })
 
   server.decorate('keycloakAuth', async (request: FastifyRequest, reply: FastifyReply) => {
