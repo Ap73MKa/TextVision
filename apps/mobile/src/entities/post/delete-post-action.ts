@@ -7,13 +7,15 @@ import { PUBLIC_API_URL } from '$env/static/public'
 const deletePostAction = async (id: string) => {
   const response = await fetch(`${PUBLIC_API_URL}/posts/${id}`, {
     headers: {
-      Authorization: `Bearer ${get(user)?.token}`,
+      Authorization: `Bearer ${get(user)?.token ?? ''}`,
     },
     method: 'DELETE',
   })
 
   if (!response.ok)
-    throw new Error(`Error ${response.status}: ${await response.text()}`)
+    throw new Error(
+      `${response.status.toString()}: ${(await response.json()).error ?? 'Неизвестная ошибка'}`
+    )
 }
 
 export default deletePostAction

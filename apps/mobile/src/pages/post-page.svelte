@@ -53,10 +53,10 @@
             <TrashIcon class="size-4" />
         </Button>
     </div>
-    <Tabs.Content value="text" class="size-full relative pt-28 px-4">
+    <Tabs.Content value="text" class="mt-0 size-full relative pt-28 px-4">
         <textarea value={$postQuery.data?.text} class="bg-inherit size-full focus:outline-none"></textarea>
     </Tabs.Content>
-    <Tabs.Content value="image" class="size-full">
+    <Tabs.Content value="image" class="size-full mt-0">
         <ImageViewer
             imageData={$postQuery.data?.imagePath ? `${PUBLIC_API_URL}/${$postQuery.data.imagePath }` : ""}
             textBoxes={$postQuery.data?.boxes ?? []}

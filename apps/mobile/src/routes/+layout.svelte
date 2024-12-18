@@ -22,4 +22,4 @@
 </QueryClientProvider>
 
 <ModeWatcher />
-<Toaster />
+<Toaster position="top-center" />

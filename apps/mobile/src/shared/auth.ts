@@ -42,12 +42,12 @@ const exchangeCodeForToken = async (code: string): Promise<string> => {
       grant_type: 'authorization_code',
       code: code,
       redirect_uri: `${PUBLIC_API_URL}/callback`,
-      client_id: `${PUBLIC_AUTH_CLIENT_ID}`,
-      client_secret: `${PUBLIC_AUTH_CLIENT_SECRET}`,
+      client_id: PUBLIC_AUTH_CLIENT_ID,
+      client_secret: PUBLIC_AUTH_CLIENT_SECRET,
     }),
   })
 
-  if (!response.ok) throw new Error('Can not access data')
+  if (!response.ok) throw new Error('Ошибка получения доступа')
 
   const data = (await response.json()) as { access_token: string }
   return data.access_token
@@ -70,7 +70,21 @@ const decodeToken = (token: string): User | null => {
       token: token,
     }
   } catch {
-    return null
+    throw new Error('Ошибка разбора токена')
+  }
+}
+
+const logout = async (token: string) => {
+  try {
+    const response = await fetch(`${PUBLIC_API_URL}/auth/logout`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'POST',
+    })
+    console.log(response.status)
+  } catch (ex) {
+    console.log(ex)
   }
 }
 
@@ -79,12 +93,10 @@ const addAuthListener = (
   onError?: (error: Error) => void
 ) =>
   onOpenUrl(async (urls) => {
-    if (urls.length === 0)
-      return onError?.(new Error('No URLs received in onOpenUrl'))
+    if (urls.length === 0) return onError?.(new Error('Url адрес не найдет'))
 
     const code = processUrlCode(urls[0])
-    if (!code)
-      return onError?.(new Error('Invalid URL: authorization code missing'))
+    if (!code) return onError?.(new Error('Код авторизации отсутствует'))
 
     try {
       const token = await exchangeCodeForToken(code)
@@ -135,4 +147,4 @@ type User = {
 }
 
 export type { User }
-export { addAuthListener, user }
+export { addAuthListener, logout, user }

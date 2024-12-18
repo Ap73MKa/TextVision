@@ -6,7 +6,10 @@
 
   import { user } from "@/shared/auth";
 
-  const signOut = () => { user.set(null) }
+  const signOut = async() => {
+    // await logout($user?.token ?? '')
+    user.set(null)
+  }
 </script>
 
 {#if $user}

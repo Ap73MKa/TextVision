@@ -23,7 +23,7 @@ const createPostAction = async (createDto: PostCreateDto): Promise<PostDto> => {
 
   if (!response.ok)
     throw new Error(
-      `Ошибка ${response.status.toString()}: ${await response.text()}`
+      `${response.status.toString()}: ${(await response.json()).error ?? 'Неизвестная ошибка'}`
     )
 
   return response.json() as Promise<PostDto>
