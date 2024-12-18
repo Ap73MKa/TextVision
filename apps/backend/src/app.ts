@@ -39,7 +39,7 @@ export default async function (opts?: FastifyServerOptions) {
       return reply.type('text/html').send(htmlContent)
     } catch (err) {
       server.log.error(err)
-      return reply.code(500).send('Ошибка сервера: файл не найден')
+      return reply.status(500).send('Ошибка сервера: файл не найден')
     }
   })
 
