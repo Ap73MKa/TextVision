@@ -19,8 +19,6 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
   server.get('/', async (req, reply) => {
     const userId = req.user.sub
 
-    console.log(userId)
-
     const posts = await server.prisma.post.findMany({
       where: { userId },
       include: {

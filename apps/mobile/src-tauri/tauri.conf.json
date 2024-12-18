@@ -22,7 +22,7 @@
     "deep-link": {
       "mobile": [
         {
-          "host": "dev.lakina.keenetic.pro",
+          "host": "tvapi.sh0.su",
           "pathPrefix": ["/callback"]
         }
       ]

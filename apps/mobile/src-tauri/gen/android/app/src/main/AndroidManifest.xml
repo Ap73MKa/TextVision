@@ -30,7 +30,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http" />
                 <data android:scheme="https" />
-                <data android:host="dev.lakina.keenetic.pro" />
+                <data android:host="tvapi.sh0.su" />
                 <data android:pathPrefix="/callback" />
             </intent-filter>
             <!-- DEEP LINK PLUGIN. AUTO-GENERATED. DO NOT REMOVE. -->
