@@ -37,7 +37,7 @@
   }
 </script>
 
-<Button {...$$restProps} on:click={browseImage}>
+<Button {...$$restProps} onclick={browseImage}>
   <slot />
 </Button>
 

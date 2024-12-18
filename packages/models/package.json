@@ -8,8 +8,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint .",
-    "ui:add": "bunx shadcn-svelte@latest add"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "typescript": "^5.7.2"

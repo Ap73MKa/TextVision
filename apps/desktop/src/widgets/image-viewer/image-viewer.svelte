@@ -24,10 +24,10 @@
 
 <cropper-canvas class={cn('relative', className)}>
   <div class="absolute right-0 top-0 z-20 flex gap-2 p-2">
-    <button type="button" on:click={() => cropperImage.$scale(1.2)}>
+    <button type="button" onclick={() => cropperImage.$scale(1.2)}>
       <ZoomPlusIcon class="size-5" />
     </button>
-    <button type="button" on:click={() => cropperImage.$scale(0.8)}>
+    <button type="button" onclick={() => cropperImage.$scale(0.8)}>
       <ZoomMinusIcon class="size-5" />
     </button>
   </div>

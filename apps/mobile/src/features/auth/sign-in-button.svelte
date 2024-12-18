@@ -23,6 +23,6 @@
   };
 </script>
 
-<Button {...rest} on:click={openAuthPageInBrowser}>
+<Button {...rest} onclick={openAuthPageInBrowser}>
   {#if children}{@render children()}{:else}Войти{/if}
 </Button>

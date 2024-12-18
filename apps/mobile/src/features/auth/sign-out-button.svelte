@@ -16,6 +16,6 @@
   }
 </script>
 
-<Button {...rest} on:click={signOut}>
+<Button {...rest} onclick={signOut}>
   {#if children}{@render children()}{:else}Sign Out{/if}
 </Button>

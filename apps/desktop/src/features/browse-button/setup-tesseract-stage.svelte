@@ -60,7 +60,7 @@
     <PsmSelect bind:value={psm} />
   </div>
   <div class="w-full flex gap-2 justify-end">
-    <Button on:click={cancelAction} variant="outline">Back</Button>
-    <Button on:click={browseImage}>Apply</Button>
+    <Button onclick={cancelAction} variant="outline">Back</Button>
+    <Button onclick={browseImage}>Apply</Button>
   </div>
 </div>

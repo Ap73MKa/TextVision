@@ -8,7 +8,7 @@
   import TrashIcon from "lucide-svelte/icons/trash"
   import { toast } from "svelte-sonner"
 
-  import type { PostDto } from "@/entities/post";
+  import { type PostDto } from '@/entities/post'
   import { createGetPostQuery, deletePostAction } from "@/entities/post"
   import { ImageViewer } from "@/features/image-viewer"
   import { goto } from "$app/navigation"

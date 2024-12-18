@@ -1,7 +1,7 @@
 import type { BoxType } from './box-type'
 import type { LangValueType } from './lang-type'
 
-export type PostDto = {
+type PostDto = {
   name: string
   language: LangValueType
   id: string
@@ -11,3 +11,5 @@ export type PostDto = {
   boxes: BoxType[]
   createdAt: Date
 }
+
+export type { PostDto }

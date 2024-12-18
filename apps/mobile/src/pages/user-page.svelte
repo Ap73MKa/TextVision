@@ -4,10 +4,10 @@
   import NotepadIcon from "lucide-svelte/icons/notepad-text"
   import UserIcon from "lucide-svelte/icons/user"
 
-  import { user } from "@/shared/auth";
+  import { user, logout } from "@/shared/auth";
 
   const signOut = async() => {
-    // await logout($user?.token ?? '')
+    await logout($user?.token ?? '')
     user.set(null)
   }
 </script>

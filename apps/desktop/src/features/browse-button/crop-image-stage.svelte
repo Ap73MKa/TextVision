@@ -63,9 +63,9 @@
 <div class="flex justify-end pt-2 gap-2">
   <Button
     variant="outline"
-    on:click={() => {
+    onclick={() => {
       cancelAction()
     }}>Close</Button
   >
-  <Button on:click={() => onSubmitAction()}>Next</Button>
+  <Button onclick={() => onSubmitAction()}>Next</Button>
 </div>

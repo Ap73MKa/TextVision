@@ -15,7 +15,7 @@
 <Button
   variant={isSelected ? 'secondary' : 'outline'}
   class="h-8 justify-start px-3 shadow"
-  on:click={() => {
+  onclick={() => {
     selectedRecord.set(item)
   }}
 >

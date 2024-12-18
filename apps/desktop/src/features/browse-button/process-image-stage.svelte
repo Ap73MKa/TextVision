@@ -79,10 +79,10 @@
       />
     </div>
     <div class="flex w-full h-full items-end gap-2">
-      <Button on:click={cancelAction} variant="outline" class="w-full"
+      <Button onclick={cancelAction} variant="outline" class="w-full"
         >Back</Button
       >
-      <Button on:click={onSubmitAction} class="w-full">Next</Button>
+      <Button onclick={onSubmitAction} class="w-full">Next</Button>
     </div>
   </div>
 </div>

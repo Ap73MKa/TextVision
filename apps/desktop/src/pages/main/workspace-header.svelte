@@ -27,7 +27,7 @@
   class="flex h-12 w-full shrink-0 items-center justify-between gap-2 border-b bg-background px-4"
 >
   <Button
-    on:click={() => {
+    onclick={() => {
       selectedRecord.set(undefined)
     }}
     variant="ghost"
@@ -44,7 +44,7 @@
       Text
     </Tabs.Trigger>
   </Tabs.List>
-  <Button size="icon" class="size-8" on:click={() => deleteSelectedRecord()}>
+  <Button size="icon" class="size-8" onclick={() => deleteSelectedRecord()}>
     <TrashIcon class="size-4" />
   </Button>
 </div>

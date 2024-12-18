@@ -19,10 +19,10 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "formsnap": "^1.0.1",
-    "svelte": "^5.13.0"
+    "svelte": "5.12.0"
   },
   "dependencies": {
-    "bits-ui": "^0.21.16",
+    "bits-ui": "0.21.16",
     "clsx": "^2.1.1",
     "cmdk-sv": "^0.0.18",
     "lucide-svelte": "^0.468.0",
