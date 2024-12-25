@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "dev-docs": "turbo run dev --filter=docs",
     "dev-mobile": "turbo run dev --filter=mobile --env-mode=loose",
     "dev-desk": "turbo run dev --filter=desktop",
     "dev-back": "turbo run dev --filter=backend",
