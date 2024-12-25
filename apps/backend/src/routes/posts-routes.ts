@@ -54,8 +54,9 @@ const postsRoutes: FastifyPluginAsyncZod = async (server) => {
         blocks = processTextBlocks(result.data.blocks ?? [])
         text = result.data.text
         if (!text)
-          return reply.status(500).send({ error: 'Текст не обнаружен' })
-      } catch {
+          return await reply.status(500).send({ error: 'Текст не обнаружен' })
+      } catch (ex) {
+        server.log.error(ex)
         return reply.status(500).send({ error: 'Ошибка обработки фото' })
       }
 

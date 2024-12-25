@@ -68,7 +68,7 @@
           >
             <Check
               class={cn(
-                'mr-2 h-4 w-4',
+                'mr-2 size-4',
                 value !== framework.value && 'text-transparent'
               )}
             />

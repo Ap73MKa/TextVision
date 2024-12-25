@@ -6,14 +6,14 @@ import {
   validatorCompiler,
   ZodTypeProvider,
 } from 'fastify-type-provider-zod'
+import fs from 'fs'
 import path from 'path'
 
+import authRoutes from '@/routes/auth-routes'
 import postsRoutes from '@/routes/posts-routes'
-import authRoutes from "@/routes/auth-routes"
 import appPath from '@/shared/app-path'
 import authPlugin from '@/shared/plugins/auth-plugin'
 import prismaPlugin from '@/shared/plugins/prisma-plugin'
-import fs from 'fs'
 
 export default async function (opts?: FastifyServerOptions) {
   const server = Fastify(opts).withTypeProvider<ZodTypeProvider>()

@@ -1,6 +1,7 @@
-import {env} from "@/shared/env.ts";
-import logger from '@/shared/logger.ts'
 import dotenvx from '@dotenvx/dotenvx'
+
+import { env } from '@/shared/env.ts'
+import logger from '@/shared/logger.ts'
 
 import fastify from './app'
 

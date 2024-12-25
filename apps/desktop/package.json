@@ -20,25 +20,24 @@
     "@tauri-apps/plugin-dialog": "^2.2.0",
     "@tauri-apps/plugin-fs": "^2.2.0",
     "cmdk-sv": "^0.0.18",
-    "cropperjs": "2.0.0-rc.2",
+    "cropperjs": "^2.0.0-rc.2",
     "dexie": "^4.0.10",
-    "lucide-svelte": "^0.468.0",
+    "lucide-svelte": "^0.469.0",
     "mode-watcher": "^0.5.0",
     "svelte-sonner": "^0.3.28",
     "tesseract.js": "^5.1.1"
   },
   "devDependencies": {
-    "@svelte-put/shortcut": "^4.0.0",
-    "@sveltejs/adapter-static": "^3.0.6",
-    "@sveltejs/kit": "^2.9.1",
-    "@sveltejs/vite-plugin-svelte": "^5.0.1",
+    "@svelte-put/shortcut": "^4.1.0",
+    "@sveltejs/adapter-static": "^3.0.8",
+    "@sveltejs/kit": "^2.15.0",
+    "@sveltejs/vite-plugin-svelte": "^5.0.3",
     "@tauri-apps/cli": "^2.1.0",
     "autoprefixer": "^10.4.20",
-    "svelte": "^5.10.0",
+    "svelte": "^5.16.0",
     "svelte-check": "^4.1.1",
-    "tailwindcss": "^3.4.16",
-    "tslib": "^2.8.1",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.7.2",
-    "vite": "^6.0.3"
+    "vite": "^6.0.5"
   }
 }

@@ -21,6 +21,8 @@
     <input
         id="file-upload"
         type="file"
+        accept="image/*"
+        capture="environment"
         onchange={handleFileChange}
         class="hidden"
     />
